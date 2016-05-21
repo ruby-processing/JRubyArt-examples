@@ -1,0 +1,1 @@
+-Xcompile.invokedynamic=true

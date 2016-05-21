@@ -1,0 +1,3 @@
+-Djruby.ji.objectProxyCache=false -XX:CompileCommand=dontinline,org.jruby.runtime.invokedynamic.InvokeDynamicSupport::invocationFallback 
+ 
+

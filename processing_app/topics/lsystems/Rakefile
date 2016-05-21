@@ -1,0 +1,26 @@
+# Simple demo Rakefile to autorun samples in current directory
+# adjust path to k9 executable, and or opts as required
+
+SAMPLES_DIR = './'
+
+desc 'run demo'
+task default: [:demo]
+
+desc 'demo'
+task :demo do
+  samples_list.shuffle.each{ |sample| run_sample sample }
+end
+
+def samples_list
+  Dir.chdir(SAMPLES_DIR)
+  Dir.glob('*.rb').map { |file| File.join(SAMPLES_DIR, file) }
+end
+
+def run_sample(sample_name)
+  puts format('Running %s...quit to run next sample', sample_name)
+  open("|k9 run #{sample_name}", 'r') do |io|
+    while l = io.gets
+      puts(l.chop)
+    end
+  end
+end
