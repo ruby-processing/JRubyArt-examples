@@ -1,12 +1,11 @@
-# Loads a "mask" for an image to specify the transparency 
+# Loads a "mask" for an image to specify the transparency
 # in different parts of the image. The two images are blended
-# together using the mask() method of PImage. 
-
+# together using the mask() method of PImage.
 
 def setup
   sketch_title 'Alpha Mask'
-  @image = load_image 'test.jpg'
-  @image_mask = load_image 'mask.jpg'
+  @image = load_image(data_path('test.jpg'))
+  @image_mask = load_image(data_path('mask.jpg'))
   @image.mask @image_mask
 end
 

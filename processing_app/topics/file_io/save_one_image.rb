@@ -21,5 +21,5 @@ def settings
 end
 
 def mouse_pressed
-  save('line.tif')
+  save(data_path('line.tif'))
 end

@@ -19,7 +19,7 @@ end
 def setup
   sketch_title 'Shape Vertices'
   # Load the shape
-  @uk = load_shape('uk.svg')
+  @uk = load_shape(data_path('uk.svg'))
 end
 
 def draw

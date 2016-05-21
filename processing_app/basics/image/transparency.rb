@@ -4,8 +4,8 @@
 
 def setup
   sketch_title 'Transparency'
-  @a = load_image 'construct.jpg'
-  @b = load_image 'wash.jpg'
+  @a = load_image(data_path('construct.jpg'))
+  @b = load_image(data_path('wash.jpg'))
   @offset = 0.0  
 end
 

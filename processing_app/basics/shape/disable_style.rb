@@ -1,8 +1,8 @@
-# Ignore Styles. 
-# Illustration by George Brower. 
-# 
+# Ignore Styles.
+# Illustration by George Brower.
+#
 # Shapes are loaded with style information that tells them how
-# to draw (the color, stroke weight, etc.) The disableStyle 
+# to draw (the color, stroke weight, etc.) The disableStyle
 # method of PShape turns off this information. The enableStyle
 # method turns it back on.
 #
@@ -12,11 +12,11 @@ def setup
   sketch_title 'Disable Style'
   # The file 'bot1.svg' must be in the data folder
   # of the current sketch to load successfully
-  @bot = load_shape('bot1.svg')
+  @bot = load_shape(data_path('bot1.svg'))
 end
 
 def draw
-  background(102)  
+  background(102)
   # Draw left bot
   bot.disable_style    # Ignore the colors in the SVG
   fill(0, 102, 153)    # Set the SVG fill to blue

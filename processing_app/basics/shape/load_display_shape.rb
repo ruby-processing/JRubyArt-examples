@@ -13,7 +13,7 @@ end
 
 def setup
   sketch_title 'Ugly Bots'
-  @bot = load_shape "bot1.svg"    
+  @bot = load_shape(data_path('bot1.svg'))    
   no_loop
 end
 

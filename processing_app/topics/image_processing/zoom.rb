@@ -9,9 +9,9 @@ attr_reader :img, :img_pixels, :sval, :nmx, :nmy, :res
 
 def setup
   sketch_title 'Zoom'
-  noFill
+  no_fill
   stroke(255)
-  @img = load_image('ystone08.jpg')
+  @img = load_image(data_path('ystone08.jpg'))
   @img_pixels = []
   @sval = 1.0
   @res = 5

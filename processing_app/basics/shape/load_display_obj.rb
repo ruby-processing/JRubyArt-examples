@@ -9,7 +9,7 @@ attr_reader :rocket, :ry
 def setup
   sketch_title 'Load Display Object'
   @ry = 0 
-  @rocket = load_shape('rocket.obj')
+  @rocket = load_shape(data_path('rocket.obj'))
 end
 
 def draw

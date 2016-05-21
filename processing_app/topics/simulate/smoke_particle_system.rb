@@ -8,7 +8,7 @@ attr_reader :ps, :img, :wind
 
 def setup
   sketch_title 'Smoke Particle System'
-  @img = load_image('texture.png')
+  @img = load_image(data_path('texture.png'))
   @ps = ParticleSystem.new(0, Vec2D.new(width / 2, height - 75), img)
 end
 

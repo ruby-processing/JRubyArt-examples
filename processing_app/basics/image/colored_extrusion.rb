@@ -13,7 +13,7 @@ def setup
   @nmy = 0.0
   @sval = 1.0
   @res = 5
-  @img = load_image 'ystone08.jpg'
+  @img = load_image(data_path('ystone08.jpg'))
   @img_pixels = []
   (0...@img.height).each do |y|
     @img_pixels << []

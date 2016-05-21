@@ -7,12 +7,12 @@ def setup
   frame_rate 30
   @a = 0
   # is 200 x 200 pixels.
-  @background_image = load_image 'milan_rubbish.jpg'
+  @background_image = load_image(data_path('milan_rubbish.jpg'))
 end
 
 def draw
   background @background_image
-  @a = (@a + 1) % (width+32)
+  @a = (@a + 1) % (width + 32)
   stroke 266, 204, 0
   line 0, @a,   width, @a-26
   line 0, @a-6, width, @a-32

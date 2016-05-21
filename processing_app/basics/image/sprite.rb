@@ -5,7 +5,7 @@
 
 def setup
   sketch_title 'Sprite'
-  @teddy = load_image "teddy.gif"
+  @teddy = load_image(data_path('teddy.gif'))
   @xpos, @ypos = width / 2, height / 2
   @drag = 30.0    
   frame_rate 60

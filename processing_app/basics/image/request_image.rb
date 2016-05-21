@@ -14,11 +14,13 @@ attr_reader :imgs
 
 def setup
   sketch_title 'Request Image'
-  @imgs = []
   # Load images asynchronously, kind of pointless with this few small images
-  10.times do |i|
-    imgs << request_image(format('PT_anim%s.gif', i.to_s.rjust(4, '0')))
-  end
+  @imgs = (0...10).map do |i|
+    request_image(
+      data_path(format('PT_anim%s.gif', i.to_s.rjust(4, '0'))
+      )
+    )
+  end 
 end
 
 def draw

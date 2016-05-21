@@ -46,7 +46,7 @@ class Animation
     @fcount = count
     @frame = 0
     @images = (0...count).map do |i|
-      load_image(format(image_format, i.to_s.rjust(4, '0')))
+      load_image(data_path(format(image_format, i.to_s.rjust(4, '0'))))
     end
   end
 

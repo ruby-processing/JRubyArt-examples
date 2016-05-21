@@ -4,7 +4,8 @@
 #
 # This example demonstrates how to use saveFrame to render
 # out an image sequence that you can assemble into a movie
-# using the MovieMaker tool.
+# using the MovieMaker tool. NB: on macosx you might need
+# save files to an absolute path File.absolute_path...
 #
 
 # A boolean to track whether we are recording are not
@@ -34,7 +35,7 @@ def draw
   # If we are recording call saveFrame!
   # The number signs (#) indicate to Processing to
   # number the files automatically
-  save_frame('output/frames####.png'.to_java(:String)) if recording
+  save_frame('output/frames####.png'.to_java(:string)) if recording
   # Let's draw some stuff to tell us what is happening
   # It's important to note that none of this will show up in the
   # rendered files b/c it is drawn *after* saveFrame

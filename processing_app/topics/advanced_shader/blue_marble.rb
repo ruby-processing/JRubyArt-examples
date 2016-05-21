@@ -6,23 +6,27 @@
 attr_reader :earth, :clouds, :earth_shader, :cloud_shader, :earth_rotation
 attr_reader :clouds_rotation, :target_angle
 
+SHADERS = %w(EarthFrag.glsl EarthVert.glsl CloudFrag.glsl CloudVert.glsl).freeze
+SHADER_NAME = %i(earth_frag earth_vert cloud_frag cloud_vert).freeze
+IMAGES = %w(earthmap1k earthcloudmap earthcloudmaptrans earthbump1k earthspec1k).freeze
+IMAGE_NAME = %i(earth_tex cloud_tex alpha_tex bump_map spec_map).freeze
+
 def setup
   sketch_title 'Blue Marble'
   @earth_rotation = 0
   @clouds_rotation = 0
-  earth_tex = load_image('earthmap1k.jpg')
-  cloud_tex = load_image('earthcloudmap.jpg')
-  alpha_tex = load_image('earthcloudmaptrans.jpg')
-  bump_map = load_image('earthbump1k.jpg')
-  spec_map = load_image('earthspec1k.jpg')
-  @earth_shader = load_shader('EarthFrag.glsl', 'EarthVert.glsl')
-  earth_shader.set('texMap', earth_tex)
-  earth_shader.set('bumpMap', bump_map)
-  earth_shader.set('specularMap', spec_map)
+  glsl_files = SHADERS.map { |shade| data_path(shade) }
+  shaders = SHADER_NAME.zip(glsl_files.to_java(:string)).to_h
+  images = IMAGES.map { |img| load_image(data_path("#{img}.jpg")) }
+  textures = IMAGE_NAME.zip(images).to_h
+  @earth_shader = load_shader(shaders[:earth_frag], shaders[:earth_vert])
+  earth_shader.set('texMap', textures[:earth_tex])
+  earth_shader.set('bumpMap', textures[:bump_map])
+  earth_shader.set('specularMap', textures[:spec_map])
   earth_shader.set('bumpScale', 0.05)
-  @cloud_shader = load_shader('CloudFrag.glsl', 'CloudVert.glsl')
-  cloud_shader.set('texMap', cloud_tex)
-  cloud_shader.set('alphaMap', alpha_tex)
+  @cloud_shader = load_shader(shaders[:cloud_frag], shaders[:cloud_vert])
+  cloud_shader.set('texMap', textures[:cloud_tex])
+  cloud_shader.set('alphaMap', textures[:alpha_tex])
   @earth = create_shape(SPHERE, 200)
   earth.setStroke(false)
   earth.setSpecular(color(125))

@@ -4,19 +4,16 @@
 # Applies a convolution matrix to a portion of an image. Move mouse to
 # apply filter to different parts of the image.
 #
-
 attr_reader :img
-
 # It's possible to convolve the image with many different
 # matrices to produce different effects. This is a high-pass
 # filter it accentuates the edges.
-
-MATRIX = [[-1, -1, -1], [-1,  9, -1], [-1, -1, -1]]
+MATRIX = [[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]].freeze
 W = 120
 
 def setup
   sketch_title 'Convolution'
-  @img = load_image('moon-wide.jpg')
+  @img = load_image(data_path('moon-wide.jpg'))
 end
 
 def draw
@@ -69,4 +66,3 @@ end
 def settings
   size(640, 360)
 end
-

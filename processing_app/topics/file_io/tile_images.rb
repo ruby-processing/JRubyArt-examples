@@ -4,6 +4,7 @@
 # Draws an image larger than the screen by tiling it into small sections.
 # The scale_value variable sets amount of scaling: 1 is 100%, 2 is 200%, etc.
 #
+FORM = 'lines-%d-%d.png'.freeze
 attr_reader :scale_value, :x_offset, :y_offset
 
 def setup
@@ -27,7 +28,7 @@ def settings
 end
 
 def set_offset
-  save_frame(format('lines-%d-%d.png', y_offset, x_offset))
+  save_frame(data_path(format(FORM, y_offset, x_offset)))
   @x_offset += 1
   if x_offset == scale_value
     @x_offset = 0

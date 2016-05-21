@@ -6,9 +6,8 @@
 
 def setup
   sketch_title 'Textured Cube'  
-  @rotx = PI/4
-  @roty = PI/4  
-  @tex = load_image "berlin-1.jpg"
+  ArcBall.init(self)
+  @tex = load_image(data_path('berlin-1.jpg'))
   texture_mode NORMAL  # Changed for processing 2.0
   fill 255
   stroke 44, 48, 32  
@@ -17,10 +16,6 @@ end
 def draw  
   background 0  
   no_stroke  
-  translate width/2, height/2, -100  
-  rotate_x @rotx
-  rotate_y @roty  
-  scale 90  
   texture_cube  
 end
 
@@ -33,6 +28,7 @@ def texture_cube
   # of the screen, but is not otherwised aligned with the X/Z faces. (This
   # just affects what type of symmetry is required if you need seamless
   # tiling all the way around the cube)
+  scale 100
   begin_shape QUADS
   texture @tex
   # +Z "front" face
@@ -66,12 +62,6 @@ def texture_cube
   vertex -1,  1,  1, 1, 1
   vertex -1,  1, -1, 0, 1
   end_shape  
-end
-  
-def mouse_dragged  
-  rate = 0.01
-  @rotx += ( pmouse_y - mouse_y ) * rate
-  @roty += ( mouse_x - pmouse_x ) * rate  
 end
 
 def settings

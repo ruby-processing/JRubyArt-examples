@@ -16,7 +16,7 @@ def setup
   frame_rate(24)
   @frame = 0
   @images = (0...NUM_FRAMES).map do |i|
-    load_image(format(IMGFORM, i.to_s.rjust(4, '0')))
+    load_image(data_path(format(IMGFORM, i.to_s.rjust(4, '0'))))
   end
 end
 

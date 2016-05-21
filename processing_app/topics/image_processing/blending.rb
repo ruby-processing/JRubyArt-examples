@@ -1,4 +1,3 @@
-#
 # Blending
 # by Andres Colubri.
 #
@@ -13,8 +12,8 @@ attr_reader :img1, :img2, :pic_alpha, :name, :sel_mode
 
 def setup
   sketch_title 'Blending'
-  @img1 = load_image('layer1.jpg')
-  @img2 = load_image('layer2.jpg')
+  @img1 = load_image(data_path('layer1.jpg'))
+  @img2 = load_image(data_path('layer2.jpg'))
   @name = 'REPLACE'
   noStroke
   @sel_mode = REPLACE
