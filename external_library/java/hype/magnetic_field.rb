@@ -32,7 +32,7 @@ def setup
 
   @pool = HDrawablePool.new(2_500)
   pool.auto_add_to_stage
-      .add(HShape.new('arrow.svg').enable_style(false).anchor_at(H::CENTER))
+      .add(HShape.new(data_path('arrow.svg')).enable_style(false).anchor_at(H::CENTER))
       .layout(Hype::HGridLayout.new.start_x(-60).start_y(-60).spacing(16, 16).cols(50))
       .on_create do |obj|
         obj.no_stroke.anchor(-20, -20)

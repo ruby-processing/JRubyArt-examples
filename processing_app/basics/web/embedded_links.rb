@@ -39,7 +39,7 @@ def check_buttons
   @over_right_button = inside? mouse_x, mouse_y, (105..180), (60..135)
 end
 
-def inside? ( x, y, x_bound, y_bound )
+def inside?(x, y, x_bound, y_bound)
   x_bound.cover?(x) && y_bound.cover?(y)
 end
 

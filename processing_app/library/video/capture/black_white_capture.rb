@@ -1,21 +1,16 @@
 # hold down mouse to see unfiltered output
-require_relative 'video_event'
-
-load_libraries :video
-include_package 'processing.video'
-
-include Java::MonkstoneVideoevent::VideoInterface
+load_libraries :video, :video_event
 
 attr_reader :cam, :my_shader
 
 def setup
   sketch_title 'Black & White Capture'
-  @my_shader = load_shader('bwfrag.glsl')
+  @my_shader = load_shader(data_path('bwfrag.glsl'))
   start_capture(width, height)
 end
 
 def start_capture(w, h)
-  @cam = Capture.new(self, w, h)
+  @cam = Java::ProcessingVideo::Capture.new(self, w, h)
   cam.start
 end
 

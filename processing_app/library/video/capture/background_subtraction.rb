@@ -76,4 +76,3 @@ end
 def settings
   size(960, 544, P2D)
 end
-

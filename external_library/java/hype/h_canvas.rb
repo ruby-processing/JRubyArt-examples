@@ -27,7 +27,7 @@ def setup
   sketch_title 'Scanlines GLSL sketch'
   H.init(self)
   H.background(color('#000000'))
-  @my_shader = load_shader('scanlines.glsl')
+  @my_shader = load_shader(data_path('scanlines.glsl'))
   my_shader.set('resolution', 1.0, 1.0)
   my_shader.set('screenres', width.to_f, height.to_f)
   my_shader.set('time', millis / 1000.0)

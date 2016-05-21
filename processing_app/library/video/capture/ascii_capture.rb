@@ -20,7 +20,7 @@ def setup
   sketch_title 'Ascii Capture'
   init_video
   @font_size = 1.5
-  @font = load_font('UniversLTStd-Light-48.vlw')
+  @font = load_font(data_path('UniversLTStd-Light-48.vlw'))
   # for the 256 levels of brightness, distribute the letters across
   # the an array of 256 elements to use for the lookup
   @letters = (0...256).map do |i|
@@ -111,4 +111,3 @@ end
 def settings
   size(960, 544, P2D)
 end
-

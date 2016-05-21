@@ -6,7 +6,7 @@ def setup
   sketch_title 'Read Color'
   no_stroke
   background 0
-  c = load_image 'cait.jpg'
+  c = load_image(data_path('cait.jpg'))
   xoff, yoff = 0, 0
   p = 2
   pix = p * 3
