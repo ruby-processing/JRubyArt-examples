@@ -9,8 +9,10 @@ attr_reader :my_filter, :my_image
 
 def setup
   sketch_title 'Pixelate'
-  @my_image  = load_image('texture.jpg')
-  @my_filter = load_shader('pixelate.glsl')
+  @my_image  = load_image(data_path('texture.jpg'))
+  @my_filter = load_shader(data_path('pixelate.glsl'))
+  # @my_image  = load_image('texture.jpg')
+  # @my_filter = load_shader('pixelate.glsl')
   my_filter.set('sketchSize', width.to_f, height.to_f)
 end
 

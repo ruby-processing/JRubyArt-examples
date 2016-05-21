@@ -11,7 +11,6 @@
 # Photographs by Folkert Gorter (@folkertgorter / http://superfamous.com/)
 # made available under a CC Attribution 3.0 license.
 #
-
 DIM = 300 # the grid dimensions of the heightmap
 attr_reader :blur_factor # the blur for the displacement map
 attr_reader :resize_factor # the resize factor for the displacement map
@@ -24,18 +23,19 @@ attr_reader :displace # GLSL shader
 attr_reader :images # array to hold 2 input images
 attr_reader :color_map # variable to keep track of the current colorMap
 
-
 def setup
-  sketch_title 'Glsl heightmap noise'
+  sketch_title 'Glsl Heightmap Noise'
   @blur_factor = 3
   @resize_factor = 0.25
-  displace_strength = 0.25 # the displace strength of the GLSL shader displacement effect
+  displace_strength = 0.25 # the displace strength of the GLSL shader
   # load the images
   textures = %w(Texture01.jpg Texture02.jpg)
-  @images = textures.map { |texture| load_image(texture) }
+  @images = textures.map { |texture| load_image(data_path(texture)) }
   @color_map = 0
   # load the PShader with a fragment and a vertex shader
-  @displace = load_shader('displaceFrag.glsl', 'displaceVert.glsl')
+  shader_name = %w(displaceFrag.glsl displaceVert.glsl)
+  shaders = shader_name.map { |s| data_path(s) }
+  @displace = load_shader(shaders[0], shaders[1])
   displace.set('displaceStrength', displace_strength) # set the displace_strength
   displace.set('colorMap', images[color_map]) # set the initial colorMap
   # create the heightmap PShape (see custom creation method) and put it in the

@@ -13,10 +13,12 @@ BARREL = 2.2
 def setup
   sketch_title 'Barrel Blur Chroma'
   # Load and play the video in a loop
-  @movie = Movie.new(self, 'iss.mov')
+  @movie = Movie.new(self, data_path('iss.mov'))
+  # @movie = Movie.new(self, 'iss.mov') # requires --nojruby flag
   movie.loop
   # Load and configure the shader
-  @my_shader = load_shader('barrel_blur.glsl')
+  @my_shader = load_shader(data_path('barrel_blur.glsl'))
+  # @my_shader = load_shader('barrel_blur.glsl') # require --nojruby flag
   my_shader.set('sketchSize', width.to_f, height.to_f)
   my_shader.set('barrelPower', BARREL)
 end

@@ -14,9 +14,10 @@ def setup
   sketch_title 'Deform'
   
   textureWrap(REPEAT)
-  @tex = loadImage('tex1.jpg')
- 
-  @deform = loadShader('deform.glsl')
+  @tex = load_image(data_path('tex1.jpg'))
+  @deform = load_shader(data_path('deform.glsl'))
+  # @tex = loadImage('tex1.jpg')
+  # @deform = loadShader('deform.glsl')
   deform.set('resolution', width.to_f, height.to_f)
 end
 

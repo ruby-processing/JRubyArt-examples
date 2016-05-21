@@ -14,8 +14,10 @@ def setup
     @panel = c
   end
   @hide = false
-  @my_image  = load_image('texture.jpg')
-  @my_filter = load_shader('shader.glsl')
+  @my_image  = load_image(data_path('texture.jpg'))
+  @my_filter = load_shader(data_path('shader.glsl'))
+  # @my_image  = load_image('texture.jpg')
+  # @my_filter = load_shader('shader.glsl')
 end
 
 def draw

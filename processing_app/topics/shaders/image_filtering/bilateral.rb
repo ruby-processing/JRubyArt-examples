@@ -7,8 +7,10 @@
 attr_reader :apply, :bilateral, :my_image
 
 def setup  
-  @my_image  = load_image('texture.jpg')
-  @bilateral = load_shader('bilateral.glsl')
+  @my_image  = load_image(data_path('texture.jpg'))
+  @bilateral = load_shader(data_path('bilateral.glsl'))
+  # @my_image  = load_image('texture.jpg')
+  # @bilateral = load_shader('bilateral.glsl')
   bilateral.set('sketchSize', width.to_f, height.to_f)
   sketch_title 'Bilateral'
 end

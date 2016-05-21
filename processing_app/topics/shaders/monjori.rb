@@ -1,19 +1,18 @@
 ##
-# Monjori. 
-# 
-# GLSL version of the 1k intro Monjori from the demoscene 
+# Monjori.
+#
+# GLSL version of the 1k intro Monjori from the demoscene
 # (http://www.pouet.net/prod.php?which=52761)
 # Ported from the webGL version available in ShaderToy:
 # http://www.iquilezles.org/apps/shadertoy/
-# (Look for Monjori under the Plane Deformations Presets) 
+# (Look for Monjori under the Plane Deformations Presets)
 
- 
 attr_reader :monjori
 
 def setup
   sketch_title 'Monjori'
   no_stroke
-  @monjori = load_shader('monjori.glsl')
+  @monjori = load_shader(data_path('monjori.glsl'))
   monjori.set('resolution', width.to_f, height.to_f)
 end
 
@@ -22,7 +21,7 @@ def draw
   shader(monjori)
   # This kind of effects are entirely implemented in the
   # fragment shader, they only need a quad covering the
-  # entire view area so every pixel is pushed through the 
+  # entire view area so every pixel is pushed through the
   # shader.
   rect(0, 0, width, height)
 end

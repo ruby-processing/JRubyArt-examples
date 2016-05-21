@@ -5,13 +5,13 @@ attr_reader :label, :can, :angle, :bw_shader
 
 def setup
   sketch_title 'Bw shader'
-  @label = load_image('lachoy.jpg') # sketch needs --noruby flag to run
+  # @label = load_image('lachoy.jpg') # sketch needs --noruby flag to run
   # @label = load_image((File.absolute_path('data/lachoy.jpg')) # no flag required
-  # @label = load_image((data_path('lachoy.jpg')) # no flag required
+  @label = load_image((data_path('lachoy.jpg')) # no flag required
   @can = create_can(100, 200, 32, label)
-  @bw_shader = load_shader('bwfrag.glsl') # sketch needs --noruby flag to run
+  # @bw_shader = load_shader('bwfrag.glsl') # sketch needs --noruby flag to run
   # @bw_shader = load_shader(File.absolute_path('data/bwfrag.glsl')) # no flag required
-  # @bw_shader = load_shader(data_path('bwfrag.glsl')) # no flag required since jruby_art-1.1
+  @bw_shader = load_shader(data_path('bwfrag.glsl')) # no flag required since jruby_art-1.1
   @angle = 0
 end
 

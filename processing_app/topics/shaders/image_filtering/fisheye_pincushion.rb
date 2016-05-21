@@ -10,7 +10,8 @@ attr_reader :my_filter, :my_image, :amount, :panel, :hide
 def setup
   sketch_title 'Fisheye Pincushion'
   setup_control
-  @my_image  = load_image('texture.jpg')
+  @my_image  = load_image(data_path('texture.jpg'))
+  # @my_image  = load_image('texture.jpg')
   @hide = false
 end
 
@@ -21,7 +22,8 @@ def draw
     panel.set_visible(hide)
   end
   background(0)
-  @my_filter = load_shader('fish_eye.glsl')
+  @my_filter = load_shader(data_path('fish_eye.glsl'))
+  # @my_filter = load_shader('fish_eye.glsl')
   my_filter.set('sketchSize', width.to_f, height.to_f)
   # Draw the image on the scene
   image(my_image, 0, 0)

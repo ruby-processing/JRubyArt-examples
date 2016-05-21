@@ -10,7 +10,8 @@ attr_reader :blur
 
 def setup
   sketch_title 'Blur filter'
-  @blur = load_shader('blur.glsl') 
+  @blur = load_shader(data_path('blur.glsl')) 
+  # @blur = load_shader('blur.glsl') 
   stroke(255, 0, 0)
   rectMode(CENTER)
 end

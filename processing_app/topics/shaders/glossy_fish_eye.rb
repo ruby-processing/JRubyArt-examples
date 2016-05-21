@@ -1,20 +1,20 @@
-#
 # Glossy Fish Eye
-# 
-# A fish-eye shader is used on the main surface and 
-# a glossy specular reflection shader is used on the
-# offscreen canvas. 
 #
+# A fish-eye shader is used on the main surface and
+# a glossy specular reflection shader is used on the
+# offscreen canvas.
 
 attr_reader :ball, :canvas, :glossy, :fisheye, :img, :use_fish_eye
+SHADERS = %w(FishEye.glsl GlossyFrag.glsl GlossyVert.glsl).freeze
 
 def setup
   sketch_title 'Glossy fish eye'
   @canvas = create_graphics(width, height, P3D)
   @use_fish_eye = true
-  @fisheye = load_shader('FishEye.glsl')
+  shaders = SHADERS.map { |shader| data_path(shader) }
+  @fisheye = load_shader(shaders[0])
   fisheye.set('aperture', 180.0)
-  @glossy = load_shader('GlossyFrag.glsl', 'GlossyVert.glsl')  
+  @glossy = load_shader(shaders[1], shaders[2])
   glossy.set('AmbientColour', 0.0, 0.0, 0.0)
   glossy.set('DiffuseColour', 0.9, 0.2, 0.2)
   glossy.set('SpecularColour', 1.0, 1.0, 1.0)
@@ -34,11 +34,11 @@ def draw
   canvas.background(0)
   canvas.push_matrix
   canvas.rotate_y(frame_count * 0.01)
-  canvas.point_light(204, 204, 204, 1000, 1000, 1000)
-  canvas.pop_matrix  
-  (0 ... canvas.width + 100).step(100) do |x|
-    (0 ... canvas.width + 100).step(100) do |y|
-      (0 ... canvas.width + 100).step(100) do |z|
+  canvas.point_light(204, 204, 204, 1_000, 1_000, 1_000)
+  canvas.pop_matrix
+  (0...canvas.width + 100).step(100) do |x|
+    (0...canvas.width + 100).step(100) do |y|
+      (0...canvas.width + 100).step(100) do |z|
         canvas.push_matrix
         canvas.translate(x, y, -z)
         canvas.shape(ball)
@@ -46,14 +46,14 @@ def draw
       end
     end
   end
-  canvas.end_draw   
-  shader(fisheye) if use_fish_eye  
+  canvas.end_draw
+  shader(fisheye) if use_fish_eye
   image(canvas, 0, 0, width, height)
 end
 
 def mouse_pressed
   @use_fish_eye = !use_fish_eye
-  reset_shader    
+  reset_shader
 end
 
 def settings

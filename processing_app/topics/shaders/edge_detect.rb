@@ -11,8 +11,10 @@ attr_reader :edges, :img , :enabled
 def setup
   sketch_title 'Edge detect'
   @enabled = true
-  @img = load_image('leaves.jpg');      
-  @edges = load_shader('edges.glsl')
+  @img = load_image(data_path('leaves.jpg'))    
+  @edges = load_shader(data_path('edges.glsl'))
+  # @img = load_image('leaves.jpg') # use --noruby flag      
+  # @edges = load_shader('edges.glsl') # use --nojruby flag
 end
 
 def draw
@@ -20,10 +22,10 @@ def draw
   image(img, 0, 0)
 end
 
-def mousePressed
+def mouse_pressed
   @enabled = !enabled
   if (!enabled == true)
-    resetShader
+    reset_shader
   end
 end
 

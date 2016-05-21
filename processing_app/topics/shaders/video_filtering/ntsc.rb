@@ -11,10 +11,10 @@ attr_reader :movie, :my_shader
 def setup
   sketch_title 'NTSC'
   # Load and play the video in a loop
-  @movie = Movie.new(self, 'iss.mov')
+  @movie = Movie.new(self, data_path('iss.mov'))
   movie.loop
   # Load and configure the shader
-  @my_shader = load_shader('shader.glsl')
+  @my_shader = load_shader(data_path('shader.glsl'))
   my_shader.set('sketchSize', width.to_f, height.to_f)
 end
 

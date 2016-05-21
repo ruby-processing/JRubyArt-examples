@@ -2,10 +2,13 @@ attr_reader :dithering, :my_image, :noise_image
 
 def setup
   sketch_title 'Dithering'
-  @my_image  = load_image('texture.jpg')
-  @noise_image  = load_image('noise.png')
+  @my_image  = load_image(data_path('texture.jpg'))
+  @noise_image  = load_image(data_path('noise.png'))
   # Load and configure the shader
-  @dithering = load_shader('dithering.glsl')
+  @dithering = load_shader(data_path('dithering.glsl'))
+  # @my_image  = load_image('texture.jpg')
+  # @noise_image  = load_image('noise.png')
+  # @dithering = load_shader('dithering.glsl')
   dithering.set('sketchSize', width.to_f, height.to_f)
   dithering.set("noiseTexture", noise_image)
 end

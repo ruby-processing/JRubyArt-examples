@@ -7,10 +7,12 @@ attr_reader :gaussian_blur, :threshold
 def setup
   sketch_title 'Metaballs'
   # Load and configure the filters
-  @gaussian_blur = load_shader('gaussianBlur.glsl')
+  @gaussian_blur = load_shader(data_path('gaussianBlur.glsl'))
+  # @gaussian_blur = load_shader('gaussianBlur.glsl') # requires --nojruby flag
   gaussian_blur.set('kernelSize', 32) # How big is the sampling kernel?
   gaussian_blur.set('strength', 7.0) # How strong is the blur?  
-  @threshold = load_shader('threshold.glsl')
+  @threshold = load_shader(data_path('threshold.glsl'))
+  # @threshold = load_shader('threshold.glsl')
   threshold.set('threshold', 0.5)
   threshold.set('antialiasing', 0.05) # values between 0.00 and 0.10 work best  
 end

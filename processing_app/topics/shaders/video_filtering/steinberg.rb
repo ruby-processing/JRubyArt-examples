@@ -7,7 +7,9 @@ attr_reader :cam, :my_shader
 
 def setup
   sketch_title 'Steinberg'
-  @my_shader = load_shader('steinberg.glsl')
+  @my_shader = load_shader(data_path('steinberg.glsl')) # data_path wrapper since jruby_art-1.1
+  # @my_shader = load_shader(File.absolute_path('data/steinberg.glsl')) # provide absolute data path
+  # @my_shader = load_shader('steinberg.glsl') # requires --nojruby flag
   my_shader.set('sketchSize', width.to_java(Java::float), height.to_java(Java::float))
   start_capture(width, height)
 end

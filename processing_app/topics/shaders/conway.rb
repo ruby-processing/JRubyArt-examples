@@ -8,9 +8,9 @@ def setup
   sketch_title 'Conway'
   @pg = createGraphics(400, 400, P2D)
   pg.no_smooth
-  @conway = load_shader('conway.glsl') # sketch needs --noruby flag to run
+  # @conway = load_shader('conway.glsl') # sketch needs --noruby flag to run
   # @conway = load_shader(File.absolute_path('data/conway.glsl')) # no flag required
-  # @conway = load_shader(data_path('conway.glsl')) # no flag required
+  @conway = load_shader(data_path('conway.glsl')) # no flag required
   conway.set('resolution', width.to_f, height.to_f)
   @time = Time.now
 end

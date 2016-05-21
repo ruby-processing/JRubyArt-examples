@@ -3,25 +3,25 @@
 # https://forum.processing.org/two/profile/7061/Poersch
 
 VERT_SRC = [
-  "uniform mat4 transform;",
-  "attribute vec4 vertex;",
-  "attribute vec2 texCoord;",
-  "varying vec2 vertTexCoord;",
-  "void main() {",
-      "vertTexCoord = texCoord;",
-      "gl_Position = transform * vertex;",
-  "}"
+  'uniform mat4 transform;',
+  'attribute vec4 vertex;',
+  'attribute vec2 texCoord;',
+  'varying vec2 vertTexCoord;',
+  'void main() {',
+      'vertTexCoord = texCoord;',
+      'gl_Position = transform * vertex;',
+  '}'
 ].freeze
 
 FRAG_SRC = [
- "uniform vec4 colorA;",
- "uniform vec4 colorB;",
- "varying vec2 vertTexCoord;",
- "void main() {",
-      "float dist = distance(vertTexCoord, vec2(0.5, 0.5));",
-      "if(dist > 0.2 && dist < 0.5)",
-          "gl_FragColor = mix(colorA, colorB, (dist - 0.2) * 3.33);",
- "}"
+ 'uniform vec4 colorA;',
+ 'uniform vec4 colorB;',
+ 'varying vec2 vertTexCoord;',
+ 'void main() {',
+     'float dist = distance(vertTexCoord, vec2(0.5, 0.5));',
+     'if(dist > 0.2 && dist < 0.5)',
+         'gl_FragColor = mix(colorA, colorB, (dist - 0.2) * 3.33);',
+ '}'
 ].freeze
 
 def settings

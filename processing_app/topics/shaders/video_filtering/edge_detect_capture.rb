@@ -4,7 +4,9 @@ attr_reader :cam, :my_shader
 
 def setup
   sketch_title 'Edge Detect Capture'
-  @my_shader = load_shader('edge_detect.glsl')
+  @my_shader = load_shader(data_path('edge_detect.glsl'))
+  # @my_shader = load_shader('edge_detect.glsl') # require --nojruby flag
+  # @my_shader = load_shader(File.absolute_path('data/edge_detect.glsl')) # full data path
   my_shader.set('sketchSize', width.to_f, height.to_f)
   start_capture(width, height)
 end

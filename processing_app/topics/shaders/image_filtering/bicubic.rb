@@ -14,8 +14,10 @@ def setup
     @panel = c
   end
   @hide = false
-  @my_image  = load_image('texture.jpg')
-  @bicubic = load_shader('bicubic.glsl')
+  @my_image  = load_image(data_path('texture.jpg'))
+  @bicubic = load_shader(data_path('bicubic.glsl'))
+  # @my_image  = load_image('texture.jpg')
+  # @bicubic = load_shader('bicubic.glsl')
   bicubic.set('sketchSize', width.to_f, height.to_f)
   sketch_title 'Bicubic'
 end
