@@ -28,7 +28,7 @@ def draw
   background 0
   # put pre-load animation here?
   # When all images are loaded draw them to the screen
-  return unless all_loaded?
+  # return unless all_loaded?
   imgs.each_with_index do |img, i|
     image(img, width / imgs.length * i, 0, width / imgs.length, height)
   end

@@ -1,6 +1,7 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 require 'matrix'
+require 'parallel'
 
 # Mat4 class wraps ruby Matrix and multiply method
 class Mat4
@@ -20,7 +21,7 @@ class Mat4
   # see line 89 Frame_of_Reference.rb
 
   def *(other)
-    other.map do |arr|
+    Parallel.map(other) do |arr|
       matrix_to_vector(mat * Matrix[[arr.x], [arr.y], [arr.z], [1]])
     end
   end
