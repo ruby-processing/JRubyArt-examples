@@ -5,12 +5,12 @@
 # Original code: http://paulbourke.net/geometry/bezier/
 #
 # hit "spacebar" to generate a new shape and save current
-# translated for JRubyArt by Martin Prout 
+# translated for JRubyArt by Martin Prout
 #
-NI=4
-NJ=5
-RESI=NI*10
-RESJ=NJ*10
+NI = 4
+NJ = 5
+RESI = NI * 10
+RESJ = NJ * 10
 
 attr_accessor :outp, :inp, :normp, :auto_normals, :arcball, :bez_patch
 
@@ -43,8 +43,8 @@ def build_shape
   bez.fill(192, 192, 192)
   bez.ambient(20, 20, 20)
   bez.specular(30)
-  (0 ... RESI - 1).each do |i|
-    (0 ... RESJ).each do |j|      
+  (0...RESI - 1).each do |i|
+    (0...RESJ).each do |j|
       bez.normal(*normp[i][j]) unless auto_normals
       bez.vertex(*outp[i][j])
       bez.vertex(*outp[i+1][j])
@@ -62,14 +62,14 @@ end
 def build_geometry
   @outp = []
   @normp = []
-  @inp = Array.new(NI){|i| Array.new(NJ){|j| Vec3D.new(i, j, rand(-3.0..3))}}
+  @inp = Array.new(NI){ |i| Array.new(NJ){ |j| Vec3D.new(i, j, rand(-3.0..3)) } }
   uitang = Vec3D.new
   ujtang = Vec3D.new
-  (0 ... RESI).each do |i|
+  (0...RESI).each do |i|
     mui = i.fdiv(RESI - 1)
     row = []
     row_n = []
-    (0 ... RESJ).each do |j|
+    (0...RESJ).each do |j|
       muj = j.fdiv(RESJ - 1)
       vect = Vec3D.new
       uitang.x, uitang.y, uitang.z = 0, 0, 0
@@ -97,7 +97,7 @@ def build_geometry
   end
 end
 
-def bezier_blend( k, mu,  n)
+def bezier_blend(k, mu,  n)
   blend = 1.0
   nn = n
   kn = k

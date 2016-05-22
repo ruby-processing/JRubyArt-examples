@@ -6,7 +6,7 @@ end
 
 def setup
   sketch_title 'Mesh Tweening'
-  @sh = load_shader('frag.glsl', 'vert.glsl')
+  @sh = load_shader(data_path('frag.glsl'), data_path('vert.glsl'))
   @d = 10
   shader(sh)
   no_stroke

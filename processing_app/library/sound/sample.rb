@@ -13,7 +13,7 @@ def setup
   sketch_title 'Sample'
   no_stroke
   # Load a soundfile
-  @sound_file = SoundFile.new(self, 'vibraphon.aiff')
+  @sound_file = SoundFile.new(self, data_path('vibraphon.aiff'))
   report_settings
   # Play the file in a loop
   sound_file.loop
