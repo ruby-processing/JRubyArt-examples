@@ -17,7 +17,7 @@ def setup
 end
 
 def draw
-  begin_raw(DXF, 'output.dxf') if recording # Start recording to the file
+  begin_raw(DXF, data_path('output.dxf')) if recording # Start recording to the file
   lights
   background(0)
   translate(width / 3, height / 3, -200)

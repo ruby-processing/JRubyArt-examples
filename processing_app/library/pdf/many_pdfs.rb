@@ -3,7 +3,6 @@
 # Saves one PDF file each each frame while the mouse is pressed.
 # When the mouse is released, the PDF creation stops.
 #
-
 load_library 'pdf'
 include_package 'processing.pdf'
 
@@ -16,7 +15,7 @@ def setup
 end
 
 def draw
-  begin_record(PDF, "lines#{frame_count}.pdf") unless !save_pdf
+  begin_record(PDF, data_path("lines#{frame_count}.pdf")) unless !save_pdf
   background(255) 
   stroke(0, 20)
   stroke_weight(20.0)
@@ -32,11 +31,6 @@ def mouse_released
   @save_pdf = false
 end
 
-
-
-
-
 def settings
   size(600, 600)
 end
-

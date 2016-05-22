@@ -3,8 +3,6 @@
 # Saves one PDF document of many frames drawn to the screen.
 # Starts the file when the mouse is pressed and end the file
 # when the mouse is released.
-
-
 load_library 'pdf'
 include_package 'processing.pdf'
 
@@ -20,10 +18,9 @@ def draw
   line(mouse_x, 0, width-mouse_y, height)
 end
 
-
 def mouse_pressed
-  begin_record(PDF, "Lines.pdf"); 
-  background(255);
+  begin_record(PDF, data_path('Lines.pdf')) 
+  background(255)
 end
 
 def mouse_released
@@ -31,8 +28,6 @@ def mouse_released
   background(255)
 end
 
-
 def settings
   size(600, 600)
 end
-
