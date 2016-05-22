@@ -20,7 +20,7 @@ def draw
   # We can dynamically set the stroke and fill of the shape
   circle.set_stroke(color(255))  
   circle.set_stroke_weight(4)
-  circle.set_fill(color(map(mouseX, 0, width, 0, 255)))
+  circle.set_fill(color(map1d(mouseX, 0..width, 0..255)))
   # We can use translate to move the PShape
   translate(mouse_x, mouse_y)
   # Drawing the PShape

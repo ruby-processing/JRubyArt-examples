@@ -44,19 +44,18 @@ def setup
   # Make a primitive (Rectangle) PShape
   rectangle = create_shape(RECT,-10,-10,20,20)
   rectangle.set_fill(false)
-  rectangle.set_stroke(255)
+  rectangle.set_stroke(color(255))
   
   # Add them all to the group
   group.add_child(star)
   group.add_child(path)
-  group.add_child(rectangle) # Rectangle is missing???
-  
+  group.add_child(rectangle)   
 end
 
 def draw
   
   # We can access them individually via the group PShape
-  @rectangle = group.get_child(2)
+  rectangle = group.get_child(2)
   # Shapes can be rotated
   rectangle.rotate(0.1)
    

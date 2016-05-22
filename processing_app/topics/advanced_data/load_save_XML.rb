@@ -45,7 +45,7 @@ end
 
 def load_data
   # Load XML file
-  @xml = loadXML('data.xml')
+  @xml = loadXML(data_path('data.xml'))
   # Get all the child nodes named 'bubble'
   children = xml.get_children('bubble')
   sketch_title 'Load & Save Xml'
@@ -90,7 +90,7 @@ def mouse_pressed
   # If the XML file has more than 10 bubble elements
   xml.remove_child(children[0]) if children.length > 10
   # Save a new XML file
-  saveXML(xml, 'data/data.xml')
+  saveXML(xml, data_path('data.xml'))
   # reload the new data
   load_data
 end
