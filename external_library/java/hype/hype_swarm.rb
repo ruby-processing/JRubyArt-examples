@@ -74,12 +74,13 @@ def draw
     )
     @count += 1
   end
-  H.draw_stage
-  begin
-    it = swarm.goals.iterator
+  H.draw_stage 
+  it = swarm.goals.iterator
+  while it.has_next
     it.remove
     it.next
-  end unless swarm.goals.iterator.has_next
+  end 
+    
   pool.each do |d|
     swarm.add_goal(d.x, d.y)
   end
