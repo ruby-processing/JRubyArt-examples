@@ -30,6 +30,7 @@ Includes autorun Rakefiles, in a console cd outer directory and 'rake' to run al
     4. [video][]
 
 4. [JBox2D][]
+5. [Hype-processing][hype]
 
 ### User contributions are most welcome
 [Contributions][] add your [own][]
@@ -56,3 +57,4 @@ Includes autorun Rakefiles, in a console cd outer directory and 'rake' to run al
 [video]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/processing_app/library/video
 [control-panel]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/contributed/jwishy.rb
 [JBox2D]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/ruby_gem/jbox2d
+[hype]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hype
