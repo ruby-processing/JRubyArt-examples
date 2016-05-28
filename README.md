@@ -6,7 +6,7 @@ Many of the vanilla processing example sketches have been translated to ruby-pro
 Includes autorun Rakefiles:-
 
 1. in a console cd `k9_samples` directory
-2. and `rake` to run all autorun examples 
+2. and `rake` to run all the autorun examples (not all the examples)
 3. or eg `rake hype` to just run the hype library examples (depends on an installed hype library). 
 
 ### Partial Catalogue (for the lazy)
