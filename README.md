@@ -2,7 +2,7 @@
 JRubyArt-examples
 ================
 
-Many of the vanilla processing example sketches have been translated to ruby-processing, and they are mainly written as 'bare' sketches (ie not class wrapped) in keeping with the original processing.  At runtime these sketches the get wrapped into a Sketch class. Should you prefer you can still write class wrapped sketches, these will work equally well with ruby-processing. Certain sketches must be run with JRuby-Complete (mainly `load_image` and `shader` sketches), this is a [java permissions thing with jruby][]. You should also checkout the [Nature of Code Examples in ruby][] and for the beginner [Learning Processing with Ruby][] for even more examples.
+Many of the vanilla processing example sketches have been translated to ruby-processing, and they are mainly written as 'bare' sketches (ie not class wrapped) in keeping with the original processing.  At runtime these sketches the get wrapped into a Sketch class. Should you prefer you can still write class wrapped sketches, these will work equally well with ruby-processing. You should also checkout the [Nature of Code Examples in ruby][] and for the beginner [Learning Processing with Ruby][] for even more examples.
 Includes autorun Rakefiles, in a console cd outer directory and 'rake' to run all autorun examples or eg 'rake shaders' to just run the shader examples. 
 
 ### Partial Catalogue (for the lazy)
