@@ -7,7 +7,7 @@ def settings
 end
 
 def setup
-  sketch_title 'Chooser'
+  sketch_title 'Image Chooser'
   resizable
   fill 0, 0, 200
   text('Click Window to Load Image', 10, 100)
@@ -29,5 +29,5 @@ end
 def mouse_clicked
   @img = nil
   # java_signature 'void selectInput(String, String)'
-  select_input('select an image', 'file_selected')
+  select_input('Select Image File', 'file_selected')
 end

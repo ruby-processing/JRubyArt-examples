@@ -15,8 +15,8 @@ def setup
   @hs1 = HScrollbar.new(app: self, height: height / 2 - 8, wd: 16, loose: 16)
   @hs2 = HScrollbar.new(app: self, height: height / 2 + 8, wd: 16, loose: 16)
   # Load images
-  @img1 = load_image('seedTop.jpg')
-  @img2 = load_image('seedBottom.jpg')
+  @img1 = load_image(data_path('seedTop.jpg'))
+  @img2 = load_image(data_path('seedBottom.jpg'))
 end
 
 def draw

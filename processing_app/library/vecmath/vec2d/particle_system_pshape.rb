@@ -12,7 +12,7 @@ attr_reader :ps
 def setup
   sketch_title 'Particle System PShape'
   # Load the image
-  sprite = load_image('sprite.png')
+  sprite = load_image(data_path('sprite.png'))
   # A new particle system with 10,000 particles
   @ps = ParticleSystem.new(width, height, sprite, 10_000)
   # Writing to the depth buffer is disabled to avoid rendering

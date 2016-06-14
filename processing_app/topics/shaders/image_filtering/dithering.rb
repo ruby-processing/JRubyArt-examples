@@ -7,7 +7,7 @@ def setup
   # Load and configure the shader
   @dithering = load_shader(data_path('dithering.glsl'))
   # @my_image  = load_image('texture.jpg')
-  # @noise_image  = load_image('noise.png')
+  # @noise_image = load_image('noise.png')
   # @dithering = load_shader('dithering.glsl')
   dithering.set('sketchSize', width.to_f, height.to_f)
   dithering.set("noiseTexture", noise_image)

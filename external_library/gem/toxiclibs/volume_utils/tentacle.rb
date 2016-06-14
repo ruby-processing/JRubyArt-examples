@@ -12,7 +12,7 @@ end
 
 def setup
   sketch_title 'Tentacle'
-  @tex = load_image('rock_texture2.png')
+  @tex = load_image(data_path('rock_texture2.png'))
   ArcBall.init(self)
   @gfx = Gfx::MeshToVBO.new(self)
   # gfx.fill_color(color(0, 0, 200))

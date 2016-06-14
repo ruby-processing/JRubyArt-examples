@@ -1,5 +1,3 @@
-require 'JRubyArt'
-
 # Original by luis2048
 
 # A picture is shown and it looks like a magnifying glass 
@@ -13,8 +11,6 @@ require 'JRubyArt'
 # destination look like a lens is beeing held over the source 
 # picture. Based on lens formula by on Abe Racadabra.
 
-
-
 def setup
   sketch_title 'Lens'
   @lens_d            = 160
@@ -26,7 +22,7 @@ def setup
   
   # Load background image.
   @lens_effect.begin_draw
-  @lens_effect.image(load_image('red_smoke.jpg'), 0, 0, width, height)
+  @lens_effect.image(load_image(data_path('red_smoke.jpg')), 0, 0, width, height)
   @lens_effect.end_draw
   image(@lens_effect, 0, 0, width, height)
   
@@ -91,9 +87,6 @@ def draw
   image(@lens_image, @xx, @yy, @lens_d, @lens_d)
 end
 
-
-
 def settings
   size 640, 300, P3D
 end
-
