@@ -2,7 +2,7 @@
 
 For debian users it should be as simple as `sudo apt-get install cfdg` installs commandline version.
 
-For others check [contextfreeart website][download], if you get the command line version you could easily automate running cfdg program.
+For others check [contextfreeart website][download], if you get the command line version you could easily automate running the cfdg program, once the files have been created.
 
 ### Black and White Demo
 
