@@ -109,7 +109,7 @@ cfdg haddock.cfdg -w 1180 -h 1200 -o phil.png
 But there is much more you can do (look up che che for a much more sophisticated cfdg file).
 
 
-NB: You could add grayscale filter if you are strating with a coloured image.
+NB: You could add a grayscale filter if you start with a coloured image. Here we set hue to 0 ie red colour 20 is yellow etc, read more from contextfreeart tutorial (plus have a go at creating a standalone cfdg sketch it is a lot of fun).
 
 
 [download]:http://www.contextfreeart.org/mediawiki/index.php/Download_page
