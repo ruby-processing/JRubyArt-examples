@@ -36,6 +36,6 @@ def captureEvent(c)
 end
 
 def settings
-  size 960, 544, P2D
+  size 1280, 720, P2D
 end
 
