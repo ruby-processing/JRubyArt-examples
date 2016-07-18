@@ -1,7 +1,7 @@
 # The Nature of Code
 # Daniel Shiffman
 # http://natureofcode.com
-
+require 'forwardable'
 # A rectangular box
 class Box
   extend Forwardable
@@ -34,7 +34,7 @@ class Box
     pos = box2d.body_coord(body)
     # Get its angle of rotation
     a = body.getAngle
-    rect_mode(Java::ProcessingCore::CENTER)
+    rect_mode(Java::ProcessingCore::PConstants::CENTER)
     push_matrix
     translate(pos.x, pos.y)
     rotate(a)

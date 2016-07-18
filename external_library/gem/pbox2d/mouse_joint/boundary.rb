@@ -36,7 +36,7 @@ class Boundary
     stroke(127)
     fill(127)
     stroke_weight(1)
-    rect_mode(Java::ProcessingCore::CENTER)
+    rect_mode(Java::ProcessingCore::PConstants::CENTER)
     a = b.get_angle
     push_matrix
     translate(x, y)
