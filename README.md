@@ -1,6 +1,8 @@
-# JRubyArt-examples for JRubyArt-1.1+
+# JRubyArt-examples for JRubyArt-1.2.0.pre
 JRubyArt-examples
 ================
+
+Rakefiles amended to use `-r` in place of `run`
 
 Many of the vanilla processing example sketches have been translated to ruby-processing, and they are mainly written as 'bare' sketches (ie not class wrapped) in keeping with the original processing.  At runtime these sketches the get wrapped into a Sketch class. Should you prefer you can still write class wrapped sketches, these will work equally well with jruby_art. You should also checkout the [Nature of Code Examples in ruby][] and for the beginner [Learning Processing with Ruby][] for even more examples.
 Includes autorun Rakefiles:-

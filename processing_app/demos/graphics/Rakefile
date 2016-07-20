@@ -1,5 +1,5 @@
 # Simple demo Rakefile to autorun samples in current directory
-# excludes planets.rb which needs --nojruby flag to run
+# excludes planets.rb which needs  flag to run
 # adjust path to rp5 executable, and or opts as required
 
 SAMPLES_DIR = './'
@@ -24,7 +24,7 @@ end
 
 def run_sample(sample_name)
   puts "Running #{sample_name}...quit to run next sample"
-  open("|k9 run #{sample_name}", 'r') do |io|
+  open("|k9 -r #{sample_name}", 'r') do |io|
     while l = io.gets
       puts(l.chop)
     end

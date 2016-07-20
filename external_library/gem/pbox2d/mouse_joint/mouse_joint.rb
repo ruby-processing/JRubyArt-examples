@@ -9,13 +9,15 @@ require_relative 'box'
 require_relative 'boundary'
 require_relative 'spring'
 require_relative 'dummy_spring'
-require 'forwardable'
 
 # A reference to our box2d world
 attr_reader :box2d, :boundaries, :box, :spring
+def settings
+  size(640, 360)
+end
 
 def setup
-  size(640, 360)
+  sketch_title('Mouse Joint')
   # Initialize box2d physics and create the world
   @box2d = Box2D.new self
   box2d.create_world
