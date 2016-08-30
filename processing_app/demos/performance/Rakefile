@@ -22,7 +22,7 @@ end
 
 def run_sample(sample_name)
   puts "Running #{sample_name}...quit to run next sample"
-  open("|k9  run #{sample_name}", "r") do |io|
+  open("|k9 --run #{sample_name}", "r") do |io|
     while l = io.gets
       puts(l.chop) 
     end      
