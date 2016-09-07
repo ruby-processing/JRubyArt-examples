@@ -1,4 +1,4 @@
-# JRubyArt-examples for JRubyArt-1.2.0.pre
+# JRubyArt-examples for JRubyArt-1.2.4+
 JRubyArt-examples
 ================
 
