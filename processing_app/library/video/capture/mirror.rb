@@ -16,7 +16,7 @@ attr_reader :cols, :rows, :video
 
 def setup
   sketch_title 'Mirror'
-  frameRate(30)
+  frame_rate(30)
   color_mode(RGB, 255, 255, 255, 100)
   @video = Capture.new(self, width, height)
   # Start capturing the images from the camera
@@ -60,4 +60,3 @@ end
 def settings
   size(960, 544, P2D)
 end
-
