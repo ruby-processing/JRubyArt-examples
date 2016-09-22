@@ -6,16 +6,16 @@ class Wiggler
 
   def initialize width, height
     @x = width/2
-    @y = height/2 
+    @y = height/2
     @yoff = 0
     # The 'original' locations of the vertices make up a circle
     @original = []
-    (0 ... TAU).step(0.2) do |a|
-      v = PVector.from_angle(a)
+    (0...TAU).step(0.2) do |a|
+      v = Java::ProcessingCore::PVector.from_angle(a)
       v.mult(100)
       original << v
     end
-    
+
     # Now make the PShape with those vertices
     @s = create_shape
     s.begin_shape
@@ -31,11 +31,11 @@ class Wiggler
   def wiggle
     @xoff = 0
     # Apply an offset to each vertex
-    (0 ... s.get_vertex_count).each do |i|
+    (0...s.get_vertex_count).each do |i|
       # Calculate a new vertex location based on noise around 'original' location
       pos = original[i]
       a = TAU*noise(xoff,yoff)
-      r = PVector.from_angle(a)
+      r = Java::ProcessingCore::PVector.from_angle(a)
       r.mult(4)
       r.add(pos)
       # Set the location of each vertex to the new one
@@ -54,4 +54,3 @@ class Wiggler
     pop_matrix
   end
 end
-
