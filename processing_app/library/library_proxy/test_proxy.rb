@@ -12,7 +12,7 @@ def setup
 end
 
 def draw
-  background 0, 0, 200	
+  background 0, 0, 200
   fill 200, 0, 0
   ellipse 150, 150, 200, 100
 end
