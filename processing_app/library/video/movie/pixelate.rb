@@ -6,7 +6,6 @@
 # using rectangles as pixels by reading the values stored
 # in the current video frame pixels array.
 #
-
 load_library :video
 include_package 'processing.video'
 
@@ -17,7 +16,7 @@ attr_reader :mov, :movie_color, :num_pixels_wide, :num_pixels_high
 def setup
   sketch_title 'Pixelate'
   no_stroke
-  @mov = Movie.new(self, 'transit.mov')
+  @mov = Movie.new(self, data_path('transit.mov'))
   @num_pixels_wide = width / BLOCK_SIZE
   @num_pixels_high = height / BLOCK_SIZE
   @movie_color = []
@@ -46,6 +45,5 @@ def draw
 end
 
 def settings
-  size 640, 360, FX2D
+  size 640, 360, P2D
 end
-

@@ -3,7 +3,6 @@
 # drag mouse ip screen to decrease speed
 # Uses the Movie.speed method to change
 # the playback speed.
-
 load_libraries :video, :video_event
 include_package 'processing.video'
 
@@ -12,7 +11,7 @@ attr_reader :mov
 def setup
   sketch_title 'Speed'
   background(0)
-  @mov = Movie.new(self, 'transit.mov')
+  @mov = Movie.new(self, data_path('transit.mov'))
   mov.loop
 end
 
@@ -31,5 +30,5 @@ def movieEvent(m)
 end
 
 def settings
-  size 640, 360, FX2D
+  size 640, 360
 end

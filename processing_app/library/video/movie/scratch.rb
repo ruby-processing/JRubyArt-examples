@@ -13,7 +13,7 @@ attr_reader :mov
 def setup
   sketch_title 'Scratch'
   background(0)
-  @mov = Movie.new(self, 'transit.mov')
+  @mov = Movie.new(self, data_path('transit.mov'))
   # Pausing the video at the first frame.
   mov.play
   mov.jump 0
@@ -24,7 +24,7 @@ def draw
   begin
     mov.read
     # A new time position is calculated using the current mouse location:
-    t = mov.duration * map1d(mouse_x, (0..width), (0..1.0))
+    t = mov.duration * norm(mouse_x, 0, width)
     mov.play
     mov.jump(t)
     mov.pause
@@ -33,5 +33,5 @@ def draw
 end
 
 def settings
-  size 640, 360, FX2D
+  size 640, 360
 end

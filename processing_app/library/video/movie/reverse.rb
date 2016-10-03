@@ -7,8 +7,6 @@
 # underlying gstreamer plugins used by gsvideo. For example, the
 # theora codec does support backward playback, but not so the H264
 # codec, at least in its current version.
-#
-#
 load_library :video, :video_event
 include_package 'processing.video'
 
@@ -19,7 +17,7 @@ def setup
   background(0)
   @speed_set = false
   @once = true
-  @mov = Movie.new(self, 'transit.mkv')
+  @mov = Movie.new(self, data_path('transit.mkv'))
   mov.play
 end
 
@@ -46,6 +44,5 @@ def movieEvent(m)
 end
 
 def settings
-  size 640, 360, FX2D
+  size 640, 360
 end
-
