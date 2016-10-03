@@ -13,7 +13,7 @@ def setup
   sketch_title 'Loop'
   background(0)
   # Load and play the video in a loop
-  @movie = Movie.new(self, 'transit.mov')
+  @movie = Movie.new(self, data_path('transit.mov'))
   movie.loop
 end
 
@@ -27,6 +27,5 @@ def movieEvent(m)
 end
 
 def settings
-  size 640, 360, FX2D
+  size 640, 360
 end
-
