@@ -7,7 +7,7 @@
 #
 
 attr_reader :zip, :weather, :temperature
-
+WOEID = '12761335' # yahoos code for ZIP = '10003'
 def setup
   sketch_title 'Yahoo Weather'
   @zip = 10_003
@@ -15,13 +15,13 @@ def setup
   # font = create_font('Merriweather-Light.ttf', 28)
   text_font(font)
   # The URL for the XML document
-  url = format('http://xml.weather.yahoo.com/forecastrss?p=%s', zip)
+
+  fo = "http://query.yahooapis.com/v1/public/yql?format=xml&q=select+*+from+weather.forecast+where+woeid=%s+and+u='F'"
+  url = format(fo, WOEID)
   # Load the XML document
   xml = loadXML(url)
   # Grab the element we want
-  forecast = xml.get_child('channel')
-                .get_child('item')
-                .get_child('yweather:forecast')
+  forecast = xml.getChild("results/channel/item/yweather:forecast");
   # Get the attributes we want
   @temperature = forecast.get_int('high')
   @weather = forecast.get_string('text')
@@ -39,4 +39,3 @@ end
 def settings
   size 600, 360, FX2D
 end
-
