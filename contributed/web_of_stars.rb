@@ -1,4 +1,3 @@
-# encoding: utf-8
 # After a sketch by Jerome Herr
 # see http://www.openprocessing.org/sketch/147466
 attr_reader :save, :ball_collection, :fc
