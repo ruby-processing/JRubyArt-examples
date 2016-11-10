@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 # This one has a long lineage:
 # It was originally adapted to Shoes in Ruby,
