@@ -1,5 +1,3 @@
-# encoding: utf-8
-# frozen_string_literal: true
 # example of processing blend_color (uses PImage blend_color under the hood)
 # blend_color(c1, c2, MODE) returns a color int
 

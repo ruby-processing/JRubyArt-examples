@@ -1,5 +1,3 @@
-# encoding: utf-8
-# frozen_string_literal: true
 load_library :gicentreUtils
 include_package 'org.gicentre.utils.stat' # For chart classes.
 

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # This one has a long lineage:
 # It was originally adapted to Shoes in Ruby,
 # from a Python example for Nodebox, and then, now

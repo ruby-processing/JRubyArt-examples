@@ -1,5 +1,3 @@
-# encoding: utf-8
-# frozen_string_literal: true
 # Creating Colors (Homage to Albers).
 #
 # Creating variables for colors that may be referred to

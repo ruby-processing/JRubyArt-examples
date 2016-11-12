@@ -1,6 +1,3 @@
-# encoding: utf-8
-# frozen_string_literal: true
-
 load_library :slider
 attr_reader :color1, :color2, :color3, :r, :gs, :b, :back
 
