@@ -25,7 +25,7 @@ def draw
   rect(0, 0, width, height) if (frame_count % 8_000).zero?
   @points.each do |point|
     # change direction sometimes
-    point.set_dir rand(-PI..PI) if rand > 0.96
+    point.direction rand(-PI..PI) if rand > 0.96
     point.update
     point.check_edges
   end
@@ -69,12 +69,13 @@ def center(bisector)
   end
   # calculate x and y coordinates of the circumcenter
   ox = (eq[1].y * eq[0].z - eq[0].y * eq[1].z) /
-  (eq[0].x * eq[1].y - eq[1].x * eq[0].y)
-  oy =  (eq[0].x * eq[1].z - eq[1].x * eq[0].z) /
-  (eq[0].x * eq[1].y - eq[1].x * eq[0].y)
-  Vec2D.new(ox,oy)
+       (eq[0].x * eq[1].y - eq[1].x * eq[0].y)
+  oy = (eq[0].x * eq[1].z - eq[1].x * eq[0].z) /
+       (eq[0].x * eq[1].y - eq[1].x * eq[0].y)
+  Vec2D.new(ox, oy)
 end
 
+# Moving point class
 class Point
   include Processing::Proxy
   attr_accessor :pos, :velocity, :acceleration
@@ -86,7 +87,7 @@ class Point
   end
 
   # change direction
-  def set_dir(angle)
+  def direction(angle)
     # direction of the acceleration is defined by the new angle
     @acceleration = Vec2D.from_angle(angle)
     dif = acceleration.angle_between velocity
