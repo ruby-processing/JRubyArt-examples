@@ -17,6 +17,7 @@ def setup
   @c = rand(360)
   @points = (0..2).map { Point.new(rand(width), rand(height)) }
   background 0
+  ellipse_mode RADIUS
 end
 
 def draw
@@ -35,19 +36,19 @@ def draw
   no_fill
   # verifies if there is a circle and draw it
   return if collinear(@points[0].pos, @points[1].pos, @points[2].pos)
-  draw_circle @points
+  draw_circle *@points
 end
 
-def draw_circle(pts)
+def draw_circle(a, b, c)
   # find the bisectors of 2 sides
   mp = []
-  mp[0] = bisector(pts[0].pos, pts[1].pos)
-  mp[1] = bisector(pts[1].pos, pts[2].pos)
+  mp << bisector(a.pos, b.pos)
+  mp << bisector(b.pos, c.pos)
   center_point = center(mp) # find the center of the circle
   # calculate the radius
-  radius = center_point.dist(pts[2].pos)
+  radius = center_point.dist(c.pos)
   # if not collinear display circle
-  ellipse(center_point.x, center_point.y, 2 * radius, 2 * radius)
+  ellipse(center_point.x, center_point.y, radius, radius)
 end
 
 def bisector(a, b)
@@ -102,7 +103,7 @@ class Point
     @pos += velocity
   end
 
-  def check_edges
+  def check_edges # could be more sophisticated, eg reverse velocity
     pos.x = constrain(pos.x, 0, width)
     pos.y = constrain(pos.y, 0, height)
   end
