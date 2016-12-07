@@ -3,10 +3,10 @@
 # Here is a sketch that clearly demonstrates some of the most egregious parts of
 # vanilla processing:-
 # PVector is over complicated and overloads 2D and 3D functionality, cf Vec2D
-# JRubyArt and propane which behaves as 2D vector (cross product is a float) and
-# can be used in chain calculations.
+# JRubyArt and propane which behaves as a 2D vector (cross product is a float)
+# and can easily be used in chain calculations.
 # The inverted Y axis in processing requires remapping to use in graphs etc.
-# The map method of processing can be used to this remapping, however in many
+# The map method of processing can be used to do this remapping, however in many
 # languages (python, ruby etc) map is a keyword with alternative usage.
 # For this reason in JRubyArt and propane we have replaced vanilla processing
 # map with map1d.
@@ -34,6 +34,7 @@ def setup
   @font = create_font('Arial', 16, true)
   @points = TPoints.new
   ellipse_mode RADIUS
+  @renderer = AppRender.new(self)
 end
 
 def draw
@@ -44,14 +45,7 @@ def draw
   center.display
   no_fill
   stroke 200
-  triangle(
-    points[0].screen_x,
-    points[0].screen_y,
-    points[1].screen_x,
-    points[1].screen_y,
-    points[2].screen_x,
-    points[2].screen_y
-  )
+  render_triangle(points)
   ellipse(center.screen_x, center.screen_y, circle.radius, circle.radius)
 end
 
@@ -63,14 +57,22 @@ def mouse_pressed
   @center = MathPoint.new(circle.center)
 end
 
+def render_triangle(points)
+  begin_shape
+  points.each do |point|
+    vertex(point.screen_x, point.screen_y)
+  end
+  end_shape(CLOSE)
+end
+
 def key_pressed
   case key
   when ' '
     points.clear
   when 'c', 'C'
-    points << MathPoint.new(Vec2D.new(0, 0))
-    points << MathPoint.new(Vec2D.new(100, 100))
-    points << MathPoint.new(Vec2D.new(300, 300))
+    (0..400).step(200) do |i|
+      points << MathPoint.new(Vec2D.new(i, i))
+    end
     puts 'collinear points' if points.collinear?
   end
 end
