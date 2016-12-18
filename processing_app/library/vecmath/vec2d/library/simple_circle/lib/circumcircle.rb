@@ -1,6 +1,7 @@
-# Circumcircle from 3 points
+# frozen_string_literal: true
 require 'matrix'
 
+# Circumcircle from 3 points
 class Circumcircle
   attr_reader :center, :radius, :points
   def initialize(points)
@@ -19,25 +20,19 @@ class Circumcircle
 
   def am
     2 * Matrix[
-      [points[0].x, points[0].y, 1],
-      [points[1].x, points[1].y, 1],
-      [points[2].x, points[2].y, 1]
+      *points.map { |pt| [pt.x, pt.y, 1] }
     ].determinant
   end
 
   def bx
     -Matrix[
-      [points[0].x * points[0].x + points[0].y * points[0].y, points[0].y, 1],
-      [points[1].x * points[1].x + points[1].y * points[1].y, points[1].y, 1],
-      [points[2].x * points[2].x + points[2].y * points[2].y, points[2].y, 1]
+      *points.map { |pt| [pt.x * pt.x + pt.y * pt.y, pt.y, 1] }
     ].determinant
   end
 
   def by
     Matrix[
-      [points[0].x * points[0].x + points[0].y * points[0].y, points[0].x, 1],
-      [points[1].x * points[1].x + points[1].y * points[1].y, points[1].x, 1],
-      [points[2].x * points[2].x + points[2].y * points[2].y, points[2].x, 1]
+      *points.map { |pt| [pt.x * pt.x + pt.y * pt.y, pt.x, 1] }
     ].determinant
   end
 end
