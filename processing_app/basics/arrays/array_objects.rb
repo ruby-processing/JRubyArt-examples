@@ -8,10 +8,8 @@ def setup
   wide_count = width / UNIT
   height_count = height / UNIT
   @mods = []
-  wide_count.times do |i|
-    height_count.times do |j|
-      mods << CustomObject.new(j * UNIT, i * UNIT, UNIT / 2, UNIT / 2, rand(0.05..0.8))
-    end
+  grid(wide_count, height_count) do |i, j|
+    mods << CustomObject.new(j * UNIT, i * UNIT, UNIT / 2, UNIT / 2, rand(0.05..0.8))
   end
   no_stroke
 end

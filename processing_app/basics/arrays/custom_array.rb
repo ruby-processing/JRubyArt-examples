@@ -8,10 +8,8 @@ def setup
   wide_count = width / UNIT
   height_count = height / UNIT
   @custom_array = CustomArray.new
-  height_count.times do |i|
-    wide_count.times do |j|
-      custom_array.add_object(j * UNIT, i * UNIT, UNIT / 2, UNIT / 2, rand(0.05..0.8))
-    end
+  grid(wide_count, height_count) do |i, j|
+    custom_array.add_object(j * UNIT, i * UNIT, UNIT / 2, UNIT / 2, rand(0.05..0.8))
   end
   no_stroke
 end
@@ -33,19 +31,19 @@ require 'forwardable'
 
 # The custom Array created using Forwardable
 # Processing::Proxy gives access to PApplet methods
-class CustomArray 
+class CustomArray
   extend Forwardable
   def_delegators(:@objs, :each, :<<)
   include Enumerable, Processing::Proxy
-  
+
   def initialize
     @objs = []
   end
-  
+
   def add_object(mx, my, x, y, speed)
     self << Particle.new(x.to_i, y.to_i, mx, my, UNIT, speed, 1, 1)
   end
-  
+
   def update
     each do |obj|
       update_x obj
@@ -54,7 +52,7 @@ class CustomArray
       obj.y += obj.ydir
     end
   end
-  
+
   def update_x(obj)
     obj.x += obj.speed * obj.xdir
     return if (0..UNIT).cover? obj.x
@@ -62,7 +60,7 @@ class CustomArray
     obj.x += obj.xdir
     obj.y += obj.ydir
   end
-  
+
   def draw
     background(0)
     fill(255)
@@ -71,4 +69,3 @@ class CustomArray
     end
   end
 end
-

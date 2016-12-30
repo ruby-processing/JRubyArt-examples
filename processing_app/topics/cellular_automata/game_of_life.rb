@@ -34,12 +34,10 @@ end
 def draw
   background(0)
   # Draw live cells
-  row.times do |x|
-    column.times do |y|
-      if cells[x][y]
-        fill(alive)
-        rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
-      end
+  grid(row, column) do |x, y|
+    if cells[x][y]
+      fill(alive)
+      rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
     end
   end
   # Iterate if timer ticks
@@ -88,9 +86,9 @@ def tick!  # When the clock ticks
       (x - 1..x + 1).each do |xx|
         (y - 1..y + 1).each do |yy|
           # Make sure you are not out of bounds
-          next unless [(xx >= 0), (xx < row), (yy >= 0), (yy < column)].all? 
+          next unless [(xx >= 0), (xx < row), (yy >= 0), (yy < column)].all?
           # Make sure to check against self
-          next if [(xx == x), (yy == y)].all? 
+          next if [(xx == x), (yy == y)].all?
           # Check alive neighbours and count them
           neighbours += 1 if cells_buffer[xx][yy]
         end # End of yy loop

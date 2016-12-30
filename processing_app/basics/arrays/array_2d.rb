@@ -10,11 +10,9 @@ def setup
   @distances = Array.new(width) { Array.new(height) }
   stroke_weight 2
   max_distance = dist(width / 2, height / 2, width, height)
-  width.times do |x|
-    height.times do |y|
-      distance = dist(width / 2, height / 2, x, y)
-      distances[x][y] = distance / max_distance * 255
-    end
+  grid(width, height) do |x, y|
+    distance = dist(width / 2, height / 2, x, y)
+    distances[x][y] = distance / max_distance * 255
   end
 end
 
