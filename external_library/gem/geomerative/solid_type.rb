@@ -31,7 +31,8 @@ def setup
   RCommand.setSegmentator(RCommand::UNIFORMSTEP) # settings for the generated shape density
   RCommand.setSegmentStep(2) # settings for the generated shape density
   # create the font used by Geomerative using absolute path on ArchLinux
-  font = RFont.new('/usr/share/fonts/TTF/FreeSans.ttf', 350, CENTER) 
+  # font = RFont.new('/usr/share/fonts/TTF/FreeSans.ttf', 350, CENTER) 
+  font = RFont.new('/usr/share/fonts/truetype/freefont/FreeSans.ttf', 350, CENTER) 
   rmesh = font.toGroup(INPUT).toMesh # create a 2D mesh from a text
   # call the methods (see below) that do the actual work in this sketch
   mesh = rmesh_to_hemesh(rmesh) # create a 3D mesh from an INPUT string (using Geomerative & Hemesh)
