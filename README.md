@@ -37,6 +37,7 @@ Includes autorun Rakefiles:-
 
 4. [JBox2D][]
 5. [Hype-processing][hype]
+6. [Sunflow raytracing][joons]
 
 ### User contributions are most welcome
 [Contributions][] add your [own][]
@@ -64,3 +65,4 @@ Includes autorun Rakefiles:-
 [control-panel]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/contributed/jwishy.rb
 [JBox2D]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/ruby_gem/jbox2d
 [hype]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hype
+[joons]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/joonsrenderer
