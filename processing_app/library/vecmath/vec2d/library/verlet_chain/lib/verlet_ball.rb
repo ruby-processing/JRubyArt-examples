@@ -28,7 +28,7 @@ class VerletBall
   private
 
   def verlet
-    pos_temp = Vec2D.new(pos.x, pos.y)
+    pos_temp = pos.copy
     @pos += (pos - pos_old)
     @pos_old = pos_temp
   end
