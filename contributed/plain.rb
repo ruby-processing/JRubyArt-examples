@@ -16,11 +16,14 @@ class FullScreen < Processing::App
     background 0
     fill 120, 160, 220
     stroke 0
-    rect_mode(CENTER)
-    (dim..width - dim).step(dim) do |x|
-      (dim..height - dim).step(dim) do |y|
-        rect x, y, dim, dim, rnd, rnd, rnd, rnd
-      end
+    #rect_mode(CENTER)
+    # (dim..width - dim).step(dim) do |x|
+    #   (dim..height - dim).step(dim) do |y|
+    #     rect x, y, dim, dim, rnd, rnd, rnd, rnd
+    #   end
+    # end
+    grid(width, height, dim, dim) do |x, y|
+      rect x, y, dim, dim, rnd, rnd, rnd, rnd
     end
   end
 
