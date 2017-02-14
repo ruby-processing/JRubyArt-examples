@@ -38,10 +38,12 @@ Includes autorun Rakefiles:-
 4. [JBox2D][]
 5. [Hype-processing][hype]
 6. [Sunflow raytracing][joons]
+7. [WOVNS patterns][wovns]
 
 ### User contributions are most welcome
 [Contributions][] add your [own][]
 
+[wovns]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/examples/WOVNS
 [Learning Processing with Ruby]:https://github.com/ruby-processing/learning-processing-with-ruby
 [Nature of Code Examples in ruby]:https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt
 [Contributions]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/contributed
