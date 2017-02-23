@@ -122,9 +122,9 @@ end
 def key_pressed
   case key
   when '-'
-    @curr_scale = max([curr_scale - 0.1, 0.5])
+    @curr_scale = max(curr_scale - 0.1, 0.5) # processing method
   when '='
-    @curr_scale = min([curr_scale + 0.1, 10])
+    @curr_scale = min(curr_scale + 0.1, 10) # processing method
   when 's'
     @do_save = true
   when '1'..'9'
