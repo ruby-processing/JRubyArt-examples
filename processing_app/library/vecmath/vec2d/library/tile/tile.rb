@@ -1,31 +1,33 @@
-module Tiler
-  @acute = false
+# frozen_string_literal: true
+# Tile factory
+class TileFactory
+  attr_reader :acute
 
-  def self.acute(x)
-    @acute = x
+  def initialize(acute = false)
+    @acute = acute
   end
 
   # setup the initial tiling with all red tiles
-  def self.tile(a, b, c)
-    tile = @acute ? ATile.new(0, a, b, c) : Tile.new(0, a, b, c)
+  def tile(a, b, c)
+    return ATile.new(0, a, b, c) if acute
+    Tile.new(0, a, b, c)
   end
 end
 
+# Regular Tile class
 class Tile
   include Processing::Proxy
   PHI = (1.0 + Math.sqrt(5)) / 2.0 # golden ratio
-  RED = [255, 0, 0]
-  BLUE = [0, 0, 255]
-  COLORS = [RED, BLUE]
+  COLORS = %w(#ff0000 #0000ff).freeze # red blue
   attr_reader :a, :b, :c, :col
 
-  def initialize(col,  a,  b,  c)
+  def initialize(col, a,  b,  c)
     @col, @a, @b, @c = col, a, b, c
   end
 
   def display
     no_stroke
-    fill(*COLORS[col])
+    fill(color(COLORS[col]))
     triangle(a.x, a.y, b.x, b.y, c.x, c.y)
     # fill(0, 0, 255)
     # ellipse(a.x, a.y, 4,4)
@@ -35,7 +37,7 @@ class Tile
 
   def subdivide
     result = []
-    if (col == 0)
+    if col.zero?
       # Subdivide red triangle
       p = b - a
       p /= PHI
@@ -58,10 +60,11 @@ class Tile
   end
 end
 
+# Acute Tile class
 class ATile < Tile
   def subdivide
     result = []
-    if (col == 0)
+    if col.zero?
       # Subdivide red (half kite) triangle
       q = b - a
       q /= PHI
@@ -80,6 +83,6 @@ class ATile < Tile
       result << ATile.new(1, b, p, a)
       result << ATile.new(0, p, c, b)
     end
-   result
+    result
   end
 end
