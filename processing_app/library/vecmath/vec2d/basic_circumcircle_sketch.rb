@@ -22,7 +22,7 @@ attr_reader :pnt, :points, :circle, :renderer
 def settings
   size 800, 800, P2D
   # pixel_density(2) # for HiDpi screens
-  # smooth # see https://processing.org/reference/smooth_.html
+  # smooth see https://processing.org/reference/smooth_.html
 end
 
 def setup

@@ -13,7 +13,6 @@ def setup
   @draw           = false
   @back_color     = 204
   stroke_weight 4
-  smooth
   background @back_color
   FRAME_COUNT.times { @frames << get }
 end

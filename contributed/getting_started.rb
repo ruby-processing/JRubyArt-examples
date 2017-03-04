@@ -11,7 +11,7 @@ end
 
 def draw
   fill 0, 20
-  rect 0, 0, width, height  
+  rect 0, 0, width, height
   translate width / 2, height / 2
   rotate rotation
   fill 255
@@ -21,5 +21,4 @@ end
 
 def settings
   size 200, 200
-  smooth
 end

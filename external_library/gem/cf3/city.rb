@@ -36,7 +36,6 @@ end
 
 def settings
   size 600, 600
-  smooth
 end
 
 def setup

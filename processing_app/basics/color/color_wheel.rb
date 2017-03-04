@@ -13,7 +13,6 @@
 def setup
   sketch_title 'Color Wheel'
   background 127
-  smooth
   ellipse_mode RADIUS
   no_stroke
   @style = :tint # use :shade or :tint

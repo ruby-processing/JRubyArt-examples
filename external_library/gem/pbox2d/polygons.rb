@@ -10,7 +10,6 @@ Vect = Struct.new(:x, :y)
 
 def setup
   sketch_title 'Polygons'
-  smooth
   @box2d = WorldBuilder.build(app: self, gravity: [0, -20])
   @system = ShapeSystem.new self
   @boundaries = [

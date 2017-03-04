@@ -9,7 +9,6 @@ def setup
   @a = load_image(data_path('eames.jpg'))
   no_stroke
   background 255
-  smooth
 end
 
 def draw
