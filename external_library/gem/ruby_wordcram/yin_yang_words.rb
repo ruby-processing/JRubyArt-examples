@@ -1,4 +1,4 @@
-
+require 'ruby_wordcram'
 
 def settings
   size(600, 600)
