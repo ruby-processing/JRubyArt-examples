@@ -13,10 +13,10 @@ def setup
   sketch_title 'Render SVG'
   background(255)
   count = 0
-  words = LETTERS.reverse.map do |letter|    
-    weight = map1d(count, (0..LETTERS.length), (0..1))
+  words = LETTERS.reverse.map do |letter|
+    weight = norm_strict(count, 0, LETTERS.length)
     count += 1
-    Word.new(letter, weight)    
+    Word.new(letter, weight)
   end
   colors = WEB.map{ |web| color(web) } # map color strings to color int
   @wc = WordCram.new(self)
