@@ -18,7 +18,7 @@ def setup
   colors = WEB.map{ |web| color(web) } # map color strings to color int
   @wc = WordCram.new(self)
                 .from_text_file(data_path('usconst.txt'))
-                .withColors(*colors)
+                .with_colors(*colors)
                 .with_fonts('LiberationSans')
                 .sized_by_weight(4, 140)
                 .min_shape_size(1)
