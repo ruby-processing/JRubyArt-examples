@@ -23,11 +23,8 @@ def draw
   # NB: Content created after this line does not show up rendered files
   text_align(CENTER)
   fill(255)
-  if !recording
-    text('Press r to start recording.', width / 2, height - 24)
-  else
-    text('Press r to stop recording.', width / 2, height - 24)
-  end
+  action = recording ? 'stop' : 'start'
+  text("Press r to #{action} recording.", width / 2, height - 24)
   # A red dot for when we are recording
   stroke(255)
   recording ? fill(255, 0, 0) : no_fill
