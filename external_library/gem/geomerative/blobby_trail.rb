@@ -1,4 +1,3 @@
-# encoding: utf-8
 require 'geomerative'
 # After an original sketch by fjenett
 # Declare the objects we are going to use, so that they are accesible

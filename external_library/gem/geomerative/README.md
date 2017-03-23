@@ -8,7 +8,7 @@ In [german][german]
 
 ### Examples ###
 
-The solid_type sketch is a variant of an Amon Owed sketch requires jruby_art-1.0.8 (or latest github version).
+The solid_type sketch is a variant of an Amon Owed sketch requires jruby_art-1.3.0+ (or latest github version).
 See also [geomerative.gem][gem] for more examples
 
 ### Other Examples ###

@@ -1,7 +1,6 @@
 load_libraries :hemesh, :vbo
-
-include MS # module MS imports necessary java classes and contains ruby MeshToVBO class
-
+# module MS imports necessary java classes and contains ruby MeshToVBO class
+include MS
 RES ||= 20
 
 attr_reader :mesh_ret, :inv_mesh_ret, :render
@@ -9,8 +8,8 @@ attr_reader :mesh_ret, :inv_mesh_ret, :render
 def setup
   sketch_title 'Twin Iso'
   ArcBall.init(self)
-  values = []               # build a multi-dimensional array in ruby
-  (0..RES).each do |i|    # the inclusive range is intentional here
+  values = [] # build a multi-dimensional array in ruby
+  (0..RES).each do |i| # the inclusive range is intentional here
     valu = []
     (0..RES).each do |j|
       val = []
@@ -21,27 +20,27 @@ def setup
     end
     values << valu
   end
-  
+
   creator = HEC_IsoSurface.new
   creator.set_resolution(RES, RES, RES) # number of cells in x,y,z direction
   creator.set_size(400.0 / RES, 400.0 / RES, 400.0 / RES) # cell size
-  
-  # JRuby requires a bit of help to determine correct 'java args', particulary with 
-  # overloaded arrays args as seen below. Note we are saying we have an 'array' of  
-  # 'float array' here, where the values can also be double[][][].
+
+  # JRuby requires a bit of help to determine correct 'java args', particulary
+  # with overloaded arrays args as seen below. Note we are saying we have an
+  # 'array' of 'float array' here, where the values can also be double[][][].
   java_values = values.to_java(Java::float[][]) # pre-coerce values to java
-  creator.set_values(java_values)               # the grid points
-  
-  creator.set_isolevel(1)   # isolevel to mesh
+  creator.set_values(java_values) # the grid points
+
+  creator.set_isolevel(1) # isolevel to mesh
   creator.set_invert(false) # invert mesh
   creator.set_boundary(100) # value of isoFunction outside grid
   # use creator.clear_boundary to set boundary values to "no value".
   # A boundary value of "no value" results in an open mesh
-  
+
   mesh = HE_Mesh.new(creator)
   # mesh.modify(HEM_Smooth.new.set_iterations(10).setAutoRescale(true))
   creator.set_invert(true)
-  
+
   inv_mesh = HE_Mesh.new(creator)
   inv_mesh.modify(HEM_Smooth.new.set_iterations(10).set_auto_rescale(true))
   @render = MeshToVBO.new(self)
