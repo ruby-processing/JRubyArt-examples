@@ -21,7 +21,7 @@ def draw
   fill(255)
   no_stroke
   render.draw_faces(mesh)
-  noFill
+  no_fill
   stroke(0, 50)
   render.draw_edges(mesh)
   fill(255, 0, 0)

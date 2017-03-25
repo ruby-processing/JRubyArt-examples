@@ -1,9 +1,12 @@
-load_libraries :hemesh, :vbo
-# module MS imports necessary java classes and contains ruby MeshToVBO class
-include MS
+load_libraries :hemesh
+java_import 'wblut.processing.WB_Render'
+java_import 'wblut.hemesh.HEC_IsoSurface'
+java_import 'wblut.hemesh.HE_Mesh'
+java_import 'wblut.hemesh.HEM_Smooth'
+
 RES ||= 20
 
-attr_reader :mesh_ret, :inv_mesh_ret, :render
+attr_reader :mesh, :inv_mesh, :render
 
 def setup
   sketch_title 'Twin Iso'
@@ -24,30 +27,22 @@ def setup
   creator = HEC_IsoSurface.new
   creator.set_resolution(RES, RES, RES) # number of cells in x,y,z direction
   creator.set_size(400.0 / RES, 400.0 / RES, 400.0 / RES) # cell size
-
-  # JRuby requires a bit of help to determine correct 'java args', particulary
-  # with overloaded arrays args as seen below. Note we are saying we have an
-  # 'array' of 'float array' here, where the values can also be double[][][].
+  # JRuby requires a bit of help to determine correct 'java args', particulary with
+  # overloaded arrays args as seen below. Note we are saying we have an 'array' of
+  # 'float array' here, where the values can also be double[][][].
   java_values = values.to_java(Java::float[][]) # pre-coerce values to java
-  creator.set_values(java_values) # the grid points
-
-  creator.set_isolevel(1) # isolevel to mesh
+  creator.set_values(java_values)               # the grid points
+  creator.set_isolevel(1)   # isolevel to mesh
   creator.set_invert(false) # invert mesh
   creator.set_boundary(100) # value of isoFunction outside grid
   # use creator.clear_boundary to set boundary values to "no value".
   # A boundary value of "no value" results in an open mesh
-
-  mesh = HE_Mesh.new(creator)
+  @mesh = HE_Mesh.new(creator)
   # mesh.modify(HEM_Smooth.new.set_iterations(10).setAutoRescale(true))
   creator.set_invert(true)
-
-  inv_mesh = HE_Mesh.new(creator)
+  @inv_mesh = HE_Mesh.new(creator)
   inv_mesh.modify(HEM_Smooth.new.set_iterations(10).set_auto_rescale(true))
-  @render = MeshToVBO.new(self)
-  no_stroke
-  # no color args produces a default light grey fill
-  @mesh_ret = render.meshToVBO(mesh, color(200, 0, 0))
-  @inv_mesh_ret = render.meshToVBO(inv_mesh, color(0, 0, 200))
+  @render = WB_Render.new(self)
 end
 
 def settings
@@ -59,8 +54,13 @@ def draw
   background(200)
   lights
   define_lights
-  shape(inv_mesh_ret)
-  shape(mesh_ret)
+  no_stroke
+  fill(255, 0, 0)
+  render.draw_faces(inv_mesh)
+  stroke(0)
+  render.draw_edges(mesh)
+  stroke(255, 0, 0, 80)
+  render.draw_edges(inv_mesh)
 end
 
 def define_lights
