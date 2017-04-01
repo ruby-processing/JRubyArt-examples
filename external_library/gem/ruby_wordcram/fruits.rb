@@ -4,6 +4,7 @@
 require 'ruby_wordcram'
 
 # Other suggested sources for usable palette are http://colorbrewer2.org/
+# and http://paletton.com
 
 PALETTE = %w(#b2c248 #c40000 #a61733 #f7ca18 #32cd23 #ffc800 #f27935 #ffe5b4 #913d88 #f22613 #c72c48 #ff43a4).freeze
 FRUITS = %w(avocado cherry\ red cranberry lemon lime mango orange peach plum pomegranate raspberry strawberry).freeze

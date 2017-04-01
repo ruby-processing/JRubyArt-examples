@@ -25,13 +25,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 require 'toxiclibs'
-include_package 'toxi.color'
-include_package 'toxi.util.datatypes'
 
 SWATCH_HEIGHT = 40.0
 SWATCH_WIDTH = 5.0
 SWATCH_GAP = 1
-
 MAX_SIZE = 150.0
 NUM_DISCS = 300
 attr_reader :show_discs, :list
@@ -50,7 +47,7 @@ end
 
 def draw
   # first define our new theme
-  t = ColorTheme.new('test')
+  t = Toxi::ColorTheme.new('test')
   # add different color options, each with their own weight
   t.add_range('soft ivory', 0.5)
   t.add_range('intense goldenrod', 0.25)
@@ -58,7 +55,7 @@ def draw
   t.add_range('fresh teal', 0.05)
   t.add_range('bright yellowgreen', 0.05)
   # now add another rand hue which is using only bright shades
-  t.add_range(ColorRange::BRIGHT, TColor.new_random, rand(0.02..0.05))
+  t.add_range(Toxi::ColorRange::BRIGHT, Toxi::TColor.new_random, rand(0.02..0.05))
   # use the TColor theme to create a list of 160 Colors
   @list = t.get_colors(160)
   if show_discs
@@ -70,19 +67,19 @@ def draw
     list.sort_by_distance(false)
     swatches(list, 32, yoff)
     yoff += SWATCH_HEIGHT + 10
-    list.sort_by_criteria(AccessCriteria::LUMINANCE, false)
+    list.sort_by_criteria(Toxi::AccessCriteria::LUMINANCE, false)
     swatches(list, 32, yoff)
     yoff += SWATCH_HEIGHT + 10
-    list.sort_by_criteria(AccessCriteria::BRIGHTNESS, false)
+    list.sort_by_criteria(Toxi::AccessCriteria::BRIGHTNESS, false)
     swatches(list, 32, yoff)
     yoff += SWATCH_HEIGHT + 10
-    list.sort_by_criteria(AccessCriteria::SATURATION, false)
+    list.sort_by_criteria(Toxi::AccessCriteria::SATURATION, false)
     swatches(list, 32, yoff)
     yoff += SWATCH_HEIGHT + 10
-    list.sort_by_criteria(AccessCriteria::HUE, false)
+    list.sort_by_criteria(Toxi::AccessCriteria::HUE, false)
     swatches(list, 32, yoff)
     yoff += SWATCH_HEIGHT + 10
-    list.sort_by_proximity_to(NamedColor::WHITE, RGBDistanceProxy.new, false)
+    list.sort_by_proximity_to(Toxi::NamedColor::WHITE, Toxi::RGBDistanceProxy.new, false)
     swatches(list, 32, yoff)
   end
   #
@@ -101,7 +98,7 @@ def key_pressed
     @show_discs = !show_discs
     redraw
   when 'p', 'P'
-    File.open(data_path('color.rb'), 'w') do |file|
+    File.open(data_path('color_theme.rb'), 'w') do |file|
       file.write("# Test Theme\n")
       file.write(list.to_ruby_string)
     end
