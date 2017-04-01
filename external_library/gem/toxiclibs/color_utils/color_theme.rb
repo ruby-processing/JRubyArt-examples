@@ -55,7 +55,7 @@ def draw
   t.add_range('fresh teal', 0.05)
   t.add_range('bright yellowgreen', 0.05)
   # now add another rand hue which is using only bright shades
-  t.add_range(Toxi::ColorRange::BRIGHT, Toxi::TColor.new_random, rand(0.02..0.05))
+  t.add_range(Toxi::ColorRange::BRIGHT, TColor.new_random, rand(0.02..0.05))
   # use the TColor theme to create a list of 160 Colors
   @list = t.get_colors(160)
   if show_discs

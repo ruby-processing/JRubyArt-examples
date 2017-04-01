@@ -7,9 +7,9 @@ def settings
 end
 
 def setup
-  sketch_title 'Monochrome and Complement Blue Swatch'
-  @mono = Toxi::MonochromeTheoryStrategy.new.create_list_from_color(Toxi::TColor::BLUE)
-  @complement = Toxi::ComplementaryStrategy.new.create_list_from_color(Toxi::TColor::BLUE)
+  sketch_title 'Monochrome and Complementary Blue Swatches'
+  @mono = Toxi::MonochromeTheoryStrategy.new.create_list_from_color(TColor::BLUE)
+  @complement = Toxi::ComplementaryStrategy.new.create_list_from_color(TColor::BLUE)
   render_palette(mono)
   render_palette(complement, 200)
 end
