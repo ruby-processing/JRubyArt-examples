@@ -44,7 +44,7 @@ Includes autorun Rakefiles:-
    
 5. Java Libraries
    1. [Hype-processing][hype]
-   
+   2. [Hemesh][hemesh]
 6. Others
    1. [WOVNS patterns][wovns]
 
@@ -75,6 +75,7 @@ Includes autorun Rakefiles:-
 [control-panel]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/contributed/jwishy.rb
 [PBox2D]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/ruby_gem/jbox2d
 [hype]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hype
+[hemesh]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hemesh
 [joons]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/joonsrenderer
 [geomerative]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/geomerative
 [toxiclibs]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/toxiclibs
