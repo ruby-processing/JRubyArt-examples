@@ -37,8 +37,10 @@ Includes autorun Rakefiles:-
 
 4. Gems
    1. [PBox2D][pbox2d]
-   2. [Wordcram][wordcram]
-   3. [Sunflow raytracing][joons]
+   2. [Geomerative][geomerative]
+   3. [Toxiclibs][toxiclibs]
+   4. [Wordcram][wordcram]
+   5. [Sunflow raytracing][joons]
    
 5. Java Libraries
    1. [Hype-processing][hype]
@@ -74,4 +76,6 @@ Includes autorun Rakefiles:-
 [PBox2D]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/ruby_gem/jbox2d
 [hype]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hype
 [joons]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/joonsrenderer
+[geomerative]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/geomerative
+[toxiclibs]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/toxicgem
 [wordcram]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/ruby_wordcram
