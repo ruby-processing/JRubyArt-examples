@@ -35,10 +35,18 @@ Includes autorun Rakefiles:-
     3. [control-panel][]
     4. [video][]
 
-4. [JBox2D][]
-5. [Hype-processing][hype]
-6. [Sunflow raytracing][joons]
-7. [WOVNS patterns][wovns]
+4. Gems
+   1. [PBox2D][pbox2d]
+   2. [Geomerative][geomerative]
+   3. [Toxiclibs][toxiclibs]
+   4. [Wordcram][wordcram]
+   5. [Sunflow raytracing][joons]
+   
+5. Java Libraries
+   1. [Hype-processing][hype]
+   2. [Hemesh][hemesh]
+6. Others
+   1. [WOVNS patterns][wovns]
 
 ### User contributions are most welcome
 [Contributions][] add your [own][]
@@ -65,6 +73,10 @@ Includes autorun Rakefiles:-
 [vecmath]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/processing_app/library/vecmath
 [video]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/processing_app/library/video
 [control-panel]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/contributed/jwishy.rb
-[JBox2D]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/ruby_gem/jbox2d
+[PBox2D]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/ruby_gem/jbox2d
 [hype]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hype
+[hemesh]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hemesh
 [joons]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/joonsrenderer
+[geomerative]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/geomerative
+[toxiclibs]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/toxiclibs
+[wordcram]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/ruby_wordcram
