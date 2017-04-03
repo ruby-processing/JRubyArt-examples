@@ -2,7 +2,7 @@
 Description
 ================
 
-Like the original `ruby-processing`, `JRubyArt` is like a DSL for vanilla `processing`, so sketches can be written as **bare** sketches (ie they do not require **class** wrapper, JRubyArt does that for you as does vanilla processing cf [propane][propane]). Here you will find many of the processing example sketches have been translated to ruby as **bare** sketches) but you can add the **class** wrapper if that suits you. You should also checkout the [Nature of Code Examples in ruby][] and for the beginner [Learning Processing with Ruby][] for even more examples. Many sketches folders includes autorun Rakefiles, and some of these can be run from the root directory as a demo:-
+Like the original `ruby-processing`, `JRubyArt` is like a DSL for vanilla `processing`, so sketches can be written as **bare** sketches (ie they do not require a **class** wrapper, JRubyArt does that for you as does vanilla processing cf [propane][propane]). Here you will find many of the processing example sketches have been translated to ruby as **bare** sketches) but you can add a **class** wrapper if that suits you. You should also checkout the [Nature of Code Examples in ruby][] and for the beginner [Learning Processing with Ruby][] for even more examples. Many sketches folders includes autorun Rakefiles, and some of these can be run from the root directory as a demo:-
 
 1. in a console cd `k9_samples` directory
 2. and `rake` to run all the core examples (excludes gem examples etc)
