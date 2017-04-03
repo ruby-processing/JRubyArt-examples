@@ -2,6 +2,8 @@
 # Daniel Shiffman
 # http://natureofcode.com
 
+CENTER ||= Java::ProcessingCore::PConstants::CENTER
+
 # A fixed boundary class
 class Boundary
   extend Forwardable
@@ -32,7 +34,7 @@ class Boundary
   def display
     fill(0)
     stroke(0)
-    rect_mode(Java::ProcessingCore::CENTER)
+    rect_mode(CENTER)
     rect(x, y, w, h)
   end
 end

@@ -10,8 +10,12 @@ require_relative 'particle_system'
 
 attr_reader :box2d, :windmill, :system
 
+def settings
+  size(640, 360)
+end
+
 def setup
-  size(640,360)
+  sketch_title 'Revolute Joint'
   @box2d = WorldBuilder.build(app: self)
   @windmill = Windmill.new(width / 2, 175)
   @system = ParticleSystem.new

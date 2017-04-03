@@ -3,6 +3,8 @@
 # http://natureofcode.com
 require 'forwardable'
 
+CENTER ||= Java::ProcessingCore::PConstants::CENTER
+
 # A rectangular box
 class Box
   extend Forwardable
@@ -55,7 +57,7 @@ class Box
     # Get its angle of rotation
     a = body.getAngle
 
-    rect_mode(Java::ProcessingCore::CENTER)
+    rect_mode(CENTER)
     push_matrix
     translate(pos.x,pos.y)
     rotate(-a)

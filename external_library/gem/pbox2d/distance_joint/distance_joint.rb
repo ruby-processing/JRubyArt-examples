@@ -14,9 +14,12 @@ require_relative 'particle_system'
 
 attr_reader :box2d, :boundaries, :system
 
-def setup
+def settings
   size(640, 360)
-sketch_title 'Distance Joint'
+end
+
+def setup
+  sketch_title 'Distance Joint'
   # Initialize box2d physics and create the world
   @box2d = WorldBuilder.build(app: self)
   @system = ParticleSystem.new
