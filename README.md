@@ -1,4 +1,4 @@
-# JRubyArt-examples for JRubyArt-1.2.8+
+# JRubyArt-examples for JRubyArt-1.3.0+
 JRubyArt-examples
 ================
 
@@ -8,8 +8,10 @@ Many of the vanilla processing example sketches have been translated to ruby-pro
 Includes autorun Rakefiles:-
 
 1. in a console cd `k9_samples` directory
-2. and `rake` to run all the autorun examples (not all the examples)
-3. or eg `rake hype` to just run the hype library examples (depends on an installed hype library). 
+2. and `rake` to run all the core examples (excludes gem examples etc)
+3. `rake hype` to just run the hype library examples (depends on an installed hype library). 
+4. `rake wordcram` to just run the wordcram gem examples (depends on an installed ruby_wordcram gem).
+5. `rake pbox2d` to just run the pbox2d gem examples (depends on an installed gem).
 
 ### Partial Catalogue (for the lazy)
 
