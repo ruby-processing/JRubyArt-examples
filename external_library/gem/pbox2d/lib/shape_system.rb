@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module Runnable
   def run
     reject! { |item| item.done }

@@ -3,6 +3,7 @@ require_relative 'lib/particle_system'
 require_relative 'lib/boundary'
 attr_reader :box2d, :boundaries, :systems
 
+# holder for vector values
 Vect = Struct.new(:x, :y)
 
 def setup
