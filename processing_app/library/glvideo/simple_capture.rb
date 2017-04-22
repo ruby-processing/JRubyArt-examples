@@ -29,9 +29,8 @@ def report_config
   devices = GLCapture.list
   puts('Devices:')
   devices.each { |dev| puts dev }
-  if (0 < devices.length)
-    configs = GLCapture.configs(devices[0]).to_a # ruby array
-    puts('Configs:')
-    configs.map { |cam| puts cam.strip }
-  end
+  return unless 0 < devices.length
+  configs = GLCapture.configs(devices[0]).to_a # ruby array
+  puts('Configs:')
+  configs.map { |cam| puts cam.strip }
 end
