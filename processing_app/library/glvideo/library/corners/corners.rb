@@ -20,7 +20,7 @@ class Corners
     @idx = -1
   end
 
-  def set_corner(mx, my)
+  def change_selected(mx, my)
     self[idx] = Vect.new(mx, my)
   end
 
@@ -28,7 +28,7 @@ class Corners
     idx != -1
   end
 
-  def set_index(sel)
+  def select_corner(sel)
     @idx = sel
   end
 end
