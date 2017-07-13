@@ -1,14 +1,14 @@
-# Loading URLs. 
-# 
+# Loading URLs.
+#
 # Click on the left button to open a different URL in the same window (Only
-# works online). Click on the right button to open a URL in a new browser window.  
+# works online). Click on the right button to open a URL in a new browser window.
 
 def setup
-  sketch_title 'Embedded Links'  
+  sketch_title 'Embedded Links'
 end
 
 def draw
-  background 204  	
+  background 204
   no_fill
   fill 255 if @over_left_button
   rect 20, 60, 75, 75
@@ -22,12 +22,12 @@ def draw
 end
 
 def mouse_pressed
-  link 'https://github.com/jashkenas/JRubyArt/wiki' if @over_left_button
-  link 'https://github.com/jashkenas/JRubyArt/wiki' if @over_right_button
+  link 'https://github.com/ruby-processing/JRubyArt/' if @over_left_button
+  link 'https://github.com/ruby-processing/JRubyArt/wiki' if @over_right_button
 end
 
-def mouse_moved 
-  check_buttons 
+def mouse_moved
+  check_buttons
 end
 
 def mouse_dragged

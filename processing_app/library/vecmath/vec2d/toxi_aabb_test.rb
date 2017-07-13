@@ -70,11 +70,11 @@ end
 
 # Use class to contatins_point block behaviour
 class Block
-  attr_reader :aabb  
+  attr_reader :aabb
 
   def initialize(a, b)
     @aabb = Toxi::Rect.new(a, b)
-  end  
+  end
 
   def move(vec)
     if yield
@@ -86,4 +86,3 @@ class Block
     aabb.contains_point vec
   end
 end
-

@@ -1,0 +1,4 @@
+CF::Background = [b -1]
+startshape haddock
+shape dot{CIRCLE[]}
+import data.cfdg

@@ -17,7 +17,7 @@ def setup
   resizable
   fill 0, 0, 200
   text('Click Window to Load Image', 10, 100)
-  @skip = 20 # controls apparent resolution
+  @skip = 5 # controls apparent resolution
   @data = []
   @poster = 0
 end
