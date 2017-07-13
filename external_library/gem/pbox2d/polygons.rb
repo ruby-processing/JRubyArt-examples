@@ -6,11 +6,11 @@ require_relative 'lib/shape_system'
 
 attr_reader :box2d, :boundaries, :system
 
+# holder for vector values
 Vect = Struct.new(:x, :y)
 
 def setup
   sketch_title 'Polygons'
-  smooth
   @box2d = WorldBuilder.build(app: self, gravity: [0, -20])
   @system = ShapeSystem.new self
   @boundaries = [

@@ -12,7 +12,6 @@ attr_reader :polygons
 
 def settings
   size(640, 360, P2D)
-  smooth
 end
 
 def setup
@@ -44,4 +43,3 @@ def draw
   # Display and move them all
   polygons.each(&:run)
 end
-

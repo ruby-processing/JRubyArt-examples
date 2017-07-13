@@ -4,10 +4,9 @@ require 'toxiclibs'
 SWATCH_HEIGHT = 40.0
 SWATCH_WIDTH = 5.0
 SWATCH_GAP = 1
-
 MAX_SIZE = 150.0
 NUM_DISCS = 300
-attr_reader :show_discs
+attr_reader :show_discs, :list
 
 def settings
   size(1024, 768)
@@ -33,7 +32,7 @@ def draw
   # now add another rand hue which is using only bright shades
   t.add_range(Toxi::ColorRange::BRIGHT, TColor.new_random, rand(0.02..0.05))
   # use the TColor theme to create a list of 160 Colors
-  list = t.get_colors(160)
+  @list = t.get_colors(160)
   if show_discs
     background(list.get_lightest.toARGB)
     discs(list)
@@ -55,10 +54,9 @@ def draw
     list.sort_by_criteria(Toxi::AccessCriteria::HUE, false)
     swatches(list, 32, yoff)
     yoff += SWATCH_HEIGHT + 10
-    list.sort_by_proximity_to(Toxi::NamedColor::WHITE, RGBDistanceProxy.new, false)
+    list.sort_by_proximity_to(Toxi::NamedColor::WHITE, Toxi::RGBDistanceProxy.new, false)
     swatches(list, 32, yoff)
   end
-  # save_frame(format('theme-%s%s', timestamp, '_##.png'))
 end
 
 def timestamp
@@ -66,8 +64,19 @@ def timestamp
 end
 
 def key_pressed
-  @show_discs = !show_discs if key == ' '
-  redraw
+  case key
+  when 's', 'S'
+    save_frame(data_path(format('theme-%s%s', timestamp, '_##.png')))
+    redraw
+  when 'd', 'D'
+    @show_discs = !show_discs
+    redraw
+  when 'p', 'P'
+    File.open(data_path('color_theme.rb'), 'w') do |file|
+      file.write("# Test Theme\n")
+      file.write(list.to_ruby_string)
+    end
+  end
 end
 
 def swatches(sorted, x, y)

@@ -64,19 +64,17 @@ def draw
   RG.set_polygonizer(RCommand::UNIFORMLENGTH)
   RG.set_polygonizer_length(35)
   points = wave.get_points
-  index = 0 # Letter index within the string message
   # loop through and place a letter at each point
-  MESSAGE.each_char do |letter|
-    center = RCommand.new(points[index], points[index + 1]).get_center
+  MESSAGE.chars.each_with_index do |letter, index|
+    center = RCommand.new(points[index], points[index.succ]).get_center
     fill(255)
     no_stroke
     push_matrix
     translate(center.x, center.y)
-    rotate(get_angle(points[index], points[index + 1]))
+    rotate(get_angle(points[index], points[index.succ]))
     translate(5, 20)
     font.draw(letter)
     pop_matrix
-    index += 1
   end
 end
 

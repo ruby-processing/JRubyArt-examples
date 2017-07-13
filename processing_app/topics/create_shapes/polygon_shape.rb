@@ -8,7 +8,6 @@ attr_reader :star
 
 def settings
   size(640, 360, P2D)
-  smooth
 end
 
 def setup

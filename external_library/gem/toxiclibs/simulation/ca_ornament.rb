@@ -30,7 +30,7 @@
 require 'toxiclibs'
 include_package 'toxi.sim.automata'
 include_package 'toxi.math'
-include_package 'toxi.color'
+
 attr_reader :ca, :tone_map
 
 def settings
@@ -60,17 +60,17 @@ def setup
   # create initial seed pattern
   ca.draw_box_at(0, height / 2, 5, 1)
   # create a gradient for rendering/shading the CA
-  grad = ColorGradient.new
+  grad = Toxi::ColorGradient.new
   # NamedColors are preset colors, but any TColor can be added
   # see javadocs for list of names:
-  # http://toxiclibs.org/docs/colorutils/toxi/color/NamedColor::html
-  grad.add_color_at(0, NamedColor::BLACK)
-  grad.add_color_at(64, NamedColor::CYAN)
-  grad.add_color_at(128, NamedColor::YELLOW)
-  grad.add_color_at(192, NamedColor::WHITE)
-  grad.add_color_at(255, NamedColor::BLACK)
+  # http://toxiclibs.org/docs/colorutils/toxi/color/NamedColor.html
+  grad.add_color_at(0, Toxi::NamedColor::BLACK)
+  grad.add_color_at(64, Toxi::NamedColor::CYAN)
+  grad.add_color_at(128, Toxi::NamedColor::YELLOW)
+  grad.add_color_at(192, Toxi::NamedColor::WHITE)
+  grad.add_color_at(255, Toxi::NamedColor::BLACK)
   # the tone map will map cell states/ages to a gradient color
-  @tone_map = ToneMap.new(0, rule.get_state_count - 1, grad)
+  @tone_map = Toxi::ToneMap.new(0, rule.get_state_count - 1, grad)
 end
 
 def draw

@@ -47,5 +47,4 @@ end
 
 def settings
   size 640, 360, P2D
-  smooth
 end

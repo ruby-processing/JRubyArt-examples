@@ -73,24 +73,22 @@ def create_plane(xsegs, ysegs)
   usegsize = 1 / xsegs.to_f # horizontal stepsize
   vsegsize = 1 / ysegs.to_f # vertical stepsize
 
-  xsegs.times do |x|
-    ysegs.times do |y|
-      u = x / xsegs.to_f
-      v = y / ysegs.to_f
-
-      # generate positions for the vertices of each cell
-      # (-0.5 to center the shape around the origin)
-      positions << Vec3D.new(u - 0.5, v - 0.5, 0)
-      positions << Vec3D.new(u + usegsize - 0.5, v - 0.5, 0)
-      positions << Vec3D.new(u + usegsize - 0.5, v + vsegsize - 0.5, 0)
-      positions << Vec3D.new(u - 0.5, v + vsegsize - 0.5, 0)
-
-      # generate texture coordinates for the vertices of each cell
-      tex_coords << Vec2D.new(u, v)
-      tex_coords << Vec2D.new(u + usegsize, v)
-      tex_coords << Vec2D.new(u + usegsize, v + vsegsize)
-      tex_coords << Vec2D.new(u, v + vsegsize)
-    end
+  grid(xsegs, ysegs) do |x, y| # using JRubyArt grid method
+    u = x / xsegs.to_f
+    v = y / ysegs.to_f
+    
+    # generate positions for the vertices of each cell
+    # (-0.5 to center the shape around the origin)
+    positions << Vec3D.new(u - 0.5, v - 0.5, 0)
+    positions << Vec3D.new(u + usegsize - 0.5, v - 0.5, 0)
+    positions << Vec3D.new(u + usegsize - 0.5, v + vsegsize - 0.5, 0)
+    positions << Vec3D.new(u - 0.5, v + vsegsize - 0.5, 0)
+    
+    # generate texture coordinates for the vertices of each cell
+    tex_coords << Vec2D.new(u, v)
+    tex_coords << Vec2D.new(u + usegsize, v)
+    tex_coords << Vec2D.new(u + usegsize, v + vsegsize)
+    tex_coords << Vec2D.new(u, v + vsegsize)
   end
 
   # STEP 2: put all the relevant data into the PShape

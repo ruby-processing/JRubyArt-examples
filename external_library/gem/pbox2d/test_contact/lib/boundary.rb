@@ -1,6 +1,6 @@
 require 'forwardable'
 
-CENTER ||= Java::ProcessingCore::CENTER
+CENTER ||= Java::ProcessingCore::PConstants::CENTER
 # The boundary class is used to create a floor in this
 # sketch. Note it does not have a change method
 class Boundary

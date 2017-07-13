@@ -1,12 +1,9 @@
-
 # LoadFile 1
 #
 # Loads a text file that contains two numbers separated by a tab ('\t'). A new
 # pair of numbers is loaded each frame and used to draw a point on the screen.
 #
-
 attr_reader :points, :count
-X, Y = 0, 1
 
 def setup
   sketch_title 'Load File1'
@@ -18,16 +15,16 @@ def setup
   @points = []
   # The use of vanilla processing load_strings convenience method is
   # of dubious value in ruby processing when you can do this
-  mult = -> (a.to_i, b) { a * b }
+  mult = -> (a, b) { a * b.to_i }
   mult2 = mult.curry.call(2)
-  File.open('data/positions.txt').each_line do |line|
-    points << line.split(/\t/).map!(&mult2)
+  File.open(data_path('positions.txt')).each_line do |line|
+    points << line.split.map!(&mult2)
   end
 end
 
 def draw
   return unless count < points.size
-  point(points[count][X], points[count][Y])
+  point(*points[count])
   @count += 1
 end
 

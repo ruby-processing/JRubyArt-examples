@@ -9,9 +9,8 @@ attr_reader :srface, :box2d, :particles
 
 def setup
   sketch_title 'Bumpy Surface Noise'
-  smooth 4
   # Initialize box2d physics and create the world
-  @box2d = WorldBuilder(app: self, gravity: [0, -20])
+  @box2d = WorldBuilder.build(app: self, gravity: [0, -20])
   # to later set a custom gravity
   # box2d.gravity([0, -20])
   # Create the empty list
@@ -40,4 +39,5 @@ end
 
 def settings
   size(500, 300)
+  smooth 4
 end

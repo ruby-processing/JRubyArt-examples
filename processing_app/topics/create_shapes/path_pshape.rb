@@ -1,6 +1,6 @@
 #
 # PathPShape
-# 
+#
 # A simple path using PShape
 #
 
@@ -16,7 +16,7 @@ def setup
   path.noFill
   path.stroke(255)
   path.stroke_weight(2)
-  
+
   x = 0
   # Calculate the path as a sine wave
   (0..TAU).step(0.1) do |theta|
@@ -24,7 +24,7 @@ def setup
     x += 5
   end
   # The path is complete
-  path.end_shape  
+  path.end_shape
 
 end
 
@@ -38,6 +38,4 @@ end
 
 def settings
   size(640, 360, P2D)
-  smooth
 end
-

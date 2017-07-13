@@ -1,9 +1,9 @@
 #
 # BeginEnd_contour
-# 
+#
 # How to cut a shape out of another using begin_contour and end_contour
 #
- 
+
 attr_reader :s
 
 def setup
@@ -19,7 +19,7 @@ def setup
   s.vertex(100,-100)
   s.vertex(100,100)
   s.vertex(-100,100)
-  
+
   # Interior part of shape
   s.begin_contour
   s.vertex(-10,-10)
@@ -27,7 +27,7 @@ def setup
   s.vertex(10,10)
   s.vertex(-10,10)
   s.end_contour
-  
+
   # Finishing off shape
   s.end_shape(CLOSE)
 end
@@ -44,6 +44,4 @@ end
 
 def settings
   size(640, 360, P2D)
-  smooth
 end
-

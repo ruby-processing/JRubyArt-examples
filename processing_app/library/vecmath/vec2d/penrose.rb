@@ -5,7 +5,7 @@
 # Translated (and refactored) to JRubyArt July 2015 by Martin Prout
 
 load_libraries :tile, :control_panel
-attr_reader :tris, :s, :panel, :hide, :acute
+attr_reader :tris, :s, :panel, :hide, :acute, :tiler
 
 def setup
   sketch_title 'Penrose'
@@ -19,6 +19,7 @@ def setup
     @panel = c
   end
   @hide = false
+  @tiler = TileFactory.new(acute) # set the Tiler first
   init false # defaults to regular penrose
 end
 
@@ -30,9 +31,7 @@ def draw
   end
   background(255)
   translate(width / 2, height / 2)
-  tris.each do |t|
-    t.display
-  end
+  tris.each(&:display)
 end
 
 def generate
@@ -47,26 +46,22 @@ def generate
 end
 
 def reset!
-  Tiler.acute(acute)  # set the Tiler first
+  @tiler = TileFactory.new(acute) # set the Tiler first
   init @seed
   java.lang.System.gc # but does it do any good?
 end
 
 def init(alt_seed)
   @tris = []
-  10.times do |i|     # create 36 degree segments
+  10.times do |i| # create 36 degree segments
     a = Vec2D.new
     b = Vec2D.from_angle((2 * i - 1) * PI / 10)
     c = Vec2D.from_angle((2 * i + 1) * PI / 10)
     b *= 370
     c *= 370
-    if alt_seed
-      tile = i.even? ? Tiler.tile(b, a, c) : Tiler.tile(c, a, b)
-      tris << tile
-    else
-      tile = i.even? ? Tiler.tile(a, b, c) : Tiler.tile(a, c, b)
-      tris << tile
-    end
+    tile = i.even? ? tiler.tile(b, a, c) : tiler.tile(c, a, b) if alt_seed
+    tile = i.even? ? tiler.tile(a, b, c) : tiler.tile(a, c, b) unless alt_seed
+    tris << tile
   end
 end
 

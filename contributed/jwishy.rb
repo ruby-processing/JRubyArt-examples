@@ -36,7 +36,6 @@ def setup
   @back_color = [0.06, 0.03, 0.18]
   color_mode RGB, 1
   ellipse_mode CORNER
-  smooth
 end
 
 def draw_background

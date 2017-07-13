@@ -1,26 +1,12 @@
-#
-# Save Frames
-# by Daniel Shiffman.
-#
-# This example demonstrates how to use saveFrame to render
-# out an image sequence that you can assemble into a movie
-# using the MovieMaker tool. NB: on macosx you might need
-# save files to an absolute path File.absolute_path...
-#
-
-# A boolean to track whether we are recording are not
 attr_reader :recording
 
 def setup
   sketch_title 'Save Frames'
   @recording = false
-  directory = 'output'
-  Dir.mkdir(directory) unless File.exist?(directory)
 end
 
 def draw
   background(0)
-
   # An arbitrary oscillating rotating animation
   # so that we have something to render
   (0...TAU).step(0.2) do |a|
@@ -31,22 +17,14 @@ def draw
     line(-100, 0, 100, 0)
     pop_matrix
   end
-
-  # If we are recording call saveFrame!
-  # The number signs (#) indicate to Processing to
-  # number the files automatically
-  save_frame('output/frames####.png'.to_java(:string)) if recording
+  # The '#' symbols makes Processing number the files automatically
+  save_frame(data_path('output/frames####.png')) if recording
   # Let's draw some stuff to tell us what is happening
-  # It's important to note that none of this will show up in the
-  # rendered files b/c it is drawn *after* saveFrame
+  # NB: Content created after this line does not show up rendered files
   text_align(CENTER)
   fill(255)
-  if !recording
-    text('Press r to start recording.', width / 2, height - 24)
-  else
-    text('Press r to stop recording.', width / 2, height - 24)
-  end
-
+  action = recording ? 'stop' : 'start'
+  text("Press r to #{action} recording.", width / 2, height - 24)
   # A red dot for when we are recording
   stroke(255)
   recording ? fill(255, 0, 0) : no_fill
@@ -63,5 +41,4 @@ end
 
 def settings
   size(640, 360)
-  smooth
 end

@@ -22,7 +22,7 @@ def setup
   # 3., n.aif it is easy to iterate through the folder and load all files in
   # one line of code.
   NUM_SOUNDS.times do |i|
-    file << SoundFile.new(self, format('%d.aif', (i + 1)))
+    file << SoundFile.new(self, data_path(format('%d.aif', (i + 1))))
   end
 end
 
@@ -86,4 +86,3 @@ end
 def settings
   size 640, 360, P2D
 end
-
