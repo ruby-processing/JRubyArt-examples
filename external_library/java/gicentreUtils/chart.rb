@@ -10,7 +10,7 @@ attr_reader :bar_chart, :title_font, :small_font
 
 # ------------------------ Initialisation --------------------------
 LEGEND = 'Gross domestic product measured in inflation-corrected $US'.freeze
-title 'Income per person, United Kingdom'.freeze
+TITLE = 'Income per person, United Kingdom'.freeze
 
 def settings
   size(800, 300)
