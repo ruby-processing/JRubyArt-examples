@@ -15,7 +15,7 @@ def setup
   fill 0
   # Control panel for changing gravity
   control_panel do |c|
-    c.title = 'Gravity Control'
+    c.title 'Gravity Control'
     c.slider :gravity, 0..30, 6
     @panel = c
   end

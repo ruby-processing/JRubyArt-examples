@@ -7,7 +7,7 @@ def setup
   sketch_title 'Contrast Sat Bright'
   control_panel do |c|
     c.look_feel 'Nimbus'
-    c.title = 'Control'
+    c.title 'Control'
     c.slider  :brightness, 0..100, 60
     c.slider  :saturation,  0..100, 70
     c.slider  :contrast,  50..150, 100

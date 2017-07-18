@@ -8,7 +8,7 @@ attr_reader :bicubic, :my_image, :hide, :panel, :zoom
 def setup  
   control_panel do |c|
     c.look_feel 'Nimbus'
-    c.title = 'zoom / bicubic'
+    c.title 'zoom / bicubic'
     c.slider    :zoom, 0.0..100, 60.0
     c.checkbox  :apply_filter, true
     @panel = c

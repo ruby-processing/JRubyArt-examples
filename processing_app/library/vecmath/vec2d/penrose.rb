@@ -10,7 +10,7 @@ attr_reader :tris, :s, :panel, :hide, :acute, :tiler
 def setup
   sketch_title 'Penrose'
   control_panel do |c|
-    c.title = 'Tiler Control'
+    c.title 'Tiler Control'
     c.look_feel 'Nimbus'
     c.checkbox  :seed
     c.checkbox  :acute

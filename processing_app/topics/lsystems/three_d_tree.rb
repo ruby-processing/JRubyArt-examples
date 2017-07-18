@@ -20,7 +20,7 @@ end
 
 def setup_panel
   control_panel do |c|
-    c.title = 'Control:'
+    c.title 'Control:'
     c.look_feel 'Metal'
     c.slider :zoom, 1..8, 3
     c.slider :rot_y, -PI..PI, 0

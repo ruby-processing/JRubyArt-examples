@@ -11,7 +11,7 @@ def setup
   @gfx = Gfx::ToxiclibsSupport.new(self)
   @bool = KEY.zip(TYPE).to_h
   control_panel do |c|
-    c.title = 'Control Panel'
+    c.title 'Control Panel'
     c.menu :type, KEY, 'union'
     @panel = c
   end

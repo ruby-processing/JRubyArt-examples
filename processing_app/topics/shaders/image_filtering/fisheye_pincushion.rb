@@ -36,7 +36,7 @@ end
 def setup_control
   control_panel do |c|
     c.look_feel 'Nimbus'
-    c.title = 'adjust pin..fish'
+    c.title 'adjust pin..fish'
     c.slider :amount, -50.0..50.0, 0
     @panel = c
   end
