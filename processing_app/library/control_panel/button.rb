@@ -8,7 +8,7 @@ def setup
     c.look_feel 'Nimbus'
     c.title 'Control Button'
     c.button :color_background # see method below
-    c.button :exit! { exit } # example of a button with a simple block
+    c.button(:exit!) { exit } # example of a button with a simple block
     @panel = c
   end
   color_mode RGB, 1
