@@ -1,5 +1,5 @@
 # A simple demonstration of vanilla processing 'reflection' methods using
-# JRubyArt :library_proxy. 
+# JRubyArt :library_proxy.
 # See library/my_library/my_library.rb code for the guts.
 load_libraries :library_proxy, :my_library
 
@@ -15,7 +15,7 @@ def setup
   MyLibrary.new self
 end
 
-def hide(val)
+def hide(val) # we call this method from my_library
   @visible = !val
 end
 
