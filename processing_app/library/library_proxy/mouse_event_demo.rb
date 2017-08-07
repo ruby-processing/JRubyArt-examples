@@ -1,6 +1,6 @@
 load_libraries :library_proxy, :mouse_thing
 
-attr_reader :mouseThing
+attr_reader :mouse_proxy
 
 def settings
   size(800, 600)
@@ -8,7 +8,7 @@ end
 
 def setup
   sketch_title 'Mouse Event'
-  frameRate(1)
+  frame_rate(1)
   MouseThing.new(self)
 end
 
