@@ -11,8 +11,8 @@ attr_reader :app, :count
   def mouseEvent(event)
     case event.action
     when MouseEvent::CLICK
-      # puts 'CLICK'
-      app.send :puts, event.toString
+      fstring = 'CLICK at x = %.1f, y = %.1f'
+      puts format(fstring, event.x, event.y)
     when MouseEvent::DRAG
       puts 'DRAG'
     when MouseEvent::WHEEL
