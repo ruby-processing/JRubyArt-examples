@@ -1,10 +1,8 @@
 load_library :hemesh
 
-include_package 'wblut.math'
-include_package 'wblut.processing'
-include_package 'wblut.core'
+java_import 'wblut.processing.WB_Render'
+java_import 'wblut.geom.WB_Plane'
 include_package 'wblut.hemesh'
-include_package 'wblut.geom'
 
 attr_reader :mesh, :render, :plane, :plane2, :plane3, :modifier
 
