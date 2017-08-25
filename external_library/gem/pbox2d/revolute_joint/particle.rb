@@ -13,7 +13,7 @@ class Particle
   attr_reader :body, :r
 
   def initialize(x, y, r)
-    @app = $app
+    @app = Processing.app
     @r = r
     # This function puts the particle in the Box2d world
     makeBody(x, y, r)

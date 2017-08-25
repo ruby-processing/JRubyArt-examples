@@ -1,5 +1,5 @@
-# JRubyArt-examples for JRubyArt-1.3.4+
-Uses a simplified `control_panel` interface, ie use `c.title('PanelTitle')` instead of `c.title = 'PanelTitle'`, the old examples still work with the the latest version of JRubyArt, but these examples require the latest version.
+# JRubyArt-examples for JRubyArt-1.4.0+
+Replaces `$app` with `Processing.app`, new `library_loader` (_but latter change should be transparent_).
 
 Description
 ================

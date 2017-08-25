@@ -48,7 +48,7 @@ class Particle
   def collect_force
     @x_accel, @y_accel = 0, 0
     @min_dist = 1000
-    $app.particles.each do |p|
+    Processing.app.particles.each do |p|
       next if p == self
       g_dist  = Math.hypot(x0 - p.x0, y0 - p.y0)
       g_theta = -angle_of(x0, y0, p.x0, p.y0)
@@ -69,7 +69,7 @@ class Particle
   end
 
   def grabbed?
-    $app.grabbed == self
+    Processing.app.grabbed == self
   end
 
   def run

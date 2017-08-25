@@ -11,7 +11,7 @@ class Box
   attr_accessor :body, :w, :h
   # Constructor
   def initialize(x, y)
-    @app = $app
+    @app = Processing.app
     @w, @h = 24, 24
     # Add the box to the box2d world
     make_body(Vec2.new(x, y), w, h)

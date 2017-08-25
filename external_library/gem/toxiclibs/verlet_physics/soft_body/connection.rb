@@ -6,7 +6,7 @@ class Connection < Physics::VerletSpring2D
   def_delegators(:@app, :stroke, :line)
   def initialize(p1, p2, len, strength)
     super(p1, p2, len, strength)
-    @app = $app
+    @app = Processing.app
   end
 
   def display

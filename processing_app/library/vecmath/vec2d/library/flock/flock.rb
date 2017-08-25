@@ -30,8 +30,8 @@ class Boid
     @r = 2.0
     @maxspeed = 2
     @maxforce = 0.03
-    @width = $app.width    
-    @height = $app.height
+    @width = Processing.app.width    
+    @height = Processing.app.height
   end
   
   def run(boids)

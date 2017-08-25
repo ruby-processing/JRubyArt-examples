@@ -15,7 +15,7 @@ class Cluster
   def initialize(n, d, center)
     # Set the diameter
     @diameter, = d
-    @app = $app
+    @app = Processing.app
     # Create the nodes
     @nodes = (0..n).map { Node.new(center.add(TVec2D.randomVector)) }
     # Connect all the nodes with a Spring

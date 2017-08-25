@@ -15,7 +15,7 @@ class Cluster
 
   # We initialize a Cluster with a number of nodes, a diameter, and centerpoint
   def initialize(n, d, center)
-    @app = $app
+    @app = Processing.app
     # Set the diameter
     @diameter = d
     # Create the nodes

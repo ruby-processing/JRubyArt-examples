@@ -12,7 +12,7 @@ class Particle
 
   def initialize(x, y)
     @r = 8
-    @app = $app
+    @app = Processing.app
     # Define a body
     bd = BodyDef.new
     # Set its position

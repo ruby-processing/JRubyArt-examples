@@ -12,7 +12,7 @@ class Node < Physics::VerletParticle2D
 
   def initialize(pos)
     super(pos)
-    @app = $app
+    @app = Processing.app
   end
 
   # All we're doing really is adding a display function to a VerletParticle

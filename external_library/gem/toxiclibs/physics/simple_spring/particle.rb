@@ -11,7 +11,7 @@ class Particle < Physics::VerletParticle2D
   def_delegators(:@app, :fill, :stroke, :stroke_weight, :ellipse)
   def initialize(loc)
     super(loc)
-    @app = $app
+    @app = Processing.app
   end
 
   # All we're doing really is adding a display function to a VerletParticle

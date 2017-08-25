@@ -13,7 +13,7 @@ class Windmill
   attr_reader :joint, :box1, :box2
   
   def initialize(x, y)
-    @app = $app
+    @app = Processing.app
     # Initialize locations of two boxes
     @box1 = Box.new(x, y - 20, 120, 10, false)
     @box2 = Box.new(x, y, 10, 40, true)

@@ -16,7 +16,7 @@ class Box
   # Constructor
   def initialize(x, y, w, h, lock)
     @w, @h = w, h
-    @app = $app
+    @app = Processing.app
     # Define and create the body
     bd = BodyDef.new
     bd.position.set(box2d.processing_to_world(Vec2.new(x, y)))
