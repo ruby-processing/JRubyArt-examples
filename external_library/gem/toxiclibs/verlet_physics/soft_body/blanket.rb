@@ -7,7 +7,7 @@ class Blanket
   attr_reader :particles, :springs, :physics
 
   def initialize(physics)
-    @app = $app
+    @app = Processing.app
     @particles = []
     @springs = []
     w = 20

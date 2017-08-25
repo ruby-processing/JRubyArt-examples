@@ -18,7 +18,7 @@ class Chain
     # Here is the real work, go through and add particles to the chain itself
     num_points.times do |i|
       # Make a new particle with an initial starting location
-      particle = Particle.new($app.width / 2, i * len)
+      particle = Particle.new(Processing.app.width / 2, i * len)
       # Redundancy, we put the particles both in physics and in our own Array
       physics.addParticle(particle)
       particles << particle

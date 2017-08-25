@@ -5,8 +5,8 @@ class CA
   attr_reader :rules, :generation, :cells, :height, :width
   
   def initialize(rules = [])
-    @width = $app.width
-    @height = $app.height
+    @width = Processing.app.width
+    @height = Processing.app.height
     if !rules.empty?
       @rules = rules
     else

@@ -9,7 +9,7 @@ def setup_the_spiral
         size = options[:size]
         rot = options[:rotation]
         rotate(rot) if rot
-        $app.triangle(-0.5 * size, -0.5 * size, -0.5 * size, 0.5 * size, 0.5 * size, 0.5 * size)
+        self.app.triangle(-0.5 * size, -0.5 * size, -0.5 * size, 0.5 * size, 0.5 * size, 0.5 * size)
         rotate(-rot) if rot
       end
     end

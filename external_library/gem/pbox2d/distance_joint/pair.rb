@@ -9,7 +9,7 @@ class Pair
   attr_reader :p1, :p2, :len, :joint
   # Chain constructor
   def initialize(x, y)
-    @app = $app
+    @app = Processing.app
     @len = 32
     @p1 = Particle.new(x, y)
     @p2 = Particle.new(x + rand(-1..1.0), y + rand(-1..1.0))

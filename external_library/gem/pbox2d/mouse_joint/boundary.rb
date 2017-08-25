@@ -12,7 +12,7 @@ class Boundary
 
   def initialize(x, y, w, h, a)
     @x, @y, @w, @h, @a = x, y, w, h, a
-    @app = $app
+    @app = Processing.app
     # Define the polygon
     sd = PolygonShape.new
     # Figure out the box2d coordinates

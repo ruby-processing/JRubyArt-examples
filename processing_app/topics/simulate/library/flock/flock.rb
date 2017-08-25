@@ -30,7 +30,7 @@ class Boid
   attr_reader :location, :velocity, :acceleration, :sz
 
   def initialize(x, y)
-    @width, @height = $app.width, $app.height
+    @width, @height = Processing.app.width, Processing.app.height
     @acceleration = Vec2D.new(0, 0)
     @velocity = Vec2D.new(rand(-1.0..1), rand(-1.0..1))
     @location = Vec2D.new(x, y)
