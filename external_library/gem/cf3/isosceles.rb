@@ -5,11 +5,11 @@ def setup_the_spiral
     ############ Begin defining custom terminal, an isoceles triangle
     class << self
       define_method(:isoceles) do |some_options| # isoceles triangle
-        options = self.get_shape_values(some_options)
+        options = get_shape_values(some_options)
         size = options[:size]
         rot = options[:rotation]
         rotate(rot) if rot
-        self.app.triangle(-0.5 * size, -0.5 * size, -0.5 * size, 0.5 * size, 0.5 * size, 0.5 * size)
+        Processing.app.triangle(-0.5 * size, -0.5 * size, -0.5 * size, 0.5 * size, 0.5 * size, 0.5 * size)
         rotate(-rot) if rot
       end
     end
@@ -37,5 +37,5 @@ end
 
 def draw_it
   background 255
-  @spiral.render :spiral, size: height, start_x: width/3, start_y: height/2
+  @spiral.render :spiral, size: height, start_x: width / 3, start_y: height / 2
 end

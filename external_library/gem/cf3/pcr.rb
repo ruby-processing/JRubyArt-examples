@@ -11,7 +11,7 @@ def setup_the_gel
     ############ Begin defining custom terminal, a proportional horizontal bar
     class << self
       define_method(:hbar) do |some_options|
-        options = self.get_shape_values(some_options)
+        options = get_shape_values(some_options)
         size = options[:size]
         ht = some_options[:ht] || 0.1   # default hbar width is 0.1
         ratio = ht * size

@@ -9,11 +9,11 @@ COLORS = [GOLD, BLACK, GREEN, BLUE, RED]
 
 def setup_the_tiles
   @tiles = ContextFree.define do
-    ############ Begin defining custom terminal, an wavy_triangle triangle        
+    ############ Begin defining custom terminal, an wavy_triangle triangle
     class << self
       SQRT3 = Math.sqrt(3)
       define_method(:wavy_triangle) do |some_options| # wavy_triangle triangle
-        options = self.get_shape_values(some_options)
+        options = get_shape_values(some_options)
         size = options[:size]
         rot = options[:rotation]
         disp = 0.32          # could introduce a rule option?
@@ -47,20 +47,20 @@ def setup_the_tiles
           bezier_vertex(pts[4].x, pts[4].y, pts[9].x, pts[9].y, pts[2].x, pts[2].y)
           bezier_vertex(pts[2].x, pts[2].y, pts[10].x, pts[10].y, pts[5].x, pts[5].y)
           bezier_vertex(pts[5].x, pts[5].y, pts[11].x, pts[11].y, pts[0].x, pts[0].y)
-        end_shape(CLOSE)        
+        end_shape(CLOSE)
         rotate(-rot) if rot
       end
-    
+
       private
       def adjust_bezier(theta, disp)
         Vec2D.new(Math.cos(theta) * disp, Math.sin(theta) * disp)
       end
-    
-      def get_mid_point(a, b) 
+
+      def get_mid_point(a, b)
         (a + b) / 2.0
       end
     end
-  
+
     ########### End definition of custom terminal 'wavy_triangle' shape
     shape :tiles do
       20.times do |i|

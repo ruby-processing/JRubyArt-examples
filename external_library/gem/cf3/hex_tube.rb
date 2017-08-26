@@ -27,8 +27,8 @@ def setup_the_hextube
     end
 
     shape :hexa do |i = nil, j = 0.5|
-      hexagon size: 1, brightness: 1.0
-      hexa size: 0.9, rotation: 5 *j
+      hexagon(size: 1, brightness: 1.0)
+      hexa(size: 0.9, rotation: 5 * j)
     end
   end
 end

@@ -35,6 +35,7 @@ def settings
 end
 
 def setup
+  sketch_title 'Spiral'
   setup_the_spiral
   no_stroke
   color_mode HSB, 1.0

@@ -1,7 +1,6 @@
 # tree.rb by jashkenas
 # This sketch demonstrates a lil' Ruby DSL for defining
 # context-free drawings. Each shape rule calls itself by chance.
-
 require  'cf3'
 load_library :control_panel
 

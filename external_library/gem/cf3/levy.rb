@@ -8,11 +8,11 @@ def setup_the_levy
     end
     shape :levy do
       square alpha: 0.1
-     split do
+      split do
         levy  size: 1/Math.sqrt(2), rotation: -45, x: 0.5, brightness: 0.9
         rewind
         levy  size: 1/Math.sqrt(2), rotation: 45, x: 0.5, brightness: 0.9
-     end
+      end
     end
   end
 end
@@ -28,11 +28,9 @@ def setup
   save_frame("levy.png")
 end
 
-
 def draw
   # Do nothing.
 end
-
 
 def draw_it
   background 255
