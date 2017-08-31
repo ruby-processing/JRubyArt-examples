@@ -1,5 +1,5 @@
 # JRubyArt-examples for JRubyArt-1.4.0+
-Replaces `$app` with `Processing.app`, new `library_loader` (_but latter change should be transparent_).
+Uses a simplified `control_panel` interface, ie use `c.title('PanelTitle')` instead of `c.title = 'PanelTitle'`, the old examples still work with the the latest version of JRubyArt, but these examples require the latest version.
 
 Description
 ================
@@ -35,7 +35,6 @@ Like the original `ruby-processing`, `JRubyArt` is like a DSL for vanilla `proce
     2. [vecmath][]
     3. [control-panel][]
     4. [video][]
-    5. [library proxy][]
 
 4. Gems
    1. [PBox2D][pbox2d]
@@ -75,7 +74,6 @@ Like the original `ruby-processing`, `JRubyArt` is like a DSL for vanilla `proce
 [vecmath]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/processing_app/library/vecmath
 [video]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/processing_app/library/video
 [control-panel]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/contributed/jwishy.rb
-[library proxy]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/processing_app/library/library_proxy
 [PBox2D]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/ruby_gem/jbox2d
 [hype]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hype
 [hemesh]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hemesh
