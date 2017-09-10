@@ -23,21 +23,22 @@ def draw
   stroke(255)
   stroke_weight(3)
   no_fill
-  translate(stp, 0)
+  translate(stp, 0) # move line by stp
   shp1.draw
   @stp -= 1
 end
 
 def mouse_pressed
   distvec = Vec2D.new(mouse_x, mouse_y) - oldvec
-  vec_one = Vec2D.new(oldvec.x + (distvec.x * 0.25).to_i - stp, oldvec.y)
-  vec_two = Vec2D.new(oldvec.x - (distvec.x * 0.25).to_i - stp, mouse_y)
-  add_bezier(vec_one, vec_two)
+  point_one = RPoint.new(oldvec.x + adjust_x(distvec) - stp, oldvec.y)
+  point_two = RPoint.new(oldvec.x - adjust_x(distvec) - stp, mouse_y)
+  point_three = RPoint.new(mouse_x - stp, mouse_y)
+  shp1.add_bezier_to(point_one, point_two, point_three)
   @oldvec = Vec2D.new(mouse_x, mouse_y)
 end
 
 private
 
-def add_bezier(a, b)
-  shp1.add_bezier_to(a.x, a.y, b.x, b.y, mouse_x - stp, mouse_y)
+def adjust_x(vec)
+  (vec.x * 0.25).to_i
 end
