@@ -25,7 +25,6 @@ module Liquid
   java_import 'com.thomasdiewald.pixelflow.java.imageprocessing.filter.DwLiquidFX'
   java_import 'org.jbox2d.collision.shapes.PolygonShape'
   java_import 'org.jbox2d.common.Color3f'
-  java_import 'org.jbox2d.common.MathUtils'
   java_import 'org.jbox2d.common.Vec2'
   java_import 'org.jbox2d.dynamics.Body'
   java_import 'org.jbox2d.dynamics.BodyDef'
