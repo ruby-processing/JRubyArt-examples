@@ -2,7 +2,7 @@
 # Wave Machine Example.
 #
 # required libraries:
-#  - PixelFlow, https:#github.com/diwi/PixelFlow
+#  - PixelFlow, https://github.com/diwi/PixelFlow
 #
 #
 # Controls:
@@ -42,7 +42,7 @@ VIEWPORT_H = 720
 VIEWPORT_X = 230
 VIEWPORT_Y = 0
 
-attr_reader :m_time, :pg_particles, :world, :pixelflow, :liquidfx #, :sprite
+attr_reader :m_time, :pg_particles, :world, :pixelflow, :liquidfx
 attr_reader :update_physics, :use_debug_draw, :appl_liquid_fx, :m_joint
 def settings
   size(VIEWPORT_W, VIEWPORT_H, P2D)
@@ -51,7 +51,6 @@ end
 
 def setup
   surface.set_location(VIEWPORT_X, VIEWPORT_Y)
-  # @sprite = load_image(data_path('sprite.png'))
   @update_physics = true
   @use_debug_draw = false
   @appl_liquid_fx = true
@@ -60,7 +59,6 @@ def setup
   @pg_particles = create_graphics(width, height, P2D)
   @m_time = 0
   reset
-  frame_rate(120)
 end
 
 def release
