@@ -62,12 +62,12 @@ def setup
   context.print
   context.printGL
   # callback for rendering scene, implements DwSceneDisplay interface
-  display = lambda do |canvas|
+  scene_display = lambda do |canvas|
     canvas.background(32) if canvas == skylight.renderer.pg_render
     canvas.shape(shape)
   end
   # init skylight renderer
-  @skylight = DwSkyLight.new(context, display, mat_scene_bounds)
+  @skylight = DwSkyLight.new(context, scene_display, mat_scene_bounds)
   # parameters for sky-light
   param = skylight.sky.param
   param.iterations = 50
