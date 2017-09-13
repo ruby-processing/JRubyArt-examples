@@ -12,7 +12,6 @@ load_libraries :peasycam, :PixelFlow
 
 module Skylight # Namespace for java classes
   java_import 'com.thomasdiewald.pixelflow.java.DwPixelFlow'
-  # java_import 'com.thomasdiewald.pixelflow.java.render.skylight.DwSceneDisplay'
   java_import 'com.thomasdiewald.pixelflow.java.render.skylight.DwSkyLight'
   java_import 'com.thomasdiewald.pixelflow.java.utils.DwBoundingSphere'
   java_import 'com.thomasdiewald.pixelflow.java.utils.DwVertexRecorder'
@@ -42,8 +41,8 @@ end
 def setup
   surface.setLocation(VIEWPORT_X, VIEWPORT_Y)
   # camera
-  @peasycam = PeasyCam.new(self, -4.083,  -6.096,   7.000, 1500)
-  peasycam.set_rotations(1.085,  -0.477,   2.910)
+  @peasycam = PeasyCam.new(self, -4.083, -6.096, 7.000, 1500)
+  peasycam.set_rotations(1.085, -0.477, 2.910)
   peasycam.set_distance(100)
   @cam_pos = [0, 0, 0]
   @cam_active = false
@@ -62,45 +61,44 @@ def setup
   context = DwPixelFlow.new(self)
   context.print
   context.printGL
-  # callback DwSceneDisplay for rendering scene, implementa interface as a proc
-  display = -> (canvas) do
-    if(canvas == skylight.renderer.pg_render)
-      canvas.background(32)
-    end
+  # callback for rendering scene, implements DwSceneDisplay interface
+  display = lambda do |canvas|
+    canvas.background(32) if canvas == skylight.renderer.pg_render
     canvas.shape(shape)
   end
-
   # init skylight renderer
   @skylight = DwSkyLight.new(context, display, mat_scene_bounds)
   # parameters for sky-light
-  skylight.sky.param.iterations     = 50
-  skylight.sky.param.solar_azimuth  = 0
-  skylight.sky.param.solar_zenith   = 0
-  skylight.sky.param.sample_focus   = 1 # full sphere sampling
-  skylight.sky.param.intensity      = 1.0
-  skylight.sky.param.rgb            = [1.0, 1.0, 1.0]
-  skylight.sky.param.shadowmap_size = 256 # quality vs. performance
+  param = skylight.sky.param
+  param.iterations = 50
+  param.solar_azimuth = 0
+  param.solar_zenith = 0
+  param.sample_focus = 1 # full sphere sampling
+  param.intensity = 1.0
+  param.rgb = [1.0, 1.0, 1.0]
+  param.shadowmap_size = 256 # quality vs. performance
   # parameters for sun-light
-  skylight.sun.param.iterations     = 50
-  skylight.sun.param.solar_azimuth  = 45
-  skylight.sun.param.solar_zenith   = 55
-  skylight.sun.param.sample_focus   = 0.05
-  skylight.sun.param.intensity      = 1.0
-  skylight.sun.param.rgb            = [1.0, 1.0, 1.0]
-  skylight.sun.param.shadowmap_size = 512
+  param = skylight.sun.param
+  param.iterations = 50
+  param.solar_azimuth = 45
+  param.solar_zenith = 55
+  param.sample_focus = 0.05
+  param.intensity = 1.0
+  param.rgb = [1.0, 1.0, 1.0]
+  param.shadowmap_size = 512
   frame_rate(1000)
 end
 
 def draw
   # when the camera moves, the renderer restarts
   update_cam_active
-  skylight.reset if(cam_active)
+  skylight.reset if cam_active
   # update renderer
   skylight.update
   peasycam.beginHUD
   # display result
   image(skylight.renderer.pg_render, 0, 0)
-  #    image(skylight.sky.getSrc, 0, 0)
+  # image(skylight.sky.getSrc, 0, 0)
   peasycam.endHUD
   # some info, window title
   sun_pass = skylight.sun.RENDER_PASS
