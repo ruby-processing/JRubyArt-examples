@@ -48,12 +48,15 @@ Like the original `ruby-processing`, `JRubyArt` is like a DSL for vanilla `proce
    1. [Hype-processing][hype]
    2. [Hemesh][hemesh]
    3. [PixelFlow][flow]
+   4. [LiquidFunProcessing][liquid]
+   
 6. Others
    1. [WOVNS patterns][wovns]
 
 ### User contributions are most welcome
 [Contributions][] add your [own][]
 
+[liquid]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/LiquidFunProcessing
 [flow]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/PixelFlow
 [wovns]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/examples/WOVNS
 [Learning Processing with Ruby]:https://github.com/ruby-processing/learning-processing-with-ruby
