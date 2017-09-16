@@ -35,6 +35,11 @@ AA_MODE = { '1' => :NoAA,
             '4' => :FXAA,
             '5' => :GBAA }.freeze
 
+def color_float(a, b, c)
+  color(a, b, c)
+end
+java_alias :color_float, :color, [Java::float, Java::float, Java::float]
+
 def settings
   size(VIEWPORT_W, VIEWPORT_H, P3D)
   smooth(0)
@@ -89,6 +94,7 @@ def setup
   @gbaa = GBAA.new(context, scene_display)
   mag_h = (height / 2.5).to_i
   @magnifier = DwMagnifier.new(self, 4, 0, height - mag_h, mag_h, mag_h)
+  @shp_scene ||= nil
   frame_rate(1_000)
 end
 
@@ -190,8 +196,6 @@ def display_scene(canvas)
   scene_shape canvas
 end
 
-@shp_scene ||= nil
-
 def scene_shape(canvas)
   return canvas.shape(shp_scene) unless shp_scene.nil?
   @shp_scene = create_shape(GROUP)
@@ -217,7 +221,7 @@ def scene_shape(canvas)
     hsb_h = base + rand(-off..off)
     hsb_s = 1
     hsb_b = rand(0.1..1.0)
-    shading = color(hsb_h, hsb_s, hsb_b)
+    shading = color_float(hsb_h, hsb_s, hsb_b)
     shp_box = create_shape(BOX, sx, sy, sz)
     shp_box.set_fill(true)
     shp_box.set_stroke(false)
