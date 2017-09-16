@@ -1,5 +1,6 @@
 load_library :PixelFlow, :peasycam
 
+# java_imports
 module AA
   java_import 'com.thomasdiewald.pixelflow.java.DwPixelFlow'
   java_import 'com.thomasdiewald.pixelflow.java.antialiasing.FXAA.FXAA'
@@ -23,12 +24,17 @@ VIEWPORT_X = 230
 VIEWPORT_Y = 0
 GAMMA = 2.2
 BACKGROUND_COLOR = 32.0
-attr_reader :peasycam, :context, :fxaa, :smaa, :gbaa, :pg_render_noaa, :magnifier
+attr_reader :context, :fxaa, :smaa, :gbaa, :pg_render_noaa, :magnifier, :display
 attr_reader :pg_render_smaa, :pg_render_fxaa, :pg_render_msaa, :pg_render_gbaa
-attr_reader :aamode, :smaamode, :font12, :font48, :display, :shp_scene
+attr_reader :peasycam, :aamode, :smaamode, :font12, :font48, :shp_scene
+# replace java enum with ruby symbol and use hash key to select via keyboard
+SMAA_MODE = { 'q' => :EDGES, 'w' => :BLEND, 'e' => :FINAL }.freeze
+AA_MODE = { '1' => :NoAA,
+            '2' => :MSAA,
+            '3' => :SMAA,
+            '4' => :FXAA,
+            '5' => :GBAA }.freeze
 
-SMAA_MODE = { 'q' => :EDGES, 'w' => :BLEND, 'e' => :FINAL }
-AA_MODE =  { '1' => :NoAA, '2' => :MSAA, '3' => :SMAA, '4' => :FXAA, '5' => :GBAA }
 def settings
   size(VIEWPORT_W, VIEWPORT_H, P3D)
   smooth(0)
@@ -71,11 +77,11 @@ def setup
   pg_render_gbaa.textureSampling(5)
   scene_display = lambda do |canvas|
     # lights
-    canvas.directionalLight(255, 255, 255, 200,600,400)
-    canvas.directionalLight(255, 255, 255, -200,-600,-400)
-    canvas.ambientLight(64, 64, 64)
+    canvas.directional_light(255, 255, 255, 200, 600, 400)
+    canvas.directional_light(255, 255, 255, -200, -600, -400)
+    canvas.ambient_light(64, 64, 64)
     # canvas.shape(shape)
-    sceneShape(canvas)
+    scene_shape(canvas)
   end
   # AA post-processing modes
   @fxaa = FXAA.new(context)
@@ -89,33 +95,39 @@ end
 def draw
   case aamode
   when :MSAA
-    displaySceneWrap(pg_render_msaa)
+    display_scene_wrap(pg_render_msaa)
     # RGB gamma correction
     DwFilter.get(context).gamma.apply(pg_render_msaa, pg_render_msaa, GAMMA)
   when :NoAA, :SMAA, :FXAA
-    displaySceneWrap(pg_render_noaa)
+    display_scene_wrap(pg_render_noaa)
     # RGB gamma correction
     DwFilter.get(context).gamma.apply(pg_render_noaa, pg_render_noaa, GAMMA)
-    smaa.apply(pg_render_noaa, pg_render_smaa) if aamode == :SMAA
     fxaa.apply(pg_render_noaa, pg_render_fxaa) if aamode == :FXAA
+    if aamode == :SMAA
+      smaa.apply(pg_render_noaa, pg_render_smaa)
+      # only for debugging
+      filter = DwFilter.get(context).copy
+      filter.apply(smaa.tex_edges, pg_render_smaa) if smaamode == :EDGES
+      filter.apply(smaa.tex_blend, pg_render_smaa) if smaamode == :BLEND
+    end
   when :GBAA
-    displaySceneWrap(pg_render_noaa)
+    display_scene_wrap(pg_render_noaa)
     # RGB gamma correction
     DwFilter.get(context).gamma.apply(pg_render_noaa, pg_render_noaa, GAMMA)
     gbaa.apply(pg_render_noaa, pg_render_gbaa)
   end
-  case aamode
-  when :MSAA
-    @display = pg_render_msaa
-  when :SMAA
-    @display = pg_render_smaa
-  when :FXAA
-    @display = pg_render_fxaa
-  when :GBAA
-    @display = pg_render_gbaa
-  else
-    @display = pg_render_noaa
-  end
+  @display = case aamode
+             when :MSAA
+               pg_render_msaa
+             when :SMAA
+               pg_render_smaa
+             when :FXAA
+               pg_render_fxaa
+             when :GBAA
+               pg_render_gbaa
+             else
+               pg_render_noaa
+             end
   magnifier.apply(display, mouse_x, mouse_y)
   magnifier.display_tool
   peasycam.beginHUD
@@ -130,65 +142,59 @@ def draw
   mode = aamode.to_s
   buffer = ''
   if aamode == :SMAA
-    buffer = " [#{smaamode}]" if smaamode == :EGDES
+    buffer = " [#{smaamode}]" if smaamode == :EDGES
     buffer = " [#{smaamode}]" if smaamode == :BLEND
   end
-  noStroke
-  fill(0,150)
-  rect(0, height-65, magnifier.w, 65)
+  no_stroke
+  fill 0, 150
+  rect 0, height - 65, magnifier.w, 65
   tx = 10
   ty = 20
-  textFont(font12)
-  fill(200)
+  text_font font12
+  fill 200
   text('[1] NoAA', tx, ty)
-  text('[2] MSAA - MultiSample AA', tx, ty+=20)
-  text('[3] SMAA - SubPixel Morphological AA', tx, ty+=20)
-  text('[4] FXAA - Fast Approximate AA', tx, ty+=20)
-  text('[5] GBAA - GeometryBuffer AA', tx, ty+=20)
-
-  textFont(font48)
+  text('[2] MSAA - MultiSample AA', tx, ty += 20)
+  text('[3] SMAA - SubPixel Morphological AA', tx, ty += 20)
+  text('[4] FXAA - Fast Approximate AA', tx, ty += 20)
+  text('[5] GBAA - GeometryBuffer AA', tx, ty + 20)
+  text_font font48
   tx = 20
-  ty = height-20
-  fill(0)
-  text(mode + buffer, tx+2, ty+2)
-
-  fill(255,200,0)
-  text(mode + buffer, tx, ty)
-
-
+  ty = height - 20
+  fill 0
+  text mode << buffer, tx + 2, ty + 2
+  fill(255, 200, 0)
+  text mode, tx, ty
   peasycam.endHUD
-
   # some info, window title
   format_string = 'Anti Aliasing | fps: (%6.2f)'
-  surface.setTitle(format(format_string, frame_rate))
+  surface.set_title(format(format_string, frame_rate))
 end
 
-def displaySceneWrap(canvas)
-  canvas.beginDraw
-  DwGLTextureUtils.copyMatrices(g, canvas)
+def display_scene_wrap(canvas)
+  canvas.begin_draw
+  DwGLTextureUtils.copy_matrices(g, canvas)
   background_color_gamma = (BACKGROUND_COLOR / 255.0)**GAMMA * 255.0
   # background
-  canvas.blendMode(BLEND)
-  canvas.background(background_color_gamma)
-  displayScene(canvas)
-  canvas.endDraw
+  canvas.blend_mode BLEND
+  canvas.background background_color_gamma
+  display_scene canvas
+  canvas.end_draw
 end
 
 # render something
-def displayScene(canvas)
+def display_scene(canvas)
   # lights
-  canvas.directionalLight(255, 255, 255, 200,600,400)
-  canvas.directionalLight(255, 255, 255, -200,-600,-400)
-  canvas.ambientLight(64, 64, 64)
-  # canvas.shape(shape)
-  sceneShape(canvas)
+  canvas.directional_light(255, 255, 255, 200, 600, 400)
+  canvas.directional_light(255, 255, 255, -200, -600, -400)
+  canvas.ambient_light(64, 64, 64)
+  scene_shape canvas
 end
 
 @shp_scene ||= nil
 
-def sceneShape(canvas)
+def scene_shape(canvas)
   return canvas.shape(shp_scene) unless shp_scene.nil?
-  @shp_scene = createShape(GROUP)
+  @shp_scene = create_shape(GROUP)
   num_boxes = 50
   num_spheres = 50
   bb_size = 800
@@ -212,12 +218,12 @@ def sceneShape(canvas)
     hsb_s = 1
     hsb_b = rand(0.1..1.0)
     shading = color(hsb_h, hsb_s, hsb_b)
-    shp_box = createShape(BOX, sx, sy, sz)
-    shp_box.setFill(true)
-    shp_box.setStroke(false)
-    shp_box.setFill(shading)
+    shp_box = create_shape(BOX, sx, sy, sz)
+    shp_box.set_fill(true)
+    shp_box.set_stroke(false)
+    shp_box.set_fill(shading)
     shp_box.translate(px, py, sz / 2)
-    shp_scene.addChild(shp_box)
+    shp_scene.add_child(shp_box)
   end
   cube_smooth = DwCube.new(4)
   cube_facets = DwCube.new(2)
@@ -233,49 +239,29 @@ def sceneShape(canvas)
     hsb_s = rand(0.1..1.0)
     hsb_b = 1
     shading = color(hsb_h, hsb_s, hsb_b)
-    shp_sphere = createShape(PShape::GEOMETRY)
+    shp_sphere = create_shape(PShape::GEOMETRY)
     if facets
-      DwMeshUtils.createPolyhedronShape(shp_sphere, cube_facets, 1, 4, false)
+      DwMeshUtils.create_polyhedron_shape(shp_sphere, cube_facets, 1, 4, false)
     else
-      DwMeshUtils.createPolyhedronShape(shp_sphere, cube_smooth, 1, 4, true)
+      DwMeshUtils.create_polyhedron_shape(shp_sphere, cube_smooth, 1, 4, true)
     end
-    shp_sphere.setStroke(false)
-    shp_sphere.setStroke(color(0))
-    shp_sphere.setStrokeWeight(0.01 / rr)
-    shp_sphere.setFill(true)
-    shp_sphere.setFill(shading)
-    shp_sphere.resetMatrix
+    shp_sphere.set_stroke(false)
+    shp_sphere.set_stroke(color(0))
+    shp_sphere.set_stroke_weight(0.01 / rr)
+    shp_sphere.set_fill(true)
+    shp_sphere.set_fill(shading)
+    shp_sphere.reset_matrix
     shp_sphere.scale(rr)
     shp_sphere.translate(px, py, pz)
-    shp_scene.addChild(shp_sphere)
+    shp_scene.add_child(shp_sphere)
   end
   colorMode(RGB, 255, 255, 255)
-  shp_rect = createShape(RECT, -1000, -1000, 2000, 2000)
-  shp_rect.setStroke(false)
-  shp_rect.setFill(true)
-  shp_rect.setFill(color(255))
-  shp_scene.addChild(shp_rect)
+  shp_rect = create_shape(RECT, -1000, -1000, 2000, 2000)
+  shp_rect.set_stroke(false)
+  shp_rect.set_fill(true)
+  shp_rect.set_fill(color(255))
+  shp_scene.add_child(shp_rect)
 end
-
-# def create_grid_xy(lines, s)
-#   shp_gridxy = createShape
-#   shp_gridxy.beginShape(LINES)
-#   shp_gridxy.stroke(0)
-#   shp_gridxy.strokeWeight(1.0)
-#   d = lines * s
-#   (0..lines).each do |i|
-#     shp_gridxy.vertex(-d, -i * s, 0)
-#     shp_gridxy.vertex(d, -i * s, 0)
-#     shp_gridxy.vertex(-d, +i * s, 0)
-#     shp_gridxy.vertex(d, +i * s, 0)
-#     shp_gridxy.vertex(-i * s, -d, 0)
-#     shp_gridxy.vertex(-i * s, d, 0)
-#     shp_gridxy.vertex(+i * s, -d, 0)
-#     shp_gridxy.vertex(+i * s, d, 0)
-#   end
-#   shp_gridxy.endShape
-#   shp_gridxy
-# end
 
 def print_camera
   pos = peasycam.get_position
@@ -291,12 +277,7 @@ def print_camera
 end
 
 def key_released
-  case key
-  when '1', '2', '3', '4', '5'
-    @aamode = AA_MODE[key]
-  when 'q', 'w', 'e'
-    @smaamode = SMAA_MODE[key]
-  when 'c'
-    print_camera
-  end
+  @aamode = AA_MODE[key] if AA_MODE.key? key
+  @smaamode = SMAA_MODE[key] if SMAA_MODE.key? key
+  print_camera if key == 'c'
 end
