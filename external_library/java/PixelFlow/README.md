@@ -38,4 +38,4 @@ end
 @skylight = DwSkyLight.new(context, scene_display, mat_scene_bounds)
 ```
 
-In __antialiasing.rb__ if just use the overloaded `color` method jruby complains of overloaded method, but guesses right and chooses the correct java signature (float, float, float). Mainly to show how we can do it, we provide an alias method `color_float` that avoids the look up cost in detecting the correct signature, this is not generally important if you can put up with the warning. 
+In __antialiasing.rb__ if we just use the overloaded `color` method, jruby complains of overloaded method but guesses right and chooses the correct java signature (float, float, float). Mainly to show how we can do it, we provide an alias method `color_float` that avoids the look up cost in detecting the correct signature, this is not generally important if you can put up with the warning. 
