@@ -18,6 +18,11 @@ task :contributed do
   sh "cd #{K9WD}/contributed && rake"
 end
 
+desc 'PixelFlow'
+task :pixel_flow do
+  sh "cd #{K9WD}/external_library/java/PixelFlow && rake"
+end
+
 desc 'shaders'
 task :shaders do
   sh "cd #{K9WD}/processing_app/topics/shaders && rake"
