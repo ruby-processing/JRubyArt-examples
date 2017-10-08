@@ -3,7 +3,7 @@ load_library :PixelFlow
 java_import 'com.thomasdiewald.pixelflow.java.DwPixelFlow'
 java_import 'com.thomasdiewald.pixelflow.java.fluid.DwFluid2D'
 #
-# PixelFlow | Copyright (C) 2016 Thomas Diewald - http://thomasdiewald.com
+# PixelFlow | Copyright (C) 2016-17 Thomas Diewald - http://thomasdiewald.com
 # Modified for JrubyArt by Martin Prout
 # A Processing/Java library for high performance GPU-Computing (GLSL).
 # MIT License: https://opensource.org/licenses/MIT
@@ -38,7 +38,14 @@ def setup
   context.printGL
   # fluid simulation
   @fluid = DwFluid2D.new(context, VIEWPORT_W, VIEWPORT_H, fluidgrid_scale)
-  cb_fluid_data = lambda do |obj| # obj required for signature (but unused)
+  @fluidgrid_scale = 1
+  # set some simulation parameters
+  fluid.param.dissipation_density     = 0.98
+  fluid.param.dissipation_velocity    = 0.92
+  fluid.param.dissipation_temperature = 0.69
+  fluid.param.vorticity               = 0.10
+  # interface for adding data to the fluid simulation
+  fluid.addCallback_FluiData do # block for interface
     if mouse_pressed?
       vscale = 15
       px     = mouse_x
@@ -58,14 +65,6 @@ def setup
       end
     end
   end
-  @fluidgrid_scale = 1
-  # set some simulation parameters
-  fluid.param.dissipation_density     = 0.98
-  fluid.param.dissipation_velocity    = 0.92
-  fluid.param.dissipation_temperature = 0.69
-  fluid.param.vorticity               = 0.10
-  # interface for adding data to the fluid simulation
-  fluid.addCallback_FluiData(cb_fluid_data)
   # pgraphics for fluid
   @pg_fluid = create_graphics(VIEWPORT_W, VIEWPORT_H, P2D)
   pg_fluid.smooth(4)
