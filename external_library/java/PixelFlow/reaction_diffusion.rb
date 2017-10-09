@@ -1,7 +1,7 @@
 load_library :PixelFlow
 
-# PixelFlow | Copyright (C) 2016 Thomas Diewald - http://thomasdiewald.com
-# translated to JRubyArt by MArtihn Prout
+# PixelFlow | Copyright (C) 2016-17 Thomas Diewald - http://thomasdiewald.com
+# translated to JRubyArt by Martin Prout
 # A Processing/Java library for high performance GPU-Computing (GLSL).
 # MIT License: https://opensource.org/licenses/MIT
 module Reaction
@@ -50,29 +50,29 @@ def setup
   # tex_grayscott.resize(context, GL2::GL_RG16_SNORM, width, height, GL2::GL_RG, GL2::GL_FLOAT, GL2::GL_NEAREST, 2, 2)
 
   # glsl shader
-  @shader_grayscott = context.createShader(data_path('grayscott.frag'))
-  @shader_render = context.createShader(data_path('render.frag'))
+  @shader_grayscott = context.create_shader(data_path('grayscott.frag'))
+  @shader_render = context.create_shader(data_path('render.frag'))
   # init
   @tex_render = create_graphics(width, height, P2D)
   tex_render.smooth(0)
-  tex_render.beginDraw
-  tex_render.textureSampling(2)
-  tex_render.blendMode(REPLACE)
+  tex_render.begin_draw
+  tex_render.texture_sampling(2)
+  tex_render.blend_mode(REPLACE)
   tex_render.clear
-  tex_render.noStroke
+  tex_render.no_stroke
   tex_render.background(0x00FF0000) # NB: we can use hexadecimal in ruby
   tex_render.fill(0x0000FF00)
-  tex_render.noStroke
-  tex_render.rectMode(CENTER)
+  tex_render.no_stroke
+  tex_render.rect_mode(CENTER)
   tex_render.rect(width / 2, height / 2, 20, 20)
-  tex_render.endDraw
+  tex_render.end_draw
   # copy initial data to source texture
   DwFilter.get(context).copy.apply(tex_render, tex_grayscott.src)
   frame_rate(1_000)
 end
 
 def reaction_diffusion_pass
-  context.beginDraw(tex_grayscott.dst)
+  context.begin_draw(tex_grayscott.dst)
   shader_grayscott.begin
   shader_grayscott.uniform1f('dA', 1.0)
   shader_grayscott.uniform1f('dB', 0.5)
@@ -81,9 +81,9 @@ def reaction_diffusion_pass
   shader_grayscott.uniform1f('dt', 1)
   shader_grayscott.uniform2f('wh_rcp', 1.0 / width, 1.0 / height)
   shader_grayscott.uniformTexture('tex', tex_grayscott.src)
-  shader_grayscott.drawFullScreenQuad
+  shader_grayscott.draw_full_screen_quad
   shader_grayscott.end
-  context.endDraw('reaction_diffusion_pass')
+  context.end_draw('reaction_diffusion_pass')
   tex_grayscott.swap
   @pass += 1
 end
@@ -93,16 +93,16 @@ def draw
   context.begin
   100.times { reaction_diffusion_pass }
   # create display texture
-  context.beginDraw(tex_render)
+  context.begin_draw(tex_render)
   shader_render.begin
   shader_render.uniform2f('wh_rcp', 1.0 / width, 1.0 / height)
   shader_render.uniformTexture('tex', tex_grayscott.src)
   shader_render.drawFullScreenQuad
   shader_render.end
-  context.endDraw('render')
+  context.end_draw('render')
   context.end
   # put it on the screen
-  blendMode(REPLACE)
+  blend_mode(REPLACE)
   image(tex_render, 0, 0)
   save_frame(data_path('grayscott1.jpg')) if frame_count == 1_000
   format_string = 'Reaction Diffusion  [size %d/%d]  [frame %d]  [fps: (%6.2f)]'
