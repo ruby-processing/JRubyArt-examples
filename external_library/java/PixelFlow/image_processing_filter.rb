@@ -92,25 +92,22 @@ FILTERS = %w[
   Distance\ Transform\ /\ Voronoi Flow Min\ Max\ Mapping
 ]
 
-BLUR_RADIUS = 20
-GAUSSBLUR_SIGMA = BLUR_RADIUS / 2.0
+
 GAUSSBLUR_AUTO_SIGMA = true
 
 # bilateral filter
 BILATERAL_RADIUS = 5
 BILATERAL_SIGMA_COLOR = 0.3
 BILATERAL_SIGMA_SPACE = 5
-
-# laplace filter
-LAPLACE_WEIGHT = 1 # 0, 1, 2
+PEPPER = 1000
 
 attr_reader :img, :context, :flowfield, :minmax_global, :harris, :filter
 attr_reader :tex_A, :pg_src_A, :pg_src_B, :pg_src_C, :cp5, :display_filter
-attr_reader :convolution_kernel_index, :pepper, :pg_voronoi_centers
+attr_reader :convolution_kernel_index, :pg_voronoi_centers, :laplace_weight
 attr_reader :display_geometry, :display_image, :display_animations, :filter_stacks
 
 # animated rectangle data
-attr_reader :rs, :rx, :ry, :dx, :dy, :hide, :panel, :idx
+attr_reader :rs, :rx, :ry, :dx, :dy, :hide, :panel, :filters, :blur_radius, :gaussblur_sigma
 
 def settings
   size VIEW_WIDTH, VIEW_HEIGHT, P2D
@@ -126,7 +123,6 @@ def setup
   @display_geometry = true
   @display_animations = true
   @display_image = true
-  @pepper = 1000
   @rs = 80
   @rx = 600
   @ry = 600
@@ -167,8 +163,10 @@ def setup
   control_panel do |c|
     c.look_feel 'Nimbus'
     c.title 'Filters'
-    c.menu :idx, FILTERS
+    c.menu :filters, FILTERS, 'Bloom'
     c.menu :filter_stacks, %w[1 2 3 4 5 6 7 8 9], '1'
+    c.menu :laplace_weight, %w[0 1 2], '1'
+    c.slider :blur_radius, 1..120, 20
     c.checkbox :display_image, true
     c.checkbox :display_geometry, true
     c.checkbox :display_animations, true
@@ -183,7 +181,8 @@ def draw
     @hide = true
     panel.set_visible(hide)
   end
-  @display_filter = FILTERS.index(idx)
+  @display_filter = FILTERS.index(filters)
+  @gaussblur_sigma = blur_radius / 2.0
   w = VIEW_WIDTH
   h = VIEW_HEIGHT
   # update rectangle position
@@ -222,7 +221,7 @@ def draw
     pg_src_C.noFill
     pg_src_C.rect(w / 2, h / 2, 300, 300)
     srand(1)
-    pepper.times do
+    PEPPER.times do
       px = rand(20..w - 20)
       py = rand(20..h - 20)
       pg_src_C.no_stroke
@@ -261,7 +260,7 @@ def draw
     pg_src_A.rect(w / 2, h / 2, 300, 300)
 
     srand(1)
-    pepper.times do
+    PEPPER.times do
       px = rand(20..w - 20)
       py = rand(20..h - 20)
 
@@ -290,17 +289,17 @@ def draw
     swapAB
   when 1
     filter_stacks.to_i.times do
-      filter.boxblur.apply(pg_src_A, pg_src_A, pg_src_B, BLUR_RADIUS)
+      filter.boxblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius)
     end
   when 2
     filter_stacks.to_i.times do
       filter.summedareatable.setFormat(SummedAreaTable::InternalFormat::RGBA32F)
       filter.summedareatable.create(pg_src_A)
-      filter.summedareatable.apply(pg_src_A, BLUR_RADIUS)
+      filter.summedareatable.apply(pg_src_A, blur_radius)
     end
   when 3
     filter_stacks.to_i.times do
-      filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, BLUR_RADIUS, GAUSSBLUR_SIGMA)
+      filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius, gaussblur_sigma)
     end
   when 4
     filter.binomial.apply(pg_src_A, pg_src_A, pg_src_B, BinomialBlur::TYPE::_15x15)
@@ -336,12 +335,12 @@ def draw
     filter.merge.apply(pg_src_A, texA, texB)
   when 12
     filter_stacks.to_i.times do
-      filter.laplace.apply(pg_src_A, pg_src_B, Laplace::TYPE.values[LAPLACE_WEIGHT])
+      filter.laplace.apply(pg_src_A, pg_src_B, Laplace::TYPE.values[laplace_weight.to_i])
       swapAB
     end
   when 13
-    filter.dog.param.kernel_A = BLUR_RADIUS * 2
-    filter.dog.param.kernel_B = BLUR_RADIUS * 1
+    filter.dog.param.kernel_A = blur_radius * 2
+    filter.dog.param.kernel_B = blur_radius * 1
     filter.dog.param.mult  = 2.5
     filter.dog.param.shift = 0.5
     filter.dog.apply(pg_src_A, pg_src_B, pg_src_C)
@@ -350,7 +349,7 @@ def draw
     filter.median.apply(pg_src_A, pg_src_B, Median::TYPE::_3x3_)
     swapAB
     filter_stacks.to_i.times do
-      filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, BLUR_RADIUS, GAUSSBLUR_SIGMA)
+      filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius, gaussblur_sigma)
     end
     filter.sobel.apply(pg_src_A, pg_src_B, Sobel::TYPE::_3x3_HORZ)
     swapAB
@@ -358,9 +357,9 @@ def draw
     filter.median.apply(pg_src_A, pg_src_B, Median::TYPE::_3x3_)
     swapAB
     filter_stacks.to_i.times do
-      filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, BLUR_RADIUS, GAUSSBLUR_SIGMA)
+      filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius, gaussblur_sigma)
     end
-    filter.laplace.apply(pg_src_A, pg_src_B, Laplace::TYPE.values[LAPLACE_WEIGHT])
+    filter.laplace.apply(pg_src_A, pg_src_B, Laplace::TYPE.values[laplace_weight.to_i])
     swapAB
   when 16
     harris.update(pg_src_A)
@@ -372,7 +371,7 @@ def draw
   when 17
     filter.bloom.apply(pg_src_C, pg_src_C, pg_src_A)
   when 18
-    # filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, BLUR_RADIUS)
+    # filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius)
     filter.luminance_threshold.apply(pg_src_A, pg_src_A)
   when 19
     filter.luminance_threshold.apply(pg_src_A, pg_src_B)
@@ -392,7 +391,7 @@ def draw
     swapAC
   when 21
     filter_stacks.to_i.times do
-      filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, BLUR_RADIUS, GAUSSBLUR_SIGMA)
+      filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius, gaussblur_sigma)
     end
     filter.luminance.apply(pg_src_A, pg_src_B)
     flowfield.create(pg_src_B)
