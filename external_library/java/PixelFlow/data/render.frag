@@ -1,7 +1,6 @@
 // file: render.frag
 // author: diewald
-
-#version 150
+#version 410
 
 out vec4 fragColor;
 

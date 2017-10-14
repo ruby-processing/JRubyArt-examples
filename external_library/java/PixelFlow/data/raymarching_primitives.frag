@@ -1,3 +1,4 @@
+
 #version 150
 
 #define SAMPLER0 sampler2D // sampler2D, sampler3D, samplerCube
@@ -401,3 +402,12 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     
     fragColor = vec4( tot, 1.0 );
 }
+
+
+
+
+
+
+
+
+
