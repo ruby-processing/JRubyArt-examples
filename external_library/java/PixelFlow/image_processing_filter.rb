@@ -92,9 +92,7 @@ FILTERS = %w[
   Distance\ Transform\ /\ Voronoi Flow Min\ Max\ Mapping None
 ]
 
-
 GAUSSBLUR_AUTO_SIGMA = true
-
 # bilateral filter
 BILATERAL_RADIUS = 5
 BILATERAL_SIGMA_COLOR = 0.3
@@ -102,12 +100,10 @@ BILATERAL_SIGMA_SPACE = 5
 PEPPER = 1000
 
 attr_reader :img, :context, :flowfield, :minmax_global, :harris, :filter
-attr_reader :tex_A, :pg_src_A, :pg_src_B, :pg_src_C, :cp5, :display_filter
+attr_reader :tex_A, :pg_src_A, :pg_src_B, :pg_src_C, :cp5, :current, :hide
 attr_reader :convolution_kernel_index, :pg_voronoi_centers, :laplace_weight
-attr_reader :show_geom, :show_image, :animations, :passes
-
-# animated rectangle data
-attr_reader :rs, :vel, :pos, :dx, :dy, :hide, :panel, :filters, :blur_radius, :gaussblur_sigma
+attr_reader :show_geom, :show_image, :animations, :passes, :gaussblur_sigma
+attr_reader :rs, :vel, :pos, :panel, :filters, :blur_radius, :conv_kernel_idx
 
 def settings
   size VIEW_WIDTH, VIEW_HEIGHT, P2D
@@ -117,12 +113,6 @@ end
 def setup
   @img = load_image(data_path('mc_escher.jpg'))
   @context = DwPixelFlow.new(self)
-  @display_filter = 17
-  @convolution_kernel_index = 1
-  @passes = 1
-  @show_geom = true
-  @animations = true
-  @show_image = true
   @rs = 80
   @pos = Vec2D.new(600, 600)
   @vel = Vec2D.new(0.6, 0.25)
@@ -136,9 +126,9 @@ def setup
   pg_src_A.smooth(8)
   @pg_src_B = create_graphics(VIEW_WIDTH, VIEW_HEIGHT, P2D)
   pg_src_B.smooth(8)
-  pg_src_B.beginDraw
+  pg_src_B.begin_draw
   pg_src_B.clear
-  pg_src_B.endDraw
+  pg_src_B.end_draw
   @pg_src_C = create_graphics(VIEW_WIDTH, VIEW_HEIGHT, P2D)
   pg_src_C.smooth(8)
   @tex_A = DwGLTexture.new
@@ -162,6 +152,7 @@ def setup
     c.look_feel 'Nimbus'
     c.title 'Filter Chooser and Settings'
     c.menu :filters, FILTERS, 'Bloom'
+    c.menu :conv_kernel_idx, %w[1 2 3 4 5 6 7 8 9 10], '1'
     c.menu :passes, %w[1 2 3 4 5 6 7 8 9], '1'
     c.menu :laplace_weight, %w[0 1 2], '1'
     c.slider :blur_radius, 1..120, 20
@@ -179,7 +170,8 @@ def draw
     @hide = true
     panel.set_visible(hide)
   end
-  @display_filter = FILTERS.index(filters)
+  @current = FILTERS.index(filters)
+  @convolution_kernel_index = conv_kernel_idx.to_i
   @gaussblur_sigma = blur_radius / 2.0
   w = VIEW_WIDTH
   h = VIEW_HEIGHT
@@ -211,11 +203,11 @@ def draw
     pg_src_C.line(w, 0, 0, h)
     pg_src_C.stroke_weight(1)
     pg_src_C.stroke(0, 255, 0)
-    pg_src_C.noFill
+    pg_src_C.no_fill
     pg_src_C.ellipse(w / 2, h / 2, 150, 150)
     pg_src_C.stroke_weight(1)
     pg_src_C.stroke(0, 255, 0)
-    pg_src_C.noFill
+    pg_src_C.no_fill
     pg_src_C.rect(w / 2, h / 2, 300, 300)
     srand(1)
     PEPPER.times do
@@ -226,61 +218,51 @@ def draw
       pg_src_C.rect(px, py, 2, 2)
     end
   end
-  pg_src_C.endDraw
+  pg_src_C.end_draw
   # update input image
-  pg_src_A.beginDraw
-
-  pg_src_A.rectMode(CENTER)
+  pg_src_A.begin_draw
+  pg_src_A.rect_mode(CENTER)
   pg_src_A.clear
   pg_src_A.background(255)
-
   if show_image
     pg_src_A.image(img, 0, 0)
   end
-
   if show_geom
-    pg_src_A.strokeWeight(1)
+    pg_src_A.stroke_weight(1)
     pg_src_A.stroke(0)
     pg_src_A.line(w / 2, 0, w / 2, h)
     pg_src_A.line(0, h / 2, w, h / 2)
     pg_src_A.line(0, 0, w, h)
     pg_src_A.line(w, 0, 0, h)
-
-    pg_src_A.strokeWeight(1)
+    pg_src_A.stroke_weight(1)
     pg_src_A.stroke(0)
-    pg_src_A.noFill
+    pg_src_A.no_fill
     pg_src_A.ellipse(w / 2, h / 2, 150, 150)
-
-    pg_src_A.strokeWeight(1)
+    pg_src_A.stroke_weight(1)
     pg_src_A.stroke(0)
-    pg_src_A.noFill
+    pg_src_A.no_fill
     pg_src_A.rect(w / 2, h / 2, 300, 300)
-
     srand(1)
     PEPPER.times do
       px = rand(20..w - 20)
       py = rand(20..h - 20)
-
       pg_src_A.no_stroke
       pg_src_A.fill(0)
       pg_src_A.rect(px, py, 1, 1)
     end
   end
-
   if animations
     # moving rectangle
     pg_src_A.fill(100, 175, 255)
     pg_src_A.rect(pos.x, pos.y, rs, rs)
-
     # mouse-driven ellipse
     pg_src_A.fill(255, 150, 0)
-    pg_src_A.noStroke
+    pg_src_A.no_stroke
     pg_src_A.ellipse(mouse_x, mouse_y, 100, 100)
   end
-
-  pg_src_A.endDraw
+  pg_src_A.end_draw
   # apply filters
-  case(display_filter)
+  case(current)
   when 0
     filter.luminance.apply(pg_src_A, pg_src_B)
     swapAB
@@ -375,13 +357,13 @@ def draw
     # filter.bloom.apply(pg_src_B, pg_src_A)
     filter.bloom.apply(pg_src_B, pg_src_B, pg_src_A)
   when 20
-    pg_src_B.beginDraw
+    pg_src_B.begin_draw
     pg_src_B.background(0)
-    pg_src_B.noStroke
+    pg_src_B.no_stroke
     pg_src_B.fill(255)
     pg_src_B.rectMode(CENTER)
-    pg_src_B.ellipse(mouseX, mouseY, 200, 200)
-    pg_src_B.endDraw
+    pg_src_B.ellipse(mouse_x, mouse_y, 200, 200)
+    pg_src_B.end_draw
     filter.distancetransform.param.FG_mask = [1.0, 1.0, 1.0, 1.0]
     filter.distancetransform.create(pg_voronoi_centers)
     filter.distancetransform.apply(pg_src_A, pg_src_C)
@@ -398,8 +380,8 @@ def draw
     flowfield.param.line_width = 1.0
     flowfield.param.line_spacing = 10
     flowfield.param.line_shading = 0
-    flowfield.displayPixel(pg_src_A)
-    flowfield.displayLines(pg_src_A)
+    flowfield.display_pixel(pg_src_A)
+    flowfield.display_lines(pg_src_A)
   when 22
     filter.copy.apply(pg_src_A, tex_A)
     minmax_global.apply(tex_A)
