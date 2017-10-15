@@ -107,7 +107,7 @@ attr_reader :convolution_kernel_index, :pg_voronoi_centers, :laplace_weight
 attr_reader :show_geom, :show_image, :animations, :passes
 
 # animated rectangle data
-attr_reader :rs, :rx, :ry, :dx, :dy, :hide, :panel, :filters, :blur_radius, :gaussblur_sigma
+attr_reader :rs, :vel, :pos, :dx, :dy, :hide, :panel, :filters, :blur_radius, :gaussblur_sigma
 
 def settings
   size VIEW_WIDTH, VIEW_HEIGHT, P2D
@@ -124,10 +124,8 @@ def setup
   @animations = true
   @show_image = true
   @rs = 80
-  @rx = 600
-  @ry = 600
-  @dx = 0.6
-  @dy = 0.25
+  @pos = Vec2D.new(600, 600)
+  @vel = Vec2D.new(0.6, 0.25)
   context.print
   context.printGL
   @flowfield = DwFlowField.new(context)
@@ -186,21 +184,20 @@ def draw
   w = VIEW_WIDTH
   h = VIEW_HEIGHT
   # update rectangle position
-  @rx += dx
-  @ry += dy
+  @pos += vel
   # keep inside viewport
-  if rx < rs / 2
-    @rx = rs / 2
-    @dx = -dx
-  elsif rx > w - rs / 2
-    @rx = w - rs / 2
-    @dx = -dx
-  elsif ry < rs / 2
-    @ry = rs/2
-    @dy = -dy
-  elsif ry > h - rs / 2
-    @ry = h - rs / 2
-    @dy = -dy
+  if pos.x < rs / 2
+    pos.x = rs / 2
+    vel.x *= -1
+  elsif pos.x > w - rs / 2
+    pos.x = w - rs / 2
+    vel.x *= -1
+  elsif pos.y < rs / 2
+    pos.y = rs / 2
+    vel.y *= -1
+  elsif pos.y > h - rs / 2
+    pos.y = h - rs / 2
+    vel.y *= -1
   end
   pg_src_C.begin_draw
   pg_src_C.rect_mode(CENTER)
@@ -273,12 +270,12 @@ def draw
   if animations
     # moving rectangle
     pg_src_A.fill(100, 175, 255)
-    pg_src_A.rect(rx, ry, rs, rs)
+    pg_src_A.rect(pos.x, pos.y, rs, rs)
 
     # mouse-driven ellipse
     pg_src_A.fill(255, 150, 0)
     pg_src_A.noStroke
-    pg_src_A.ellipse(mouseX, mouseY, 100, 100)
+    pg_src_A.ellipse(mouse_x, mouse_y, 100, 100)
   end
 
   pg_src_A.endDraw
