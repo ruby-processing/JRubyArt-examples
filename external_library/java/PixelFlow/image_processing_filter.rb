@@ -89,7 +89,7 @@ FILTERS = %w[
   sobel\ 3x3\ horz sobel\ 3x3\ horz/vert laplace Dog median\ +\ gauss\ +\ laplace
   median\ +\ gauss\ +\ sobel(H) Harris\ Corner\ Detection Bloom
   Luminance\ Threshold Luminance\ Threshold\ +\ Bloom
-  Distance\ Transform\ /\ Voronoi Flow Min\ Max\ Mapping
+  Distance\ Transform\ /\ Voronoi Flow Min\ Max\ Mapping None
 ]
 
 
@@ -104,7 +104,7 @@ PEPPER = 1000
 attr_reader :img, :context, :flowfield, :minmax_global, :harris, :filter
 attr_reader :tex_A, :pg_src_A, :pg_src_B, :pg_src_C, :cp5, :display_filter
 attr_reader :convolution_kernel_index, :pg_voronoi_centers, :laplace_weight
-attr_reader :display_geometry, :display_image, :display_animations, :filter_stacks
+attr_reader :show_geom, :show_image, :animations, :passes
 
 # animated rectangle data
 attr_reader :rs, :rx, :ry, :dx, :dy, :hide, :panel, :filters, :blur_radius, :gaussblur_sigma
@@ -119,10 +119,10 @@ def setup
   @context = DwPixelFlow.new(self)
   @display_filter = 17
   @convolution_kernel_index = 1
-  @filter_stacks = 1
-  @display_geometry = true
-  @display_animations = true
-  @display_image = true
+  @passes = 1
+  @show_geom = true
+  @animations = true
+  @show_image = true
   @rs = 80
   @rx = 600
   @ry = 600
@@ -154,7 +154,7 @@ def setup
   pg_voronoi_centers.begin_draw
   pg_voronoi_centers.background(0)
   pg_voronoi_centers.stroke(255)
-  grid(height, width, gap, gap) do |x, y|
+  grid(width, height, gap, gap) do |x, y|
     px = x + rand(gap)
     py = y + rand(gap)
     pg_voronoi_centers.point(px + 0.5,  py + 0.5)
@@ -162,14 +162,14 @@ def setup
   pg_voronoi_centers.end_draw
   control_panel do |c|
     c.look_feel 'Nimbus'
-    c.title 'Filters'
+    c.title 'Filter Chooser and Settings'
     c.menu :filters, FILTERS, 'Bloom'
-    c.menu :filter_stacks, %w[1 2 3 4 5 6 7 8 9], '1'
+    c.menu :passes, %w[1 2 3 4 5 6 7 8 9], '1'
     c.menu :laplace_weight, %w[0 1 2], '1'
     c.slider :blur_radius, 1..120, 20
-    c.checkbox :display_image, true
-    c.checkbox :display_geometry, true
-    c.checkbox :display_animations, true
+    c.checkbox :show_image, true
+    c.checkbox :show_geom, true
+    c.checkbox :animations, true
     @panel = c
   end
   # frame_rate(60)
@@ -205,7 +205,7 @@ def draw
   pg_src_C.begin_draw
   pg_src_C.rect_mode(CENTER)
   pg_src_C.background(0)
-  if display_geometry
+  if show_geom
     pg_src_C.stroke_weight(1)
     pg_src_C.stroke(0, 255, 0)
     pg_src_C.line(w / 2, 0, w / 2, h)
@@ -237,11 +237,11 @@ def draw
   pg_src_A.clear
   pg_src_A.background(255)
 
-  if display_image
+  if show_image
     pg_src_A.image(img, 0, 0)
   end
 
-  if display_geometry
+  if show_geom
     pg_src_A.strokeWeight(1)
     pg_src_A.stroke(0)
     pg_src_A.line(w / 2, 0, w / 2, h)
@@ -270,7 +270,7 @@ def draw
     end
   end
 
-  if display_animations
+  if animations
     # moving rectangle
     pg_src_A.fill(100, 175, 255)
     pg_src_A.rect(rx, ry, rs, rs)
@@ -288,28 +288,28 @@ def draw
     filter.luminance.apply(pg_src_A, pg_src_B)
     swapAB
   when 1
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.boxblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius)
     end
   when 2
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.summedareatable.setFormat(SummedAreaTable::InternalFormat::RGBA32F)
       filter.summedareatable.create(pg_src_A)
       filter.summedareatable.apply(pg_src_A, blur_radius)
     end
   when 3
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius, gaussblur_sigma)
     end
   when 4
     filter.binomial.apply(pg_src_A, pg_src_A, pg_src_B, BinomialBlur::TYPE::_15x15)
   when 5
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.bilateral.apply(pg_src_A, pg_src_B, BILATERAL_RADIUS, BILATERAL_SIGMA_COLOR, BILATERAL_SIGMA_SPACE)
       swapAB
     end
   when 6
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.convolution.apply(pg_src_A, pg_src_B, KERNEL[convolution_kernel_index].to_java(:float))
       swapAB
     end
@@ -317,7 +317,7 @@ def draw
     filter.median.apply(pg_src_A, pg_src_B, Median::TYPE::_3x3_)
     swapAB
   when 8
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.median.apply(pg_src_A, pg_src_B, Median::TYPE::_5x5_)
       swapAB
     end
@@ -334,7 +334,7 @@ def draw
     texB = Merge::TexMad.new(pg_src_C, 0.5, 0.0)
     filter.merge.apply(pg_src_A, texA, texB)
   when 12
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.laplace.apply(pg_src_A, pg_src_B, Laplace::TYPE.values[laplace_weight.to_i])
       swapAB
     end
@@ -348,7 +348,7 @@ def draw
   when 14
     filter.median.apply(pg_src_A, pg_src_B, Median::TYPE::_3x3_)
     swapAB
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius, gaussblur_sigma)
     end
     filter.sobel.apply(pg_src_A, pg_src_B, Sobel::TYPE::_3x3_HORZ)
@@ -356,7 +356,7 @@ def draw
   when 15
     filter.median.apply(pg_src_A, pg_src_B, Median::TYPE::_3x3_)
     swapAB
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius, gaussblur_sigma)
     end
     filter.laplace.apply(pg_src_A, pg_src_B, Laplace::TYPE.values[laplace_weight.to_i])
@@ -390,7 +390,7 @@ def draw
     filter.distancetransform.apply(pg_src_A, pg_src_C)
     swapAC
   when 21
-    filter_stacks.to_i.times do
+    passes.to_i.times do
       filter.gaussblur.apply(pg_src_A, pg_src_A, pg_src_B, blur_radius, gaussblur_sigma)
     end
     filter.luminance.apply(pg_src_A, pg_src_B)
