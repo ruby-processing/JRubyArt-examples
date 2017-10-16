@@ -12,17 +12,19 @@ def setup
   @back_color = color(0, 0, 0)
   cp5 = ControlP5.new(self)
   group_fluid = cp5.addGroup('groceries')
-                   .setPosition(20,20)
+                   .setPosition(20, 20)
                    .setBackgroundHeight(100)
-                   .setBackgroundColor(color(255,50))
+                   .setBackgroundColor(color(255, 50))
   cp5.addButton('fish')
-     .setPosition(10,20)
-     .setSize(80,20)
+     .setPosition(10, 20)
+     .setSize(80, 20)
      .setGroup('groceries')
-     .addListener { |event| puts event }
+     .activateBy(ControlP5::RELEASE)
+     .setValue(9)
+     .addListener { |event| puts event.getValue }
   cp5.addButton('fruit')
-     .setPosition(10,60)
-     .setSize(80,20)
+     .setPosition(10, 60)
+     .setSize(80, 20)
      .setGroup('groceries')
      .addListener { |event| puts event }
 end
