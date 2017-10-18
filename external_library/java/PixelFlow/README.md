@@ -45,4 +45,4 @@ The ControlP5 library is overly complicated and does not seem to work well with 
 
 
 [p5]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/controlP5
-[basic]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/basic_fluid.rb
+[basic]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/PixelFlow/basic_fluid.rb
