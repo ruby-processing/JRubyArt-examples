@@ -11,14 +11,16 @@ load_libraries :PixelFlow, :controlP5
 
 java_import 'com.thomasdiewald.pixelflow.java.DwPixelFlow'
 java_import 'com.thomasdiewald.pixelflow.java.fluid.DwFluid2D'
-
 java_import 'controlP5.Accordion'
 java_import 'controlP5.ControlP5'
 java_import 'controlP5.Group'
 java_import 'controlP5.RadioButton'
 java_import 'controlP5.Toggle'
+java_import 'controlP5.ControlListener'
 
+include ControlListener
 
+DISPLAY_MODE = %w[Density Temperature Pressure Velocity]
 
 # This example shows a very basic fluid simulation setup.
 # Multiple emitters add velocity/temperature/density each iteration.
@@ -43,8 +45,8 @@ BACKGROUND_COLOR = 0
 attr_reader :context, :fluid, :obstacle_painter, :pg_fluid, :pg_obstacles
 attr_reader :update_fluid, :display_fluid_textures, :display_fluid_vectors
 attr_reader :display_fluid_texture_mode, :cp5, :fluidgrid_scale, :gui_w
-attr_reader :gui_x, :gui_y, :mouse_input
-
+attr_reader :gui_x, :gui_y, :mouse_input, :rb_setdisplay_mode, :group_fluid
+attr_reader :background_color, :iterations
 def settings
   size(VIEWPORT_W, VIEWPORT_H, P2D)
   smooth(2)
@@ -55,6 +57,7 @@ def setup
   @display_fluid_textures     = true
   @display_fluid_vectors      = false
   @display_fluid_texture_mode = 0
+  @background_color = 0
   # main library context
   @context = DwPixelFlow.new(self)
   context.print
@@ -66,17 +69,9 @@ def setup
 
   # fluid simulation
   @fluid = DwFluid2D.new(context, VIEWPORT_W, VIEWPORT_H, fluidgrid_scale)
-
-  # set some simulation parameters
-  fluid.param.dissipation_density     = 0.999
-  fluid.param.dissipation_velocity    = 0.99
-  fluid.param.dissipation_temperature = 0.80
-  fluid.param.vorticity               = 0.10
-
   # interface for adding data to the fluid simulation
-
-  cb_fluid_data = lambda do |obj|
-    # add impulse: density + temperature
+  fluid.addCallback_FluiData do
+   # add impulse: density + temperature
     intensity = 1.0
     px = 1 * width / 3
     py = 0
@@ -119,20 +114,16 @@ def setup
       py     = height-mouse_y
       vx     = (mouse_x - pmouse_x) * +vscale
       vy     = (mouse_y - pmouse_y) * -vscale
-
       fluid.add_density(px, py, radius, 0.25, 0.0, 0.1, 1.0)
       fluid.add_velocity(px, py, radius, vx, vy)
     end
   end
-  fluid.addCallback_FluiData(cb_fluid_data)
-
   # pgraphics for fluid
   @pg_fluid = create_graphics(VIEWPORT_W, VIEWPORT_H, P2D)
   pg_fluid.smooth(4)
   pg_fluid.begin_draw
-  pg_fluid.background(BACKGROUND_COLOR)
+  pg_fluid.background(background_color)
   pg_fluid.end_draw
-
   # pgraphics for obstacles
   @pg_obstacles = create_graphics(VIEWPORT_W, VIEWPORT_H, P2D)
   pg_obstacles.smooth(0)
@@ -158,7 +149,7 @@ def setup
   pg_obstacles.noFill
   pg_obstacles.rect(0, 0, pg_obstacles.width, pg_obstacles.height)
   pg_obstacles.end_draw
-  @cp5 = createGUI
+  createGUI
   # class, that manages interactive drawing (adding/removing) of obstacles
   @obstacle_painter = ObstaclePainter.new(pg_obstacles)
   @mouse_input = !cp5.isMouseOver && mousePressed && !obstacle_painter.drawing?
@@ -173,10 +164,10 @@ def draw
   end
   # clear render target
   pg_fluid.begin_draw
-  pg_fluid.background(BACKGROUND_COLOR)
+  pg_fluid.background(background_color)
   pg_fluid.end_draw
   # render fluid stuff
-  if(display_fluid_textures)
+  if display_fluid_textures
     # render: density (0), temperature (1), pressure (2), velocity (3)
     fluid.renderFluidTextures(pg_fluid, display_fluid_texture_mode)
   end
@@ -214,7 +205,7 @@ def resize_down
   fluid.resize(width, height, fluidgrid_scale)
 end
 
-def fluid_reset
+def reset!
   fluid.reset
 end
 
@@ -235,29 +226,15 @@ def key_released
   case key
   when 'p'
     toggle_pause # pause / unpause simulation
-  when '+'
-    resize_up    # increase fluid-grid resolution
-  when '-'
-    resize_down  # decrease fluid-grid resolution
   when 'r'
-    fluid_reset       # restart simulation
-  when '1'
-    @display_fluid_texture_mode = 0 # density
-  when '2'
-    @display_fluid_texture_mode = 1 # temperature
-  when '3'
-    @display_fluid_texture_mode = 2 # pressure
-  when '4'
-    @display_fluid_texture_mode = 3 # velocity
-  when 'q'
-    @display_fluid_textures = !display_fluid_textures
-  when 'w'
-    @display_fluid_vectors = !display_fluid_vectors
+    reset!
+  when 's'
+    cp5.save_properties(data_path('fluid_basic.json'))
   end
 end
 
 def createGUI
-  cp5 = ControlP5.new(self)
+  @cp5 = ControlP5.new(self)
   sx = 100
   sy = 14
   oy = (sy * 1.5).to_i
@@ -274,79 +251,70 @@ def createGUI
   py = 15
   cp5.addButton('reset')
      .setGroup(group_fluid)
-     .plugTo(self, 'fluid_reset')
      .setSize(80, 18)
      .setPosition(px, py)
+     .addListener { reset! }
   cp5.addButton('+')
      .setGroup(group_fluid)
-     .plugTo(self, 'resize_up'  )
      .setSize(39, 18)
      .setPosition(px += 82, py)
+     .addListener { resize_up }
   cp5.addButton('-')
      .setGroup(group_fluid)
-     .plugTo(self, 'resize_down')
      .setSize(39, 18)
      .setPosition(px += 41, py)
+     .addListener { resize_down }
   px = 10
   cp5.addSlider('velocity')
      .setGroup(group_fluid)
      .setSize(sx, sy)
      .setPosition(px, py += (oy*1.5).to_i)
      .setRange(0, 1)
-     .setValue(fluid.param.dissipation_velocity)
-     .plugTo(fluid.param, 'dissipation_velocity')
+     .setValue(1.0)
   cp5.addSlider('density')
      .setGroup(group_fluid)
      .setSize(sx, sy)
      .setPosition(px, py += oy)
      .setRange(0, 1)
-     .setValue(fluid.param.dissipation_density)
-     .plugTo(fluid.param, 'dissipation_density')
+     .setValue(0.99)
   cp5.addSlider('temperature')
      .setGroup(group_fluid)
      .setSize(sx, sy)
      .setPosition(px, py += oy)
      .setRange(0, 1)
-     .setValue(fluid.param.dissipation_temperature)
-     .plugTo(fluid.param, 'dissipation_temperature')
+     .setValue(0.8)
   cp5.addSlider('vorticity')
      .setGroup(group_fluid)
      .setSize(sx, sy)
      .setPosition(px, py += oy)
      .setRange(0, 1)
-     .setValue(fluid.param.vorticity)
-     .plugTo(fluid.param, 'vorticity')
+     .setValue(0.1)
   cp5.addSlider('iterations')
      .setGroup(group_fluid)
      .setSize(sx, sy)
      .setPosition(px, py += oy)
      .setRange(0, 80)
-     .setValue(fluid.param.num_jacobi_projection)
-     .plugTo(fluid.param, 'num_jacobi_projection')
+     .setValue(40)
   cp5.addSlider('timestep')
      .setGroup(group_fluid).setSize(sx, sy).setPosition(px, py += oy)
      .setRange(0, 1)
-     .setValue(fluid.param.timestep)
-     .plugTo(fluid.param, 'timestep')
+     .setValue(0.125)
   cp5.addSlider('gridscale')
      .setGroup(group_fluid)
      .setSize(sx, sy)
      .setPosition(px, py += oy)
      .setRange(0, 50)
-     .setValue(fluid.param.gridscale)
-     .plugTo(fluid.param, 'gridscale')
-  rb_setdisplay_mode = cp5.addRadio('display_mode')
-                          .setGroup(group_fluid)
-                          .setSize(80,18)
-                          .setPosition(px, py += (oy*1.5).to_i)
-                          .setSpacingColumn(2)
-                          .setSpacingRow(2)
-                          .setItemsPerRow(2)
-                          .addItem('Density', 0)
-                          .addItem('Temperature', 1)
-                          .addItem('Pressure', 2)
-                          .addItem('Velocity', 3)
-                          .activate(display_fluid_texture_mode)
+     .setValue(1)
+     @rb_setdisplay_mode = cp5.addRadio('display_mode')
+                             .setGroup(group_fluid)
+                             .setSize(80, 18)
+                             .setPosition(px, py += (oy*1.5).to_i)
+                             .setSpacingColumn(2)
+                             .setSpacingRow(2)
+                             .setItemsPerRow(2)
+  DISPLAY_MODE.each_with_index do |item, i|
+    rb_setdisplay_mode.addItem item, i
+  end
   rb_setdisplay_mode.getItems.each do |toggle|
     toggle.getCaptionLabel.alignX(CENTER)
   end
@@ -358,7 +326,7 @@ def createGUI
      .setSpacingRow(2)
      .setItemsPerRow(1)
      .addItem('Velocity Vectors', 0)
-     .activate(display_fluid_vectors ? 0 : 2)
+     #.activate(display_fluid_vectors ? 0 : 2)
   ##########################################
   # GUI - DISPLAY
   ##########################################
@@ -370,13 +338,12 @@ def createGUI
   group_display.getCaptionLabel.align(CENTER, CENTER)
   px = 10
   py = 15
-  cp5.addSlider('BACKGROUND')
+  cp5.addSlider('background')
      .setGroup(group_display)
      .setSize(sx,sy)
      .setPosition(px, py)
      .setRange(0, 255)
-     .setValue(BACKGROUND_COLOR)
-     .plugTo(self, 'BACKGROUND_COLOR')
+     .setValue(0)
   ##########################################
   # GUI - ACCORDION
   ##########################################
@@ -387,7 +354,32 @@ def createGUI
                          .addItem(group_fluid)
                          .addItem(group_display)
                          .open(4)
-  cp5
+end
+
+def controlEvent(event)
+  if event.group?
+    display_mode(rb_setdisplay_mode.getValue) if event.getGroup.getName == 'display_mode'
+    display_velocity_vectors(event.getGroup.getValue) if event.getGroup.getName == 'display_velocity_vectors'
+  elsif event.controller?
+    case event.getController.getName
+    when 'gridscale'
+      @fluidgrid_scale = event.getController.getValue.to_i
+    when 'velocity'
+      fluid.param.dissipation_velocity = event.getController.getValue
+    when 'background'
+      @background_color = event.getController.getValue
+    when 'temperature'
+      fluid.param.dissipation_temperature = event.getController.getValue
+    when 'timestep'
+      fluid.param.timestep = event.getController.getValue
+    when 'iterations'
+      fluid.param.num_jacobi_projection = event.getController.getValue
+    when 'density'
+      fluid.param.dissipation_density = event.getController.getValue
+    when 'vorticity'
+      fluid.param.vorticity = event.getController.getValue
+    end
+  end
 end
 
 class ObstaclePainter
@@ -428,7 +420,7 @@ class ObstaclePainter
   def draw
     @paint_x = mouse_x
     @paint_y = mouse_y
-    if(draw_mode == 1)
+    if draw_mode == 1
       pg.begin_draw
       pg.blend_mode(REPLACE)
       pg.stroke_weight(size_paint)
@@ -436,7 +428,7 @@ class ObstaclePainter
       pg.line(mouse_x, mouse_y, pmouse_x, pmouse_y)
       pg.end_draw
     end
-    clear(mouse_x, mouse_y) if(draw_mode == 2)
+    clear(mouse_x, mouse_y) if draw_mode == 2
   end
 
   def end_draw
