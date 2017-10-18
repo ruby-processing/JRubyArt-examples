@@ -39,14 +39,15 @@ DISPLAY_MODE = %w[Density Temperature Pressure Velocity]
 
 VIEWPORT_W = 800
 VIEWPORT_H = 800
-BACKGROUND_COLOR = 0
+GUI_X = 20
+GUI_Y = 20
+GUI_W = 200
 
-
-attr_reader :context, :fluid, :obstacle_painter, :pg_fluid, :pg_obstacles
+attr_reader :fluid, :obstacle_painter, :pg_fluid, :pg_obstacles, :group_fluid
 attr_reader :update_fluid, :display_fluid_textures, :display_fluid_vectors
-attr_reader :display_fluid_texture_mode, :cp5, :fluidgrid_scale, :gui_w
-attr_reader :gui_x, :gui_y, :mouse_input, :rb_setdisplay_mode, :group_fluid
-attr_reader :background_color, :iterations
+attr_reader :display_fluid_texture_mode, :cp5, :fluidgrid_scale, :iterations
+attr_reader :mouse_input, :rb_setdisplay_mode, :background_color
+
 def settings
   size(VIEWPORT_W, VIEWPORT_H, P2D)
   smooth(2)
@@ -59,13 +60,13 @@ def setup
   @display_fluid_texture_mode = 0
   @background_color = 0
   # main library context
-  @context = DwPixelFlow.new(self)
+  context = DwPixelFlow.new(self)
   context.print
   context.printGL
   @fluidgrid_scale = 1
-  @gui_w = 200
-  @gui_x = 20
-  @gui_y = 20
+  @GUI_W = 200
+  @GUI_X = 20
+  @GUI_Y = 20
 
   # fluid simulation
   @fluid = DwFluid2D.new(context, VIEWPORT_W, VIEWPORT_H, fluidgrid_scale)
@@ -80,15 +81,12 @@ def setup
     g = 0.3
     b = 1.0
     fluid.add_density(px, py, radius, r, g, b, intensity)
-
     if (fluid.simulation_step % 200).zero?
       temperature = 50.0
       fluid.addTemperature(px, py, radius, temperature)
     end
-
     # add impulse: density + temperature
     animator = sin(fluid.simulation_step * 0.01)
-
     intensity = 1.0
     px = 2 * width / 3.0
     py = 150
@@ -131,7 +129,7 @@ def setup
   pg_obstacles.clear
   # circle-obstacles
   pg_obstacles.stroke_weight(10)
-  pg_obstacles.noFill
+  pg_obstacles.no_fill
   pg_obstacles.no_stroke
   pg_obstacles.fill(64)
   radius = 100
@@ -141,18 +139,18 @@ def setup
   radius = 200
   pg_obstacles.stroke(64)
   pg_obstacles.stroke_weight(10)
-  pg_obstacles.noFill
+  pg_obstacles.no_fill
   pg_obstacles.ellipse(1 * width / 2.0,  1 * height / 4.0, radius, radius)
   # border-obstacle
   pg_obstacles.stroke_weight(20)
   pg_obstacles.stroke(64)
-  pg_obstacles.noFill
+  pg_obstacles.no_fill
   pg_obstacles.rect(0, 0, pg_obstacles.width, pg_obstacles.height)
   pg_obstacles.end_draw
   createGUI
   # class, that manages interactive drawing (adding/removing) of obstacles
   @obstacle_painter = ObstaclePainter.new(pg_obstacles)
-  @mouse_input = !cp5.isMouseOver && mousePressed && !obstacle_painter.drawing?
+  @mouse_input = !cp5.is_mouse_over && mouse_pressed? && !obstacle_painter.drawing?
   frame_rate(60)
 end
 
@@ -179,7 +177,15 @@ def draw
   obstacle_painter.display_brush(g)
   # info
   format_string = 'Fluid Basic [size %d/%d]  [frame %d]  [fps: (%6.2f)]'
-  surface.set_title(format(format_string, fluid.fluid_w, fluid.fluid_h, fluid.simulation_step, frame_rate))
+  surface.set_title(
+    format(
+      format_string,
+      fluid.fluid_w,
+      fluid.fluid_h,
+      fluid.simulation_step,
+      frame_rate
+      )
+    )
 end
 
 def mouse_pressed
@@ -229,6 +235,7 @@ def key_released
   when 'r'
     reset!
   when 's'
+    # save ControlP5 settings in json format
     cp5.save_properties(data_path('fluid_basic.json'))
   end
 end
@@ -241,143 +248,143 @@ def createGUI
   ######################################
   # GUI - FLUID
   ######################################
-  group_fluid = cp5.addGroup('fluid')
-  group_fluid.setHeight(20)
-             .setSize(gui_w, 300)
-             .setBackgroundColor(color(16, 180))
-             .setColorBackground(color(16, 180))
-  group_fluid.getCaptionLabel.align(CENTER, CENTER)
+  group_fluid = cp5.add_group('fluid')
+  group_fluid.set_height(20)
+             .set_size(GUI_W, 300)
+             .set_background_color(color(16, 180))
+             .set_color_background(color(16, 180))
+  group_fluid.get_caption_label.align(CENTER, CENTER)
   px = 10
   py = 15
-  cp5.addButton('reset')
-     .setGroup(group_fluid)
-     .setSize(80, 18)
-     .setPosition(px, py)
-     .addListener { reset! }
-  cp5.addButton('+')
-     .setGroup(group_fluid)
-     .setSize(39, 18)
-     .setPosition(px += 82, py)
-     .addListener { resize_up }
-  cp5.addButton('-')
-     .setGroup(group_fluid)
-     .setSize(39, 18)
-     .setPosition(px += 41, py)
-     .addListener { resize_down }
+  cp5.add_button('reset')
+     .set_group(group_fluid)
+     .set_size(80, 18)
+     .set_position(px, py)
+     .add_listener { reset! } # add listener direct to button
+  cp5.add_button('+')
+     .set_group(group_fluid)
+     .set_size(39, 18)
+     .set_position(px += 82, py)
+     .add_listener { resize_up } # add listener direct to button
+  cp5.add_button('-')
+     .set_group(group_fluid)
+     .set_size(39, 18)
+     .set_position(px += 41, py)
+     .add_listener { resize_down } # add listener direct to button
   px = 10
-  cp5.addSlider('velocity')
-     .setGroup(group_fluid)
-     .setSize(sx, sy)
-     .setPosition(px, py += (oy*1.5).to_i)
-     .setRange(0, 1)
-     .setValue(1.0)
-  cp5.addSlider('density')
-     .setGroup(group_fluid)
-     .setSize(sx, sy)
-     .setPosition(px, py += oy)
-     .setRange(0, 1)
-     .setValue(0.99)
-  cp5.addSlider('temperature')
-     .setGroup(group_fluid)
-     .setSize(sx, sy)
-     .setPosition(px, py += oy)
-     .setRange(0, 1)
-     .setValue(0.8)
-  cp5.addSlider('vorticity')
-     .setGroup(group_fluid)
-     .setSize(sx, sy)
-     .setPosition(px, py += oy)
-     .setRange(0, 1)
-     .setValue(0.1)
-  cp5.addSlider('iterations')
-     .setGroup(group_fluid)
-     .setSize(sx, sy)
-     .setPosition(px, py += oy)
-     .setRange(0, 80)
-     .setValue(40)
-  cp5.addSlider('timestep')
-     .setGroup(group_fluid).setSize(sx, sy).setPosition(px, py += oy)
-     .setRange(0, 1)
-     .setValue(0.125)
-  cp5.addSlider('gridscale')
-     .setGroup(group_fluid)
-     .setSize(sx, sy)
-     .setPosition(px, py += oy)
-     .setRange(0, 50)
-     .setValue(1)
-     @rb_setdisplay_mode = cp5.addRadio('display_mode')
-                             .setGroup(group_fluid)
-                             .setSize(80, 18)
-                             .setPosition(px, py += (oy*1.5).to_i)
-                             .setSpacingColumn(2)
-                             .setSpacingRow(2)
-                             .setItemsPerRow(2)
+  cp5.add_slider('velocity')
+     .set_group(group_fluid)
+     .set_size(sx, sy)
+     .set_position(px, py += (oy*1.5).to_i)
+     .set_range(0, 1)
+     .set_value(1.0)
+  cp5.add_slider('density')
+     .set_group(group_fluid)
+     .set_size(sx, sy)
+     .set_position(px, py += oy)
+     .set_range(0, 1)
+     .set_value(0.99)
+  cp5.add_slider('temperature')
+     .set_group(group_fluid)
+     .set_size(sx, sy)
+     .set_position(px, py += oy)
+     .set_range(0, 1)
+     .set_value(0.8)
+  cp5.add_slider('vorticity')
+     .set_group(group_fluid)
+     .set_size(sx, sy)
+     .set_position(px, py += oy)
+     .set_range(0, 1)
+     .set_value(0.1)
+  cp5.add_slider('iterations')
+     .set_group(group_fluid)
+     .set_size(sx, sy)
+     .set_position(px, py += oy)
+     .set_range(0, 80)
+     .set_value(40)
+  cp5.add_slider('timestep')
+     .set_group(group_fluid).set_size(sx, sy).set_position(px, py += oy)
+     .set_range(0, 1)
+     .set_value(0.125)
+  cp5.add_slider('gridscale')
+     .set_group(group_fluid)
+     .set_size(sx, sy)
+     .set_position(px, py += oy)
+     .set_range(0, 50)
+     .set_value(1)
+     @rb_setdisplay_mode = cp5.add_radio('display_mode')
+                             .set_group(group_fluid)
+                             .set_size(80, 18)
+                             .set_position(px, py += (oy*1.5).to_i)
+                             .set_spacing_column(2)
+                             .set_spacing_row(2)
+                             .set_items_per_row(2)
   DISPLAY_MODE.each_with_index do |item, i|
-    rb_setdisplay_mode.addItem item, i
+    rb_setdisplay_mode.add_item item, i
   end
-  rb_setdisplay_mode.getItems.each do |toggle|
-    toggle.getCaptionLabel.alignX(CENTER)
+  rb_setdisplay_mode.get_items.each do |toggle|
+    toggle.get_caption_label.alignX(CENTER)
   end
-  cp5.addRadio('display_velocity_vectors')
-     .setGroup(group_fluid)
-     .setSize(18,18)
-     .setPosition(px, py += (oy*2.5).to_i)
-     .setSpacingColumn(2)
-     .setSpacingRow(2)
-     .setItemsPerRow(1)
-     .addItem('Velocity Vectors', 0)
+  cp5.add_radio('display_velocity_vectors')
+     .set_group(group_fluid)
+     .set_size(18,18)
+     .set_position(px, py += (oy*2.5).to_i)
+     .set_spacing_column(2)
+     .set_spacing_row(2)
+     .set_items_per_row(1)
+     .add_item('Velocity Vectors', 0)
      #.activate(display_fluid_vectors ? 0 : 2)
   ##########################################
   # GUI - DISPLAY
   ##########################################
-  group_display = cp5.addGroup('display')
-  group_display.setHeight(20)
-               .setSize(gui_w, 50)
-               .setBackgroundColor(color(16, 180))
-               .setColorBackground(color(16, 180))
-  group_display.getCaptionLabel.align(CENTER, CENTER)
+  group_display = cp5.add_group('display')
+  group_display.set_height(20)
+               .set_size(GUI_W, 50)
+               .set_background_color(color(16, 180))
+               .set_color_background(color(16, 180))
+  group_display.get_caption_label.align(CENTER, CENTER)
   px = 10
   py = 15
-  cp5.addSlider('background')
-     .setGroup(group_display)
-     .setSize(sx,sy)
-     .setPosition(px, py)
-     .setRange(0, 255)
-     .setValue(0)
+  cp5.add_slider('background')
+     .set_group(group_display)
+     .set_size(sx,sy)
+     .set_position(px, py)
+     .set_range(0, 255)
+     .set_value(0)
   ##########################################
   # GUI - ACCORDION
   ##########################################
-  cp5.addAccordion('acc').setPosition(gui_x, gui_y)
-                         .setWidth(gui_w)
-                         .setSize(gui_w, height)
-                         .setCollapseMode(Accordion::MULTI)
-                         .addItem(group_fluid)
-                         .addItem(group_display)
+  cp5.addAccordion('acc').set_position(GUI_X, GUI_Y)
+                         .set_width(GUI_W)
+                         .set_size(GUI_W, height)
+                         .set_collapse_mode(Accordion::MULTI)
+                         .add_item(group_fluid)
+                         .add_item(group_display)
                          .open(4)
 end
 
 def controlEvent(event)
   if event.group?
-    display_mode(rb_setdisplay_mode.getValue) if event.getGroup.getName == 'display_mode'
-    display_velocity_vectors(event.getGroup.getValue) if event.getGroup.getName == 'display_velocity_vectors'
+    display_mode(rb_setdisplay_mode.get_value) if event.get_group.get_name == 'display_mode'
+    display_velocity_vectors(event.get_group.get_value) if event.get_group.get_name == 'display_velocity_vectors'
   elsif event.controller?
-    case event.getController.getName
+    case event.get_controller.get_name
     when 'gridscale'
-      @fluidgrid_scale = event.getController.getValue.to_i
+      @fluidgrid_scale = event.get_controller.get_value.to_i
     when 'velocity'
-      fluid.param.dissipation_velocity = event.getController.getValue
+      fluid.param.dissipation_velocity = event.get_controller.get_value
     when 'background'
-      @background_color = event.getController.getValue
+      @background_color = event.get_controller.get_value
     when 'temperature'
-      fluid.param.dissipation_temperature = event.getController.getValue
+      fluid.param.dissipation_temperature = event.get_controller.get_value
     when 'timestep'
-      fluid.param.timestep = event.getController.getValue
+      fluid.param.timestep = event.get_controller.get_value
     when 'iterations'
-      fluid.param.num_jacobi_projection = event.getController.getValue
+      fluid.param.num_jacobi_projection = event.get_controller.get_value
     when 'density'
-      fluid.param.dissipation_density = event.getController.getValue
+      fluid.param.dissipation_density = event.get_controller.get_value
     when 'vorticity'
-      fluid.param.vorticity = event.getController.getValue
+      fluid.param.vorticity = event.get_controller.get_value
     end
   end
 end
