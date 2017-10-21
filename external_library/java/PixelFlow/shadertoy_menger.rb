@@ -8,7 +8,7 @@ module Shadertoy
   java_import 'com.thomasdiewald.pixelflow.java.DwPixelFlow'
   java_import 'com.thomasdiewald.pixelflow.java.imageprocessing.DwShadertoy'
   java_import 'com.jogamp.opengl.GL2'
-  java_import 'com.thomasdiewald.pixelflow.java.dwgl.DwGLTextureUtils'
+  java_import 'com.thomasdiewald.pixelflow.java.utils.DwUtils'
 end
 
 include Shadertoy
@@ -29,8 +29,8 @@ def setup
 
   @toy = DwShadertoy.new(context, data_path('MengerSponge.frag'))
   pg_albedo = create_graphics(512, 512, P2D)
-  DwGLTextureUtils::changeTextureWrap pg_albedo, GL2::GL_MIRRORED_REPEAT
-  DwGLTextureUtils::changeTextureFilter pg_albedo, GL2::GL_LINEAR, GL2::GL_LINEAR
+  DwUtils::changeTextureWrap pg_albedo, GL2::GL_MIRRORED_REPEAT
+  DwUtils::changeTextureFilter pg_albedo, GL2::GL_LINEAR, GL2::GL_LINEAR
 
   pg_albedo.beginDraw
   pg_albedo.background(200,100,5)
