@@ -43,13 +43,14 @@ Like the original `ruby-processing`, `JRubyArt` is like a DSL for vanilla `proce
    3. [Toxiclibs][toxiclibs]
    4. [Wordcram][wordcram]
    5. [Sunflow raytracing][joons]
+   6. [Skatolo Gui][skatolo]
 
 5. Java Libraries
    1. [Hype-processing][hype]
    2. [Hemesh][hemesh]
    3. [PixelFlow][flow]
    4. [LiquidFunProcessing][liquid]
-   
+
 6. Others
    1. [WOVNS patterns][wovns]
 
@@ -84,6 +85,7 @@ Like the original `ruby-processing`, `JRubyArt` is like a DSL for vanilla `proce
 [hype]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hype
 [hemesh]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/hemesh
 [joons]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/joonsrenderer
+[skatolo]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/skatolo
 [geomerative]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/geomerative
 [toxiclibs]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/toxiclibs
 [wordcram]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/gem/ruby_wordcram

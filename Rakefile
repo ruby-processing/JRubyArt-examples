@@ -40,6 +40,11 @@ task :hype do
   sh "cd #{K9WD}/external_library/java/hype && rake"
 end
 
+desc 'skatolo'
+task :skatolo do
+  sh "cd #{K9WD}/external_library/gem/skatolo && rake"
+end
+
 desc 'slider'
 task :slider do
   sh "cd #{K9WD}/processing_app/library/slider && rake"
