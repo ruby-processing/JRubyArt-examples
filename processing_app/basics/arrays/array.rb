@@ -9,9 +9,9 @@ attr_reader :coswave
 
 def setup
   sketch_title 'Array'
-  @coswave = (0..width).map do |i|    
+  @coswave = (0..width).map do |i|
     Math.cos(map1d(i, (0..width), (0..PI))).abs
-  end 
+  end
 end
 
 def draw

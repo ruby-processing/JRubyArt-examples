@@ -5,14 +5,14 @@
 class Bubble
   include Processing::Proxy
 
-  attr_reader :x, :y, :diameter, :name, :over
+  attr_reader :x, :y, :diameter, :label, :over
 
   # Create  the Bubble
-  def initialize(x, y, diameter, name)
+  def initialize(x, y, diameter, label)
     @x = x
     @y = y
     @diameter = diameter
-    @name = name
+    @label = label
     @over = false
   end
 
@@ -31,21 +31,21 @@ class Bubble
     return unless over
     fill(0)
     text_align(CENTER)
-    text(name, x, y + diameter / 2 + 20)
+    text(label, x, y + diameter / 2 + 20)
   end
 
   def to_a
-    [x, y, diameter, name]
+    [x, y, diameter, label]
   end
 
   def to_hash
-    keys = %w(position diameter label)
-    values = [[['x', x], ['y', y]].to_h, diameter, name]
+    keys = %i[position diameter label]
+    values = [[['x', x], ['y', y]].to_h, diameter, label]
     keys.zip(values).to_h
   end
 
   def to_struct
-    BubbleStruct.new(x, y, diameter, name)
+    BubbleStruct.new(x, y, diameter, label)
   end
 end
 

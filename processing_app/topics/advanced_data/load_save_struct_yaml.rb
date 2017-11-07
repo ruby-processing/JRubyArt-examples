@@ -11,7 +11,7 @@ attr_reader :bubble_data
 def setup
   sketch_title 'Load & Save Struct Yaml'
   @bubble_data = BubbleData.new :bubbles
-  bubble_data.load_data 'data/struct_data.yml'
+  bubble_data.load_data(data_path('struct_data.yml'))
 end
 
 def draw
@@ -20,7 +20,7 @@ def draw
 end
 
 def settings
-  size 640, 360, FX2D
+  size 640, 360
 end
 
 def mouse_pressed
@@ -79,8 +79,7 @@ class BubbleData
 
   def save_data
     hash = { @key => map(&:to_struct) }
-    yaml = hash.to_yaml
     # overwite existing 'struct_data.yaml'
-    open(path, 'w:UTF-8') { |f| f.write(yaml) }
+    File.write(data_path(data_path('struct_data.yml')), hash.to_yaml)
   end
 end
