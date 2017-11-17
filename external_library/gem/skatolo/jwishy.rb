@@ -78,9 +78,9 @@ def draw_shape(args)
   when 'triangle'
     draw_triangle(args)
   when 'square'
-    rect(args[1], args[2], args[3], args[4])
+    rect(*args.slice(1, 4))
   else
-    oval(args[1], args[2], args[3], args[4]) # ellipse alias
+    oval(*args.slice(1, 4)) # ellipse alias
   end
 end
 
@@ -113,28 +113,18 @@ def create_gui
          .set_color_background(color(100))
   px = 10
   py = 15
-  skatolo.add_slider('bluish')
-         .set_size(sx, sy)
-         .set_position(px, py += oy)
-         .set_range(0, 1.0)
-         .set_value(0.5)
-         .set_group(control)
-  skatolo.add_slider('alpha')
-         .set_size(sx, sy)
-         .set_position(px, py += oy)
-         .set_range(0, 1.0)
-         .set_value(0.5)
-         .set_group(control)
-  skatolo.add_button('toggle_big')
-         .set_size(sx, 15)
-         .set_position(px, py += oy)
-         .set_group(control)
-  skatolo.add_button('reset!')
-         .set_size(sx, 15)
-         .set_position(px, py += oy)
-         .set_group(control)
-  skatolo.add_button('random_shape')
-         .set_size(sx, 15)
-         .set_position(px, py += oy)
-         .set_group(control)
+  %w[bluish alpha].freeze.each do |slider|
+    skatolo.add_slider(slider)
+           .set_size(sx, sy)
+           .set_position(px, py += oy)
+           .set_range(0, 1.0)
+           .set_value(0.5)
+           .set_group(control)
+  end
+  %w[toggle_big reset! random_shape].freeze.each do |button|
+    skatolo.add_button(button)
+           .set_size(sx, 15)
+           .set_position(px, py += oy)
+           .set_group(control)
+  end
 end

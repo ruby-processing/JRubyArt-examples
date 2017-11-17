@@ -1,7 +1,7 @@
 require 'skatolo'
-# In this simple sketch we attach two buttons to skatolo in the regular way,
-# named buttons 'press_me' and 'reset' thanks to some fancy metaprogramming
-# we can create methods :press_me and :reset for the buttons
+# In this simple sketch we attach a button to skatolo in the regular way,
+# and textfield widget. We can create a method :press_me and print the value of
+# the textfield, ps: make sure you do return on texfield entry
 include EventMethod
 attr_reader :skatolo, :back_color, :font, :name
 
