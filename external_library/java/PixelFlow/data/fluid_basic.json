@@ -1,0 +1,49 @@
+{
+  "/iterations": {
+    "min": 0,
+    "max": 80,
+    "value": 40
+  },
+  "/vorticity": {
+    "min": 0,
+    "max": 1,
+    "value": 0.10000000149011612
+  },
+  "/timestep": {
+    "min": 0,
+    "max": 1,
+    "value": 0.125
+  },
+  "/gridscale": {
+    "min": 0,
+    "max": 50,
+    "value": 1
+  },
+  "/background": {
+    "min": 0,
+    "max": 255,
+    "value": 0
+  },
+  "/display_velocity_vectors": {"arrayValue": [1]},
+  "/density": {
+    "min": 0,
+    "max": 1,
+    "value": 0.9900000095367432
+  },
+  "/velocity": {
+    "min": 0,
+    "max": 1,
+    "value": 0.5799999833106995
+  },
+  "/display_mode": {"arrayValue": [
+    0,
+    0,
+    0,
+    1
+  ]},
+  "/temperature": {
+    "min": 0,
+    "max": 1,
+    "value": 0.800000011920929
+  }
+}

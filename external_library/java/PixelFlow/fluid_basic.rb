@@ -1,6 +1,6 @@
 #
 # PixelFlow | Copyright (C) 2016-17 Thomas Diewald (www.thomasdiewald.com)
-# Translated to propane by Martin Prout
+# Translated to JRubyArt  by Martin Prout
 #
 # src  - www.github.com/diwi/PixelFlow
 #
@@ -64,9 +64,6 @@ def setup
   context.print
   context.printGL
   @fluidgrid_scale = 1
-  @GUI_W = 200
-  @GUI_X = 20
-  @GUI_Y = 20
 
   # fluid simulation
   @fluid = DwFluid2D.new(context, VIEWPORT_W, VIEWPORT_H, fluidgrid_scale)
@@ -365,26 +362,26 @@ end
 
 def controlEvent(event)
   if event.group?
-    display_mode(rb_setdisplay_mode.get_value) if event.get_group.get_name == 'display_mode'
-    display_velocity_vectors(event.get_group.get_value) if event.get_group.get_name == 'display_velocity_vectors'
+    display_mode(rb_setdisplay_mode.value) if event.group.get_name == 'display_mode'
+    display_velocity_vectors(event.group.value) if event.group.get_name == 'display_velocity_vectors'
   elsif event.controller?
-    case event.get_controller.get_name
+    case event.controller.get_name
     when 'gridscale'
-      @fluidgrid_scale = event.get_controller.get_value.to_i
+      @fluidgrid_scale = event.controller.value.to_i
     when 'velocity'
-      fluid.param.dissipation_velocity = event.get_controller.get_value
+      fluid.param.dissipation_velocity = event.controller.value
     when 'background'
-      @background_color = event.get_controller.get_value
+      @background_color = event.controller.value
     when 'temperature'
-      fluid.param.dissipation_temperature = event.get_controller.get_value
+      fluid.param.dissipation_temperature = event.controller.value
     when 'timestep'
-      fluid.param.timestep = event.get_controller.get_value
+      fluid.param.timestep = event.controller.value
     when 'iterations'
-      fluid.param.num_jacobi_projection = event.get_controller.get_value
+      fluid.param.num_jacobi_projection = event.controller.value
     when 'density'
-      fluid.param.dissipation_density = event.get_controller.get_value
+      fluid.param.dissipation_density = event.controller.value
     when 'vorticity'
-      fluid.param.vorticity = event.get_controller.get_value
+      fluid.param.vorticity = event.controller.value
     end
   end
 end

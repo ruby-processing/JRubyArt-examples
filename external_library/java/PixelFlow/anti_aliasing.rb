@@ -99,7 +99,6 @@ def setup
 end
 
 def draw
-  resize_screen
   case aamode
   when :MSAA
     display_scene_wrap(pg_render_msaa)

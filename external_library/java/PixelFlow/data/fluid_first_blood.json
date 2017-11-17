@@ -1,0 +1,50 @@
+{
+  "/iterations": {
+    "min": 0,
+    "max": 80,
+    "value": 40
+  },
+  "/vorticity": {
+    "min": 0,
+    "max": 1,
+    "value": 0
+  },
+  "/BACKGROUND": {
+    "min": 0,
+    "max": 255,
+    "value": 255
+  },
+  "/timestep": {
+    "min": 0,
+    "max": 1,
+    "value": 0.125
+  },
+  "/fluid_displayParticles": {"arrayValue": [0]},
+  "/gridscale": {
+    "min": 0,
+    "max": 50,
+    "value": 1
+  },
+  "/fluid_displayMode": {"arrayValue": [
+    1,
+    0,
+    0,
+    0
+  ]},
+  "/density": {
+    "min": 0,
+    "max": 1,
+    "value": 0.9900000095367432
+  },
+  "/velocity": {
+    "min": 0,
+    "max": 1,
+    "value": 0.5099999904632568
+  },
+  "/fluid_displayVelocityVectors": {"arrayValue": [0]},
+  "/temperature": {
+    "min": 0,
+    "max": 1,
+    "value": 0.5
+  }
+}
