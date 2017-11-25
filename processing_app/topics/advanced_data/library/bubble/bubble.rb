@@ -1,7 +1,6 @@
 # encoding: utf-8
 # frozen_string_literal: true
-
-# The bubble library, include BubbleStruct
+# The bubble library
 class Bubble
   include Processing::Proxy
 
@@ -38,15 +37,7 @@ class Bubble
     [x, y, diameter, label]
   end
 
-  def to_hash
-    keys = %i[position diameter label]
-    values = [[['x', x], ['y', y]].to_h, diameter, label]
-    keys.zip(values).to_h
-  end
-
   def to_struct
     BubbleStruct.new(x, y, diameter, label)
   end
 end
-
-BubbleStruct = Struct.new(:x, :y, :diameter, :label)
