@@ -1,0 +1,22 @@
+---
+emotions:
+- !ruby/struct:BubbleStruct
+  xpos: 160
+  ypos: 103
+  diameter: 43.19838
+  label: Happy
+- !ruby/struct:BubbleStruct
+  xpos: 372
+  ypos: 137
+  diameter: 52.42526
+  label: Sad
+- !ruby/struct:BubbleStruct
+  xpos: 273
+  ypos: 235
+  diameter: 61.14072
+  label: Joyous
+- !ruby/struct:BubbleStruct
+  xpos: 121
+  ypos: 179
+  diameter: 44.758068
+  label: Melancholy
