@@ -15,7 +15,8 @@ end
 def setup
   sketch_title 'Progress Reporter'
   ArcBall.init(self)
-  @pr= WBlut::WB_ProgressReporter.new(5) # maximum depth of reporting
+  # maximum depth of reporting 10
+  @pr= WBlut::WB_ProgressReporter.new(10, data_path("log.txt"), false)
   pr.start
   create_mesh
   @render= WBlut::WB_Render.new(self)
