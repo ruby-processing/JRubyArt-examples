@@ -14,6 +14,9 @@ end
 
 def draw
   background 255
+  fill 0
+  text_align(LEFT)
+  text('Click to add bubbles.', 10, height - 10)
   bubbles.each do |bubble|
     bubble.display
     bubble.rollover(mouse_x, mouse_y)

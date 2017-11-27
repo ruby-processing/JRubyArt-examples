@@ -14,17 +14,20 @@ def setup
   sketch_title 'Load save json'
   # initialize bubble_data with 'key' and read data from 'file path'
   @bubble_data = BubbleData.new 'bubbles'
-  bubble_data.load_data 'data/data.json'
+  bubble_data.load_data(data_path('data.json'))
 end
 
 def draw
   background 255
+  fill 0
+  text_align(LEFT)
+  text('Click to add bubbles.', 10, height - 10)
   # draw the bubbles and display a bubbles label whilst mouse over
   bubble_data.display mouse_x, mouse_y
 end
 
 def settings
-  size 640, 360, FX2D
+  size 640, 360
 end
 
 def mouse_pressed
