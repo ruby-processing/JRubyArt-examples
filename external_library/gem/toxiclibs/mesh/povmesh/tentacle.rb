@@ -3,7 +3,7 @@ require 'toxiclibs'
 # A 3D Tentacle by Nikolaus Gradwohl http://www.local-guru.net
 # Adapted for JRubyArt and mesh to PShape, and mesh2 export by Martin Prout
 
-attr_reader :mesh, :gfx, :tentacle
+attr_reader :mesh, :gfx, :tentacle, :tex
 
 def settings
   size(500, 500, P3D)
@@ -13,6 +13,7 @@ def setup
   sketch_title 'Tentacle'
   ArcBall.init(self)
   @gfx = Gfx::MeshToVBO.new(self)
+  @tex = load_image(data_path('texture.png'))
   volume = VolumetricSpaceArray.new(TVec3D.new(100, 200, 100), 100, 100, 100)
   surface = ArrayIsoSurface.new(volume)
   @mesh = TriangleMesh.new
@@ -37,7 +38,7 @@ def setup
   surface.reset
   surface.compute_surface_mesh(mesh, 0.5)
   no_stroke
-  @tentacle = gfx.mesh_to_shape(mesh, true)
+  @tentacle = gfx.mesh_to_textured_shape(mesh, tex)
 end
 
 def draw
@@ -46,7 +47,7 @@ def draw
   shape(tentacle)
 end
 
-def define_lights 
+def define_lights
   lights
   ambient_light(40, 40, 40)
   directional_light(10, 30, 40, 1, 1, 0)
@@ -66,5 +67,7 @@ def key_pressed
     exit
   when 's', 'S'
     save_frame('Tentacle.png')
+  when 't', 'T'
+    mesh.saveAsSTL(data_path('tentacle.stl'))
   end
 end
