@@ -6,8 +6,8 @@ def settings
   smooth(4)
 end
 
-def setup 
-  sketch_title 'Slider Sample'
+def setup
+  sketch_title 'Slider Simple'
   @back = true
   @r, @gs, @b = 0, 0, 0
   @color1 = Slider.slider(
@@ -41,4 +41,3 @@ def draw
   @gs = color2.read_value
   @b = color3.read_value
 end
-
