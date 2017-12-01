@@ -2,7 +2,6 @@ require 'skatolo'
 # In this simple sketch we attach a button to skatolo in the regular way,
 # and textfield widget. We can create a method :press_me and print the value of
 # the textfield, ps: make sure you do return on texfield entry
-include EventMethod
 attr_reader :skatolo, :back_color, :font, :name
 
 def settings

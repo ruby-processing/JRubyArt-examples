@@ -3,8 +3,6 @@ require 'skatolo'
 # and group them, then add the group to the accordion widget
 # named buttons 'red_color' ... thanks to some fancy metaprogramming
 # we can create methods :red_color, :green_color and :blue_color buttons
-
-include EventMethod
 COLOR = %w[Red Green Blue].freeze
 
 attr_reader :skatolo, :back_color

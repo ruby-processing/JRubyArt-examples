@@ -2,8 +2,6 @@ require 'skatolo'
 # In this simple sketch we attach two buttons to skatolo in the regular way,
 # named buttons 'press_me' and 'reset' thanks to some fancy metaprogramming
 # we can create methods :press_me and :reset for the buttons
-
-include EventMethod
 attr_reader :skatolo, :back_color
 
 def settings

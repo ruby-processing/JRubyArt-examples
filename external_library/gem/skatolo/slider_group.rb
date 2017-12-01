@@ -2,8 +2,6 @@ require 'skatolo'
 # In this simple sketch we attach three sliders to skatolo in the regular way,
 # then group them and attach to an accordion widget, the slider values are sent
 # (auto-magically) to the sketch as red_value, green_value and blue_value
-
-include EventMethod
 attr_reader :skatolo, :back_color
 
 def settings
