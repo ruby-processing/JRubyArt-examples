@@ -8,7 +8,7 @@ class VerletBall
     @pos = pos
     @push = push
     @radius = radius
-    @pos_old = Vec2D.new(pos.x, pos.y)
+    @pos_old = pos.dup
     # start motion
     @pos += push
     @x_bound = Boundary.new(radius, width - radius)

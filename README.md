@@ -53,6 +53,7 @@ Like the original `ruby-processing`, `JRubyArt` is like a DSL for vanilla `proce
 
 6. Others
    1. [WOVNS patterns][wovns]
+   2. [Grid Method][grid]
 
 ### User contributions are most welcome
 [Contributions][] add your [own][]
@@ -60,6 +61,7 @@ Like the original `ruby-processing`, `JRubyArt` is like a DSL for vanilla `proce
 [liquid]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/LiquidFunProcessing
 [flow]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/PixelFlow
 [wovns]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/examples/WOVNS
+[grid]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/examples/grid_method
 [Learning Processing with Ruby]:https://github.com/ruby-processing/learning-processing-with-ruby
 [Nature of Code Examples in ruby]:https://github.com/ruby-processing/The-Nature-of-Code-for-JRubyArt
 [Contributions]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/contributed

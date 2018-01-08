@@ -9,7 +9,7 @@ attr_reader :ps
 
 def setup
   sketch_title 'Simple Particle System'
-  @ps = ParticleSystem.new(Vec2D.new(width/2, 50))
+  @ps = ParticleSystem.new(Vec2D.new(width / 2, 50))
 end
 
 def draw
@@ -21,27 +21,27 @@ end
 module Runnable
   def run
     self.reject! { |item| item.lifespan <= 0 }
-    self.each    { |item| item.run   }
+    self.each(&:run)
   end
 end
 
-class ParticleSystem 
+class ParticleSystem
   extend Forwardable
   def_delegators(:@particle_system, :each, :<<, :reject!, :empty?)
-  include Enumerable 
+  include Enumerable
   include Runnable
-  
+
   attr_reader :origin
 
   def initialize(loc)
     @particle_system = []
-    @origin = Vec2D.new(loc.x, loc.y)
+    @origin = loc.dup
   end
-  
+
   def add_particle
-    self << Particle.new(origin) 
+    self << Particle.new(origin)
   end
-  
+
   def dead?
     self.empty?
   end
@@ -49,14 +49,14 @@ end
 
 # A simple Particle class
 
-class Particle 
-  include Processing::Proxy 
-  
+class Particle
+  include Processing::Proxy
+
   attr_reader :loc, :vel, :acc, :lifespan
-  def initialize(loc) 
+  def initialize(loc)
     @acc = Vec2D.new(0, 0.05)
     @vel = Vec2D.new(rand(-1.0..1), rand(-2.0..0))
-    @loc = loc    # loc.clone is unecessary in ruby
+    @loc = loc
     @lifespan = 255.0
   end
 
@@ -74,10 +74,10 @@ class Particle
 
   # Method to display
   def display
-    stroke(255,lifespan)
-    fill(255,lifespan)
+    stroke(255, lifespan)
+    fill(255, lifespan)
     ellipse(loc.x, loc.y, 8, 8)
-  end  
+  end
 end
 
 def settings

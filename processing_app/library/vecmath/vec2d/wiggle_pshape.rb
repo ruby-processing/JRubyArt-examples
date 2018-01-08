@@ -1,61 +1,53 @@
 #
 # WigglePShape. Demonstrates initialization and use of ShapeRender,
 # that allows us to send Vec2D to PShape vertex
-# 
+#
 # How to move the individual vertices of a PShape
 #
-
-
-attr_reader :wiggler
+attr_reader :wiggle_object
 
 def setup
   sketch_title 'Wiggle PShape'
-  @wiggler = Wiggler.new width, height
+  @wiggle_object = Wiggler.new
 end
 
 def draw
   background(255)
-  wiggler.display
-  wiggler.wiggle
+  wiggle_object.display
+  wiggle_object.wiggle
 end
 
 # An object that wraps the PShape
-
-
 class Wiggler
   include Processing::Proxy
-  attr_reader :original, :x, :y, :s, :yoff, :xoff
+  attr_reader :original, :wiggler, :yoff, :xoff
 
-  def initialize width, height
-    @x = width/2
-    @y = height/2 
+  def initialize
     @yoff = 0
-    
-    # The "original" locations of the vertices make up a circle
 
-    @original = (0...16).map{ |a| Vec2D.from_angle(PI * a / 8) * 100 }
-    
+    # The "original" locations of the vertices make up a circle
+    @original = (0...16).map{ |angle| Vec2D.from_angle(PI * angle / 8) * 100 }
+
     # Now make the PShape with those vertices
-    @s = create_shape
-    renderer = Sketch::ShapeRender.new(s) # Prefix with Sketch classname
-    s.begin_shape
-    s.fill(127)
-    s.stroke(0)
-    s.stroke_weight(2)
-    original.map{ |v| v.to_vertex(renderer) }
-    s.end_shape(CLOSE)
+    @wiggler = create_shape
+    renderer = Sketch::ShapeRender.new(wiggler) # Prefix with Sketch classname
+    wiggler.begin_shape
+    wiggler.fill(127)
+    wiggler.stroke(0)
+    wiggler.stroke_weight(2)
+    original.map{ |vert| vert.to_vertex(renderer) }
+    wiggler.end_shape(CLOSE)
   end
 
   def wiggle
     @xoff = 0
     # Apply an offset to each vertex
     rad = ->(pos){ (Vec2D.from_angle(TAU * noise(xoff, yoff)) * 4) + pos }
-    
-    original.each_with_index do |pos, i| 
+    original.each_with_index do |pos, i|
       # Calculate a new vertex location based on noise around "original" location
       r = rad.call(pos)
       # Set the location of each vertex to the new one
-      s.set_vertex(i, r.x, r.y)
+      wiggler.set_vertex(i, r.x, r.y)
       # increment perlin noise x value
       @xoff += 0.5
     end
@@ -65,8 +57,8 @@ class Wiggler
 
   def display
     push_matrix
-    translate(x, y)
-    shape(s)
+    translate(width / 2, height / 2) # center display
+    shape(wiggler)
     pop_matrix
   end
 end

@@ -1,5 +1,5 @@
 # Andrew Glassner - www.glassner.com & www.imaginary-institute.com
-# Translated to JRubyArt by Martin Prout class Ag009Hyc < Propane::App
+# Translated to JRubyArt by Martin Prout
   load_library :AULib
   include_package 'AULib'
 
