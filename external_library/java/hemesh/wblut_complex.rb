@@ -3,7 +3,7 @@ load_library :hemesh
 include_package 'wblut.hemesh'
 
 NUM_POINTS = 100
-attr_reader :points, :container, :cells, :render
+attr_reader :container, :cells, :render
 
 def setup
   sketch_title 'Voronoi Cells Complex Cap'
@@ -11,65 +11,57 @@ def setup
   @container = HE_Mesh.new(creator)
   creator = HEC_Torus.new(60, 300, 6, 16)
   inner = HE_Mesh.new(creator)
-  inner.modify(HEM_Extrude.new.setDistance(32).setChamfer(0.8))
+  inner.modify(HEM_Extrude.new.set_distance(32).set_chamfer(0.8))
   HET_MeshOp.flipFaces(inner)
   container.add(inner)
   container.smooth
   fitr = container.fItr
-  fitr.next.setColor(color(0, 200, 50)) while fitr.hasNext
+  fitr.next.setColor(color(0, 200, 50)) while fitr.has_next
   array = (0...NUM_POINTS).map do
     [rand(-250..250.0), rand(-250..250.0), rand(-100..100.0)]
   end
   # converts multidimensional ruby Array to java
-  @points = array.to_java(Java::double[])
-  multiCreator = HEMC_VoronoiCells.new
-  multiCreator.setPoints(points)
-  multiCreator.setContainer(container)
-  multiCreator.setOffset(10)
-  @cells = multiCreator.create
-  mItr = cells.mItr
-  mesh = nil
-  while mItr.hasNext
-    mesh = mItr.next
-    mesh.modify(HEM_HideEdges.new)
-  end
+  points = array.to_java(Java::double[])
+  multi_creator = HEMC_VoronoiCells.new
+  multi_creator.set_points(points)
+  multi_creator.set_container(container)
+  multi_creator.set_offset(10)
+  @cells = multi_creator.create
   @render = WB_Render.new(self)
 end
 
 def draw
   background(55)
-  directionalLight(255, 255, 255, 1, 1, -1)
-  directionalLight(127, 127, 127, -1, -1, 1)
+  directional_light(255, 255, 255, 1, 1, -1)
+  directional_light(127, 127, 127, -1, -1, 1)
   translate(width / 2, height / 2)
   rotateY(mouseX * 1.0 / width * TWO_PI)
   rotateX(mouseY * 1.0 / height * TWO_PI)
-  drawFaces
-  drawEdges
+  draw_faces
+  draw_edges
 end
 
-def drawEdges
+def draw_edges
   stroke(0)
-  render.drawEdges(cells)
+  render.draw_edges(cells)
 end
 
-def drawFaces
+def draw_faces
   no_stroke
   fill(255)
   mItr = cells.mItr
-  mesh = nil
-  fItr = nil
-  drawFace = nil
-  while mItr.hasNext
+  while mItr.has_next
     mesh = mItr.next
     fItr = mesh.fItr
-    while fItr.hasNext
+    while fItr.has_next
       face = fItr.next
-      if face.getInternalLabel == -1
-        fill(WB_Color.spectralColorZucconi6(mesh.getInternalLabel * 2.6 + 420))
+      internal_label = face.get_internal_label
+      if internal_label == -1
+        fill(WB_Color.spectralColorZucconi6(mesh.get_internal_label * 2.6 + 420))
       else
-        fill(WB_Color.spectralColorZucconi6(face.getInternalLabel * 2.6 + 420))
+        fill(WB_Color.spectralColorZucconi6(internal_label * 2.6 + 420))
       end
-      render.drawFace(face)
+      render.draw_face(face)
     end
   end
 end
