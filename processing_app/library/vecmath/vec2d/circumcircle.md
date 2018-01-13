@@ -55,4 +55,6 @@ yo = -by / 2 * a
 [circumcircle]:http://mathworld.wolfram.com/Circumcircle.html
 
 
+### No Matrix Math ###
 
+For variant that does not use matrix math see circumcircle_sketch2.rb and its circle2 library
