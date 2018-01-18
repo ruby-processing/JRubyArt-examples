@@ -6,14 +6,15 @@ class Circumcircle
   attr_reader :center, :radius, :points
   def initialize(points)
     @points = points
+    calculate
   end
+
+  private
 
   def calculate
     @center = Vec2D.new(-(bx / am), -(by / am))
     @radius = center.dist(points[2]) # points[2] = c
   end
-
-  private
 
   # Matrix math see matrix_math.md and in detail
   # http://mathworld.wolfram.com/Circumcircle.html

@@ -53,7 +53,7 @@ def mouse_pressed
   points << MathPoint.new.from_sketch(mouse_x, mouse_y)
   return unless points.full?
   @circle = Circumcircle.new(points.array)
-  circle.calculate
+  # circle.calculate
   @center = MathPoint.new(circle.center)
 end
 
