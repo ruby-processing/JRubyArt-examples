@@ -13,8 +13,6 @@ java_import 'com.thomasdiewald.pixelflow.java.imageprocessing.DwShadertoy'
 #
 # Shadertoy Demo:   https://www.shadertoy.com/view/ldl3W8
 # Shadertoy Author: https://www.shadertoy.com/user/iq
-#
-
 attr_reader :context, :toy, :tex0
 
 def settings
