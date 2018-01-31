@@ -9,7 +9,7 @@ hype_extended_format = 'hype.extended.%s'
 HYPE.each { |klass| java_import format(hype_format, klass) }
 EXTENDED.each { |klass| java_import format(hype_extended_format, klass) }
 
-attr_reader :canvas, :colors, :pool, :xo, :ao, :wo, :ro, :zo
+attr_reader :colors, :pool, :xo, :ao, :wo, :ro, :zo
 
 def setup
   sketch_title 'Oscillator'
@@ -17,7 +17,7 @@ def setup
   H.background(color(0xff000000))
   H.use3D(true)
   @colors = HPixelColorist.new(data_path('gradient.jpg'))
-  @canvas = HCanvas.new(P3D).autoClear(true)
+  canvas = HCanvas.new(P3D).autoClear(true)
   H.add(canvas)
   @pool = HDrawablePool.new(1_000)
   pool.autoParent(canvas)
@@ -31,7 +31,7 @@ def setup
     @xo = HOscillator.new
     .target(obj)
     .property(H::X)
-    .relativeVal(obj.x)
+    .relative_val(obj.x)
     .range(rand(-10..-5), rand(5..10))
     .speed(rand(0.005..0.2))
     .freq(10)
