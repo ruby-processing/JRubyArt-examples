@@ -1,6 +1,6 @@
 #
 # PixelFlow | Copyright (C) 2016 Thomas Diewald - http://thomasdiewald.com
-# Translated to RubyArt by MArtin Prout
+# Translated to RubyArt by Martin Prout
 # A Processing/Java library for high performance GPU-Computing (GLSL).
 # MIT License: https://opensource.org/licenses/MIT
 #
