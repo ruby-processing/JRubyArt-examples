@@ -36,7 +36,7 @@ def setup
   pg_albedo.background(200,100,5)
   pg_albedo.endDraw
 
-  frameRate(60)
+  frame_rate(60)
 end
 
 def mouse_dragged
