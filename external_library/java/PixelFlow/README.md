@@ -1,6 +1,6 @@
 ### PixelFlow examples
 
-Requires peascam library
+Requires peasycam library
 
 Note how we can implement callbacks in jruby with a ruby lambda in skylight_basic.rb
 
@@ -10,7 +10,7 @@ __processing__
 DwSceneDisplay scene_display = new DwSceneDisplay(){
   @Override
   public void display(PGraphics3D canvas) {
-    displayScene(canvas);  
+    displayScene(canvas);
   }
 };
 

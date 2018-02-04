@@ -33,7 +33,7 @@ def setup
   # 1) 32 bit per channel
   tex_grayscott.resize(
     context,
-    GL2::GL_RG32F, # NB we need :: not . here to access constant
+    GL2::GL_RG32F, # NB use :: not . here to access GL2 constants
     width,
     height,
     GL2::GL_RG,
@@ -62,7 +62,6 @@ def setup
   tex_render.no_stroke
   tex_render.background(0x00FF0000) # NB: we can use hexadecimal in ruby
   tex_render.fill(0x0000FF00)
-  tex_render.no_stroke
   tex_render.rect_mode(CENTER)
   tex_render.rect(width / 2, height / 2, 20, 20)
   tex_render.end_draw
@@ -96,8 +95,8 @@ def draw
   context.begin_draw(tex_render)
   shader_render.begin
   shader_render.uniform2f('wh_rcp', 1.0 / width, 1.0 / height)
-  shader_render.uniformTexture('tex', tex_grayscott.src)
-  shader_render.drawFullScreenQuad
+  shader_render.uniform_texture('tex', tex_grayscott.src)
+  shader_render.draw_full_screen_quad
   shader_render.end
   context.end_draw('render')
   context.end
