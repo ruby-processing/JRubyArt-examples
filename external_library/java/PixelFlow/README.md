@@ -43,6 +43,8 @@ In __antialiasing.rb__ if we just use the overloaded `color` method, jruby compl
 
 The ControlP5 library is overly complicated and does not seem to work well with JRubyArt, the built in `control_panel` is much simpler to use. If you must use ControlP5 see [examples][p5] and the revised [basic_fluid.rb][basic]
 
+NB: where processing sketches use `fill(hexadecimal)` etc in propane we must wrap hexadecimal with color `fill(color(hexadecimal))` (_otherwise fill etc will complain of int too big_)
+
 
 [p5]:https://github.com/ruby-processing/JRubyArt-examples/tree/master/external_library/java/controlP5
 [basic]:https://github.com/ruby-processing/JRubyArt-examples/blob/master/external_library/java/PixelFlow/fluid_basic.rb
