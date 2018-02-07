@@ -31,6 +31,8 @@ def setup
   @index_buffer = allocate_direct_int_buffer(12)
   pgl = beginPGL
   gl = pgl.gl.getGL4ES3
+  puts gl.gl_get_string(GL.GL_VENDOR)
+  puts gl.gl_get_string(GL.GL_VERSION)
   # Get GL ids for all the buffers
   intBuffer = IntBuffer.allocate(3)
   gl.glGenBuffers(3, intBuffer)
