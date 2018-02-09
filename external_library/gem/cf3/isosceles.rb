@@ -2,9 +2,9 @@ require 'cf3'
 
 def setup_the_spiral
   @spiral= ContextFree.define do
-    ############ Begin defining custom terminal, an isoceles triangle
+    ############ Begin defining custom terminal, an isosceles triangle
     class << self
-      define_method(:isoceles) do |some_options| # isoceles triangle
+      define_method(:isosceles) do |some_options| # isosceles triangle
         options = get_shape_values(some_options)
         size = options[:size]
         rot = options[:rotation]
@@ -13,9 +13,9 @@ def setup_the_spiral
         rotate(-rot) if rot
       end
     end
-    ########### End definition of custom terminal 'isoceles'
+    ########### End definition of custom terminal 'isosceles'
     shape :spiral do
-      isoceles brightness: -1, rotation: 90
+      isosceles brightness: -1, rotation: 90
       spiral rotation: 135, size: 1 / sqrt(2), x: 1 / sqrt(2)
     end
   end
@@ -26,7 +26,7 @@ def settings
 end
 
 def setup
-  sketch_title 'Isoceles'
+  sketch_title 'Isosceles'
   setup_the_spiral
   draw_it
 end
