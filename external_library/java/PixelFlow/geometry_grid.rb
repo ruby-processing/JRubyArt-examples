@@ -100,8 +100,7 @@ end
 
 def create_gizmo(s)
   stroke_weight(1)
-  shp_gizmo = create_shape
-  shp_gizmo.tap do |shp|
+  create_shape.tap do |shp|
     shp.begin_shape(LINES)
     shp.stroke(255, 0, 0)
     shp.vertex(0, 0, 0)

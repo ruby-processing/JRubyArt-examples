@@ -16,7 +16,7 @@ class Pentagonal
     @axiom = 'F-F-F-F-F'
     @grammar = Grammar.new(axiom, 'F' => 'F+F+F-F-F-F+F+F')
     @draw_length = 400
-    @theta = 0.0
+    @theta = 0
     @xpos = 0.0
     @ypos = 0.0
   end
@@ -100,4 +100,3 @@ end
 def settings
   size 800, 800, P2D
 end
-

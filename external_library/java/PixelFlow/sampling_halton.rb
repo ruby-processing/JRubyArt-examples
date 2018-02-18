@@ -38,21 +38,24 @@ def add_shape(position, scale)
   shp_samples.add_child(shp_point)
 end
 
-def display_gizmo(s)
-  if(shp_gizmo.nil?)
-    stroke_weight(1)
-    @shp_gizmo = create_shape
-    shp_gizmo.begin_shape(LINES)
-    shp_gizmo.stroke(255,0,0)
-    shp_gizmo.vertex(0,0,0)
-    shp_gizmo.vertex(s,0,0)
-    shp_gizmo.stroke(0,255,0)
-    shp_gizmo.vertex(0,0,0)
-    shp_gizmo.vertex(0,s,0)
-    shp_gizmo.stroke(0,0,255)
-    shp_gizmo.vertex(0,0,0)
-    shp_gizmo.vertex(0,0,s)
-    shp_gizmo.end_shape
+def create_gizmo(s)
+  stroke_weight(1)
+  create_shape.tap do |shp|
+    shp.begin_shape(LINES)
+    shp.stroke(255, 0, 0)
+    shp.vertex(0, 0, 0)
+    shp.vertex(s, 0, 0)
+    shp.stroke(0, 255, 0)
+    shp.vertex(0, 0, 0)
+    shp.vertex(0, s, 0)
+    shp.stroke(0, 0, 255)
+    shp.vertex(0, 0, 0)
+    shp.vertex(0, 0, s)
+    shp.end_shape
   end
+end
+
+def display_gizmo(s)
+  @shp_gizmo = create_gizmo(s) unless shp_gizmo
   shape(shp_gizmo)
 end
