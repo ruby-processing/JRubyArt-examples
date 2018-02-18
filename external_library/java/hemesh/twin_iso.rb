@@ -5,7 +5,6 @@ java_import 'wblut.hemesh.HE_Mesh'
 java_import 'wblut.hemesh.HEM_Smooth'
 
 RES ||= 20
-
 attr_reader :mesh, :inv_mesh, :render
 
 def setup
@@ -23,20 +22,20 @@ def setup
     end
     values << valu
   end
-
-  creator = HEC_IsoSurface.new
-  creator.set_resolution(RES, RES, RES) # number of cells in x,y,z direction
-  creator.set_size(400.0 / RES, 400.0 / RES, 400.0 / RES) # cell size
-  # JRuby requires a bit of help to determine correct 'java args', particulary with
-  # overloaded arrays args as seen below. Note we are saying we have an 'array' of
-  # 'float array' here, where the values can also be double[][][].
-  java_values = values.to_java(Java::float[][]) # pre-coerce values to java
-  creator.set_values(java_values)               # the grid points
-  creator.set_isolevel(1)   # isolevel to mesh
-  creator.set_invert(false) # invert mesh
-  creator.set_boundary(100) # value of isoFunction outside grid
-  # use creator.clear_boundary to set boundary values to "no value".
-  # A boundary value of "no value" results in an open mesh
+  creator = HEC_IsoSurface.new.tap do |surf|
+    surf.set_resolution(RES, RES, RES) # number of cells in x,y,z direction
+    surf.set_size(400.0 / RES, 400.0 / RES, 400.0 / RES) # cell size
+    # JRuby requires a bit of help to determine correct 'java args', particulary with
+    # overloaded arrays args as seen below. Note we are saying we have an 'array' of
+    # 'float array' here, where the values can also be double[][][].
+    java_values = values.to_java(Java::float[][]) # pre-coerce values to java
+    surf.set_values(java_values)               # the grid points
+    surf.set_isolevel(1)   # isolevel to mesh
+    surf.set_invert(false) # invert mesh
+    surf.set_boundary(100) # value of isoFunction outside grid
+    # use creator.clear_boundary to set boundary values to "no value".
+    # A boundary value of "no value" results in an open mesh
+  end
   @mesh = HE_Mesh.new(creator)
   # mesh.modify(HEM_Smooth.new.set_iterations(10).setAutoRescale(true))
   creator.set_invert(true)

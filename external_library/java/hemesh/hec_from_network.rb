@@ -29,23 +29,24 @@ def setup
   # If the connections are known in advance these can be given as parameter as int[][].
   # The second index gives index of first and second point of connection in the points
   # array. network = WB_Network.new(vertices, connections)
-  creator = HEC_FromNetwork.new
-  creator.setNetwork(network)
-  # alternatively you can specify a HE_Mesh instead of a WB_Network.
-  creator.setConnectionRadius(6) # connection radius
-  # number of faces in the connections, min 3, max whatever blows up the CPU
-  creator.setConnectionFacets(6)
-  # rotate the connections by a fraction of a facet. 0 is no rotation, 1 is a rotation over a full facet. More noticeable for low number of facets.
-  creator.setAngleOffset(0.25)
-  # Threshold angle to include sphere in joint.
-  creator.setMinimumBalljointAngle(TWO_PI / 3.0)
-  # divide connection into equal parts if larger than maximum length.
-  creator.setMaximumConnectionLength(30)
-  creator.setCap(true) # cap open endpoints of connections?
-  creator.setTaper(true) # allow connections to have different radii at each end?
-  creator.setCreateIsolatedNodes(false) # create spheres for isolated points?
-  # use the value of the WB_Node as scaling factor, only useful if the frame was created using addNode.
-  creator.setUseNodeValues(true)
+  creator = HEC_FromNetwork.new.tap do |net|
+    net.setNetwork(network)
+    # alternatively you can specify a HE_Mesh instead of a WB_Network.
+    net.setConnectionRadius(6) # connection radius
+    # number of faces in the connections, min 3, max whatever blows up the CPU
+    net.setConnectionFacets(6)
+    # rotate the connections by a fraction of a facet. 0 is no rotation, 1 is a rotation over a full facet. More noticeable for low number of facets.
+    net.setAngleOffset(0.25)
+    # Threshold angle to include sphere in joint.
+    net.setMinimumBalljointAngle(TWO_PI / 3.0)
+    # divide connection into equal parts if larger than maximum length.
+    net.setMaximumConnectionLength(30)
+    net.setCap(true) # cap open endpoints of connections?
+    net.setTaper(true) # allow connections to have different radii at each end?
+    net.setCreateIsolatedNodes(false) # create spheres for isolated points?
+    # use the value of the WB_Node as scaling factor, only useful if the frame was created using addNode.
+    net.setUseNodeValues(true)
+  end
   @mesh = HE_Mesh.new(creator)
   HET_Diagnosis.validate(mesh)
   @render = WB_Render.new(self)

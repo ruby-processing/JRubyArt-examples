@@ -9,12 +9,12 @@ attr_reader :meshes, :render
 def setup
   sketch_title 'Weaire Phelan'
   ArcBall.init(self)
-  wp = HEMC_WeairePhelan.new
-  wp.set_origin(WB_Point.new(0, 0, -100))
-  wp.set_extents(WB_Vector.new(400, 400, 400))
-  wp.set_number_of_units(2, 2, 2)
-  wp.set_scale(150, 150, 150)
-  @meshes = wp.create
+  @meshes = HEMC_WeairePhelan.new.tap do |wp|
+    wp.set_origin(WB_Point.new(0, 0, -100))
+    wp.set_extents(WB_Vector.new(400, 400, 400))
+    wp.set_number_of_units(2, 2, 2)
+    wp.set_scale(150, 150, 150)
+  end.create
   @render = WB_Render.new(self)
 end
 

@@ -14,13 +14,14 @@ def setup
   ArcBall.init(self)
   format_string = '/square-%03d.png' # format up to 3 leading zeroes
   images = (1..360).map { |index| data_path(format(format_string, index)) }
-  creator = HEC_IsoSurface.new
-  creator.set_size(8, 8, 8)
-  creator.set_values(images.to_java(:string), self, 64, 64, 64)
-  creator.set_isolevel(128)
-  creator.set_invert(false)
-  creator.set_boundary(-20_000)
-  creator.set_gamma(0.3)
+  creator = HEC_IsoSurface.new.tap do |iso|
+    iso.set_size(8, 8, 8)
+    iso.set_values(images.to_java(:string), self, 64, 64, 64)
+    iso.set_isolevel(128)
+    iso.set_invert(false)
+    iso.set_boundary(-20_000)
+    iso.set_gamma(0.3)
+  end
   @mesh = HE_Mesh.new(creator)
   @render = WB_Render.new(self)
 end
