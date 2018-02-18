@@ -38,7 +38,7 @@ end
 
 def draw
   lights
-  directionalLight(128, 96, 64, -500, -500, 1_000)
+  directional_light(128, 96, 64, -500, -500, 1_000)
   background(64)
   display_gizmo(300)
   scale(RADIUS)
@@ -73,34 +73,25 @@ def display_mesh(ifs)
   faces_count = ifs.get_faces_count
   faces       = ifs.get_faces
   verts       = ifs.get_verts
-  v = Array.new(3)
   faces.each do |face|
     case(face.length)
     when 3
       begin_shape(TRIANGLE)
-      v = verts[face[2]]
-      vertex(v[0], v[1], v[2])
-      v = verts[face[1]]
-      vertex(v[0], v[1], v[2])
-      v = verts[face[0]]
-      vertex(v[0], v[1], v[2])
+      vertex(*verts[face[2]])
+      vertex(*verts[face[1]])
+      vertex(*verts[face[0]])
       end_shape
     when 4
       begin_shape(QUAD)
-      v = verts[face[3]]
-      vertex(v[0], v[1], v[2])
-      v = verts[face[2]]
-      vertex(v[0], v[1], v[2])
-      v = verts[face[1]]
-      vertex(v[0], v[1], v[2])
-      v = verts[face[0]]
-      vertex(v[0], v[1], v[2])
+      vertex(*verts[face[3]])
+      vertex(*verts[face[2]])
+      vertex(*verts[face[1]])
+      vertex(*verts[face[0]])
       end_shape
     else
       begin_shape # POLYGON
       face.each do |coord|
-        v = verts[face[coord]]
-        vertex(v[0], v[1], v[2])
+        vertex(*verts[face[coord]])
       end
       end_shape(CLOSE)
     end
