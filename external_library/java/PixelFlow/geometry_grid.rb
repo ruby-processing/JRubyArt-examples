@@ -3,12 +3,11 @@
 # A Processing/Java library for high performance GPU-Computing (GLSL).
 # MIT License: https://opensource.org/licenses/MIT
 #
-load_libraries :PixelFlow, :peasycam
+load_libraries :PixelFlow
 
 java_import 'com.thomasdiewald.pixelflow.java.geometry.DwHalfEdge'
 java_import 'com.thomasdiewald.pixelflow.java.geometry.DwIFSGrid'
 java_import 'com.thomasdiewald.pixelflow.java.geometry.DwIndexedFaceSetAble'
-java_import 'peasy.PeasyCam'
 # A demo to create a Subdivision Cube, and either render it by as usual,
 # or convert it to a HalfEdge representation and use that for rendering and
 # more complex mesh operations/iterations.
@@ -26,7 +25,7 @@ def settings
 end
 
 def setup
-  PeasyCam.new(self, 1000)
+  ArcBall.init(self)
   create_mesh(4) # initial setting
   @display_stroke = true
   @shp_gizmo = nil
