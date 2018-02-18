@@ -111,18 +111,20 @@ end
 def create_gizmo(s)
   stroke_weight(1)
   shp_gizmo = create_shape
-  shp_gizmo.begin_shape(LINES)
-  shp_gizmo.stroke(255, 0, 0)
-  shp_gizmo.vertex(0, 0, 0)
-  shp_gizmo.vertex(s, 0, 0)
-  shp_gizmo.stroke(0, 255, 0)
-  shp_gizmo.vertex(0, 0, 0)
-  shp_gizmo.vertex(0, s, 0)
-  shp_gizmo.stroke(0, 0, 255)
-  shp_gizmo.vertex(0, 0, 0)
-  shp_gizmo.vertex(0, 0, s)
-  shp_gizmo.end_shape
-  shp_gizmo
+  shp_gizmo.tap do |shp|
+    shp.begin_shape(LINES)
+    shp.stroke(255, 0, 0)
+    shp.vertex(0, 0, 0)
+    shp.vertex(s, 0, 0)
+    shp.stroke(0, 255, 0)
+    shp.vertex(0, 0, 0)
+    shp.vertex(0, s, 0)
+    shp.stroke(0, 0, 255)
+    shp.vertex(0, 0, 0)
+    shp.vertex(0, 0, s)
+    shp.end_shape
+  end
+  # shp_gizmo
 end
 
 def display_gizmo(s)
