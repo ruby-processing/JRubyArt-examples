@@ -124,7 +124,6 @@ def create_gizmo(s)
     shp.vertex(0, 0, s)
     shp.end_shape
   end
-  # shp_gizmo
 end
 
 def display_gizmo(s)
