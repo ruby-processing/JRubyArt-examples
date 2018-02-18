@@ -17,7 +17,7 @@ java_import 'peasy.PeasyCam'
 # key '1'-'7' ... subdivisions
 # key 's      ... toggle stroke display
 
-attr_reader :cam, :grid, :mesh, :shp_gizmo, :display_stroke
+attr_reader :grid, :mesh, :shp_gizmo, :display_stroke
 RADIUS = 200
 
 def settings
@@ -26,8 +26,8 @@ def settings
 end
 
 def setup
-  @cam = PeasyCam.new(self, 1000)
-  create_mesh(4)
+  PeasyCam.new(self, 1000)
+  create_mesh(4) # initial setting
   @display_stroke = true
   @shp_gizmo = nil
 end
@@ -42,7 +42,6 @@ def draw
   directionalLight(128, 96, 64, -500, -500, 1_000)
   background(64)
   display_gizmo(300)
-
   scale(RADIUS)
   if(display_stroke)
     stroke_weight(0.5 / RADIUS)
@@ -52,21 +51,19 @@ def draw
   end
   fill(255)
   # display the IFS-mesh (Indexed Face set)
-  pushMatrix
+  push_matrix
   translate(-1.5, 0)
   display_mesh(grid)
-  popMatrix
+  pop_matrix
   # display the HalfEdge mesh
-  pushMatrix
+  push_matrix
   translate(1.5, 0)
   mesh.display(g)
-  popMatrix
+  pop_matrix
   # info
-  num_faces = mesh.ifs.getFacesCount
-  num_verts = mesh.ifs.getVertsCount
+  num_faces = mesh.ifs.get_faces_count
+  num_verts = mesh.ifs.get_verts_count
   num_edges = mesh.edges.length
-  #String txt_fps = String.format(getClass().getName()+ "   [Verts %d]  [Faces %d]  [HalfEdges %d]  [fps %6.2f]", num_verts, num_faces, num_edges, frameRate)
-  #surface.setTitle(txt_fps)
   format_string = 'Geometry Grid  [Verts %d]  [Faces %d]  [Half Edges %d]  [fps: (%6.2f)]'
   surface.set_title(format(format_string, num_verts, num_faces, num_edges, frame_rate))
 end
@@ -74,9 +71,9 @@ end
 # this method can of course be optimized if we know in advance the number of
 # vertices per face
 def display_mesh(ifs)
-  faces_count = ifs.getFacesCount
-  faces       = ifs.getFaces
-  verts       = ifs.getVerts
+  faces_count = ifs.get_faces_count
+  faces       = ifs.get_faces
+  verts       = ifs.get_verts
   v = Array.new(3)
   faces.each do |face|
     case(face.length)
@@ -111,22 +108,25 @@ def display_mesh(ifs)
   end
 end
 
+def create_gizmo(s)
+  stroke_weight(1)
+  shp_gizmo = create_shape
+  shp_gizmo.begin_shape(LINES)
+  shp_gizmo.stroke(255, 0, 0)
+  shp_gizmo.vertex(0, 0, 0)
+  shp_gizmo.vertex(s, 0, 0)
+  shp_gizmo.stroke(0, 255, 0)
+  shp_gizmo.vertex(0, 0, 0)
+  shp_gizmo.vertex(0, s, 0)
+  shp_gizmo.stroke(0, 0, 255)
+  shp_gizmo.vertex(0, 0, 0)
+  shp_gizmo.vertex(0, 0, s)
+  shp_gizmo.end_shape
+  shp_gizmo
+end
+
 def display_gizmo(s)
-  if shp_gizmo.nil?
-    strokeWeight(1)
-    @shp_gizmo = create_shape
-    shp_gizmo.begin_shape(LINES)
-    shp_gizmo.stroke(255,0,0)
-    shp_gizmo.vertex(0,0,0)
-    shp_gizmo.vertex(s,0,0)
-    shp_gizmo.stroke(0,255,0)
-    shp_gizmo.vertex(0,0,0)
-    shp_gizmo.vertex(0,s,0)
-    shp_gizmo.stroke(0,0,255)
-    shp_gizmo.vertex(0,0,0)
-    shp_gizmo.vertex(0,0,s)
-    shp_gizmo.end_shape
-  end
+  @shp_gizmo = create_gizmo(s) unless shp_gizmo
   shape(shp_gizmo)
 end
 
