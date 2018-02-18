@@ -46,48 +46,48 @@ end
 # This function draws a trefoil knot surface as a triangle mesh derived
 # from its parametric equation.
 def create_trefoil(s, ny, nx, tex)
-  obj = create_shape
-  obj.begin_shape(TRIANGLES)
-  obj.texture(tex)
-  renderer = ShapeRender.new(obj)
-  (0...nx).each do |j|
-    u0 = j.to_f / nx
-    u1 = (j + 1).to_f / nx
-    (0...ny).each do |i|
-      v0 = i.to_f / ny
-      v1 = (i + 1).to_f / ny
+  create_shape.tap do |obj|
+    obj.begin_shape(TRIANGLES)
+    obj.texture(tex)
+    renderer = ShapeRender.new(obj)
+    (0...nx).each do |j|
+      u0 = j.to_f / nx
+      u1 = (j + 1).to_f / nx
+      (0...ny).each do |i|
+        v0 = i.to_f / ny
+        v1 = (i + 1).to_f / ny
 
-      p0 = eval_point(u0, v0)
-      n0 = eval_normal(u0, v0)
+        p0 = eval_point(u0, v0)
+        n0 = eval_normal(u0, v0)
 
-      p1 = eval_point(u0, v1)
-      n1 = eval_normal(u0, v1)
+        p1 = eval_point(u0, v1)
+        n1 = eval_normal(u0, v1)
 
-      p2 = eval_point(u1, v1)
-      n2 = eval_normal(u1, v1)
+        p2 = eval_point(u1, v1)
+        n2 = eval_normal(u1, v1)
 
-      # Triangle p0-p1-p2
-      n0.to_normal(renderer)
-      (p0 * s).to_vertex_uv(renderer, u0, v0)
-      n1.to_normal(renderer)
-      (p1 * s).to_vertex_uv(renderer, u0, v1)
-      n2.to_normal(renderer)
-      (p2 * s).to_vertex_uv(renderer, u1, v1)
+        # Triangle p0-p1-p2
+        n0.to_normal(renderer)
+        (p0 * s).to_vertex_uv(renderer, u0, v0)
+        n1.to_normal(renderer)
+        (p1 * s).to_vertex_uv(renderer, u0, v1)
+        n2.to_normal(renderer)
+        (p2 * s).to_vertex_uv(renderer, u1, v1)
 
-      p1 = eval_point(u1, v0)
-      n1 = eval_normal(u1, v0)
+        p1 = eval_point(u1, v0)
+        n1 = eval_normal(u1, v0)
 
-      # Triangle p0-p2-p1
-      n0.to_normal(renderer)
-      (p0 * s).to_vertex_uv(renderer, u0, v0)
-      n2.to_normal(renderer)
-      (p2 * s).to_vertex_uv(renderer, u1, v1)
-      n1.to_normal(renderer)
-      (p1 * s).to_vertex_uv(renderer, u1, v0)
+        # Triangle p0-p2-p1
+        n0.to_normal(renderer)
+        (p0 * s).to_vertex_uv(renderer, u0, v0)
+        n2.to_normal(renderer)
+        (p2 * s).to_vertex_uv(renderer, u1, v1)
+        n1.to_normal(renderer)
+        (p1 * s).to_vertex_uv(renderer, u1, v0)
+      end
     end
+    obj.end_shape
   end
-  obj.end_shape
-  obj
 end
 
 # Evaluates the surface normal corresponding to normalized

@@ -38,20 +38,20 @@ end
 
 def build_shape
   no_stroke
-  bez = create_shape
-  bez.begin_shape(QUAD_STRIP)
-  bez.fill(192, 192, 192)
-  bez.ambient(20, 20, 20)
-  bez.specular(30)
-  (0...RESI - 1).each do |i|
-    (0...RESJ).each do |j|
-      bez.normal(*normp[i][j]) unless auto_normals
-      bez.vertex(*outp[i][j])
-      bez.vertex(*outp[i+1][j])
+  create_shape.tap do |bez|
+    bez.begin_shape(QUAD_STRIP)
+    bez.fill(192, 192, 192)
+    bez.ambient(20, 20, 20)
+    bez.specular(30)
+    (0...RESI - 1).each do |i|
+      (0...RESJ).each do |j|
+        bez.normal(*normp[i][j]) unless auto_normals
+        bez.vertex(*outp[i][j])
+        bez.vertex(*outp[i+1][j])
+      end
     end
+    bez.end_shape
   end
-  bez.end_shape
-  bez
 end
 
 ##########

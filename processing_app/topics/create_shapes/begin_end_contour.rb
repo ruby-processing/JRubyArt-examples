@@ -4,43 +4,45 @@
 # How to cut a shape out of another using begin_contour and end_contour
 #
 
-attr_reader :s
+attr_reader :contour
 
 def setup
   sketch_title 'Begin End Contour'
   # Make a shape
-  @s = create_shape
-  s.begin_shape
-  s.fill(0)
-  s.stroke(255)
-  s.stroke_weight(2)
-  # Exterior part of shape
-  s.vertex(-100,-100)
-  s.vertex(100,-100)
-  s.vertex(100,100)
-  s.vertex(-100,100)
-
-  # Interior part of shape
-  s.begin_contour
-  s.vertex(-10,-10)
-  s.vertex(10,-10)
-  s.vertex(10,10)
-  s.vertex(-10,10)
-  s.end_contour
-
-  # Finishing off shape
-  s.end_shape(CLOSE)
+  @contour = make_contour
 end
 
 def draw
   background(52)
   # Display shape
-  translate(width/2, height/2)
+  translate(width / 2, height / 2)
   # Shapes can be rotated
-  s.rotate(0.01)
-  shape(s)
+  contour.rotate(0.01)
+  shape(contour)
 end
 
+def make_contour
+  create_shape.tap do |shp|
+    shp.begin_shape
+    shp.fill(0)
+    shp.stroke(255)
+    shp.stroke_weight(2)
+    # Exterior part of shape
+    shp.vertex(-100, -100)
+    shp.vertex(100, -100)
+    shp.vertex(100, 100)
+    shp.vertex(-100, 100)
+    # Interior part of shape
+    shp.begin_contour
+    shp.vertex(-20, -20)
+    shp.vertex(-20, 20)
+    shp.vertex(20, 20)
+    shp.vertex(20, -20)
+    shp.end_contour
+    # Finishing off shape
+    shp.end_shape(CLOSE)
+  end
+end
 
 def settings
   size(640, 360, P2D)
