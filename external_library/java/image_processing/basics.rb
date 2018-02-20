@@ -33,31 +33,28 @@ def draw
   when 1
     # automatic
     # @processed_image = Threshold.apply(my_image)
-
     # by mouseX
     @processed_image = Threshold.apply(my_image, map1d(mouse_x, 0..width, 0..255))
-
-    # Dilation expands the white regions by a radius
-    # works best with threshold/binary images
   when 2, 3, 10
     quant = map1d(mouse_x, 0..width, 1..10)
-    return @processed_image = Quantization.apply(
-      my_image, quant
-    ) if current_algorithm == 10
-    @processed_image = Threshold.apply(my_image)
-    if current_algorithm == 2
-      @processed_image = Dilation.apply(processed_image, quant)
+    if current_algorithm == 10
+      @processed_image = Quantization.apply(my_image, quant)
     else
-      # Erosion expands the dark regions by a radius
-      # works best with threshold/binary images
-      @processed_image = Erosion.apply(processed_image, quant)
+      @processed_image = Threshold.apply(my_image)
+      if current_algorithm == 2
+        # Dilation expands the white regions by a radius
+        # works best with threshold/binary images
+        @processed_image = Dilation.apply(processed_image, quant)
+      else
+        # Erosion expands the dark regions by a radius
+        # works best with threshold/binary images
+        @processed_image = Erosion.apply(processed_image, quant)
+      end
     end
-
     # Brightness correction
   when 4
     intensity = map1d(mouse_x, 0..width, -255..255)
     @processed_image = Brightness.apply(my_image, intensity)
-
     # AutoBalance for simple color correction
   when 5
     @processed_image = AutoBalance.apply(my_image)
