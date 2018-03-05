@@ -19,6 +19,7 @@ VALUES = ('a'..'h').to_a
 attr_reader :cp5
 
 def setup
+  sketch_title 'ScrollableList ControlP5'
   @cp5 = ControlP5.new(self)
   # add a ScrollableList, by default it behaves like a DropdownList
   cp5.addScrollableList("dropdown")
@@ -249,16 +250,14 @@ end
 # java.lang.Object : boolean equals(Object)
 #
 # created: 2015/03/24 12:21:22
-def listen(e)
-  puts e
-end
+# def listen(e)
+#   puts e
+# end
 
 def controlEvent(event)
-  if event.controller?
-    if event.getController.getName =~ /dropdown/
-      puts event.getController.getName
-    end
-  end
+  return unless event.controller?
+  return unless event.getController.getName =~ /dropdown/
+  puts "Dropdown value #{event.getController.getValue}"
 end
 
 def settings

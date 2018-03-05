@@ -1,6 +1,6 @@
 # Blending
-# by Andres Colubri.
-#
+# by Andres Colubri. Somewhat refactored for JRubyArt by Martin Prout would be
+# better in java if constant were enums (we use a ruby hash here)
 # Images can be blended using one of the 10 blending modes
 # (currently available only in P2D and P3).
 # Click to go to cycle through the modes.
@@ -8,14 +8,22 @@
 
 # NOTE: THIS EXAMPLE IS IN PROGRESS -- REAS
 
-attr_reader :img1, :img2, :pic_alpha, :name, :sel_mode
+attr_reader :img1, :img2, :pic_alpha, :sel_mode, :idx
+
+NAMES = %w[
+  REPLACE BLEND ADD SUBTRACT LIGHTEST DARKEST DIFFERENCE EXCLUSION MULTIPLY SCREEN
+].freeze
+VALUES = [
+  REPLACE, BLEND, ADD, SUBTRACT, LIGHTEST, DARKEST, DIFFERENCE, EXCLUSION, MULTIPLY
+]
+FILTERS = VALUES.zip(NAMES).to_h # avoids the need for a lengthy if else chain
 
 def setup
   sketch_title 'Blending'
   @img1 = load_image(data_path('layer1.jpg'))
   @img2 = load_image(data_path('layer2.jpg'))
-  @name = 'REPLACE'
   noStroke
+  @idx = -1
   @sel_mode = REPLACE
 end
 
@@ -31,42 +39,12 @@ def draw
   fill(255)
   rect(0, 0, 94, 22)
   fill(0)
-  text(name, 10, 15)
+  text(FILTERS.fetch(sel_mode, 'REPLACE'), 10, 15)
 end
 
 def mouse_pressed
-  case @sel_mode
-  when REPLACE
-    @sel_mode = BLEND
-    @name = 'BLEND'
-  when BLEND
-    @sel_mode = ADD
-    @name = 'ADD'
-  when ADD
-    @sel_mode = SUBTRACT
-    @name = 'SUBTRACT'
-  when SUBTRACT
-    @sel_mode = LIGHTEST
-    @name = 'LIGHTEST'
-  when LIGHTEST
-    @sel_mode = DARKEST
-    @name = 'DARKEST'
-  when DARKEST
-    @sel_mode = DIFFERENCE
-    @name = 'DIFFERENCE'
-  when DIFFERENCE
-    @sel_mode = EXCLUSION
-    @name = 'EXCLUSION'
-  when EXCLUSION
-    @sel_mode = MULTIPLY
-    @name = 'MULTIPLY'
-  when MULTIPLY
-    @sel_mode = SCREEN
-    @name = 'SCREEN'
-  when SCREEN
-    @sel_mode = REPLACE
-    @name = 'REPLACE'
-  end
+  @idx = (idx == VALUES.length) ? 0 : idx + 1
+  @sel_mode = VALUES[idx]
 end
 
 def mouse_dragged
@@ -75,6 +53,5 @@ def mouse_dragged
 end
 
 def settings
-  size(640, 360)
+  size(640, 360, P2D)
 end
-
