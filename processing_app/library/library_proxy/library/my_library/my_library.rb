@@ -19,13 +19,13 @@ class MyLibrary < LibraryProxy
   def keyEvent(e) # NB: need camel case for reflection to work
     return unless e.get_action == KeyEvent::PRESS
     return if e.get_key >= 'z'.ord
-    case e.get_key.chr.upcase
-    when 'S'
+    case e.get_key.chr
+    when 's', 'S'
       app.send :hide, false
-    when 'H'
+    when 'h', 'H'
       app.send :hide, true
     else
-      puts e.get_key.chr
+      puts "Use 'h' or 's' keys to show/hide"
     end
   end
 end

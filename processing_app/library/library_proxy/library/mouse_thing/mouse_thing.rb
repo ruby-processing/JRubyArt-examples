@@ -1,8 +1,9 @@
 class MouseThing < LibraryProxy
-attr_reader :app, :count
-  def initialize(app)
-    @app = app
-    @count = 0
+
+  attr_reader :app
+
+  def initialize(parent)
+    @app = parent
   end
 
   def draw
@@ -11,13 +12,9 @@ attr_reader :app, :count
   def mouseEvent(event)
     case event.action
     when MouseEvent::CLICK
-      fstring = 'CLICK at x = %.1f, y = %.1f'
-      puts format(fstring, event.x, event.y)
+      puts 'CLICK'
     when MouseEvent::DRAG
       puts 'DRAG'
-    when MouseEvent::WHEEL
-      @count += event.getCount
-      puts count
     end
   end
 end

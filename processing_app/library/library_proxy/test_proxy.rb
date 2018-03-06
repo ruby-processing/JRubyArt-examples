@@ -1,6 +1,5 @@
 # test_proxy.rb by Martin Prout
-load_library :library_proxy
-require_relative 'proxy_library'
+load_library :library_proxy, :proxy_library
 
 def settings
   size 300, 300

@@ -1,7 +1,7 @@
 # A simple demonstration of vanilla processing 'reflection' methods using
 # JRubyArt :library_proxy.
 # See library/my_library/my_library.rb code for the guts.
-# press 'h' to hide ellipse, or 's' to show ellipse
+# Use 's' and 'h' keys to show and hide
 load_libraries :library_proxy, :my_library
 
 attr_reader :visible
