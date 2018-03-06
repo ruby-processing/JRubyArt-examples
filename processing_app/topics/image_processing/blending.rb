@@ -1,6 +1,6 @@
 # Blending
-# by Andres Colubri. Somewhat refactored for JRubyArt by Martin Prout would be
-# better in java if constant were enums (we use a ruby hash here)
+# by Andres Colubri. Somewhat refactored for JRubyArt by Martin Prout could be
+# much better in java if PConstants were enums (we use a ruby hash here)
 # Images can be blended using one of the 10 blending modes
 # (currently available only in P2D and P3).
 # Click to go to cycle through the modes.
@@ -9,14 +9,14 @@
 # NOTE: THIS EXAMPLE IS IN PROGRESS -- REAS
 
 attr_reader :img1, :img2, :pic_alpha, :sel_mode, :idx
-
+# avoid the lengthy if/else chain of the original by using array and hash
 NAMES = %w[
   REPLACE BLEND ADD SUBTRACT LIGHTEST DARKEST DIFFERENCE EXCLUSION MULTIPLY SCREEN
 ].freeze
 VALUES = [
   REPLACE, BLEND, ADD, SUBTRACT, LIGHTEST, DARKEST, DIFFERENCE, EXCLUSION, MULTIPLY
 ]
-FILTERS = VALUES.zip(NAMES).to_h # avoids the need for a lengthy if else chain
+FILTERS = VALUES.zip(NAMES).to_h # avoids the lengthy if/else chain of original
 
 def setup
   sketch_title 'Blending'
@@ -24,7 +24,7 @@ def setup
   @img2 = load_image(data_path('layer2.jpg'))
   noStroke
   @idx = -1
-  @sel_mode = REPLACE
+  @sel_mode = VALUES.first
 end
 
 def draw
