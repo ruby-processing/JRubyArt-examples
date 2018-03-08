@@ -79,7 +79,7 @@ class DeadGrid < LibraryProxy
     end
   end
 
-  def there?(x,y)
+  def there?(x, y)
     grid[x][y] != 0
   end
 end
