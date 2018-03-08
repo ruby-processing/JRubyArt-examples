@@ -110,21 +110,17 @@ class BlockedHandler
   def update(player, deadgrid)
     case player.direction
     when 0
-      if deadgrid.grid[player.x - 1][player.y] == 1
-        deadgrid.grid[player.x - 1][player.y] = 2
-      end
+      return unless deadgrid.grid[player.x - 1][player.y] == 1
+      deadgrid.grid[player.x - 1][player.y] = 2
     when 1
-      if deadgrid.grid[player.x][player.y - 1] == 1
-        deadgrid.grid[player.x][player.y - 1] = 2
-      end
+      return unless deadgrid.grid[player.x][player.y - 1] == 1
+      deadgrid.grid[player.x][player.y - 1] = 2
     when 2
-      if deadgrid.grid[player.x + 1][player.y] == 1
-        deadgrid.grid[player.x + 1][player.y] = 2
-      end
+      return unless  deadgrid.grid[player.x + 1][player.y] == 1
+      deadgrid.grid[player.x + 1][player.y] = 2
     when 3
-      if deadgrid.grid[player.x][player.y + 1] == 1
-        deadgrid.grid[player.x][player.y + 1] = 2
-      end
+      return unless  deadgrid.grid[player.x][player.y + 1] == 1
+      deadgrid.grid[player.x][player.y + 1] = 2
     end
   end
 end
