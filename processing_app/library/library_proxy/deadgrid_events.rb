@@ -44,27 +44,27 @@ def key_pressed
   when LEFT
     player.direction = 0
     return unless player.x > 0
-    return player.x = player.x - 1 if deadgrid.can_move?(player, 1)
+    return player.x -= 1 if deadgrid.can_move?(player, 1)
     changed
     notify_observers(player, deadgrid)
   when RIGHT
     player.direction = 2
     # check bounds
     return unless player.x < deadgrid.width
-    return player.x = player.x + 1 if deadgrid.can_move?(player, 1)
+    return player.x += 1 if deadgrid.can_move?(player, 1)
     changed
     notify_observers(player, deadgrid)
   when UP
     player.direction = 1
     # check bounds
     return unless player.y > 0
-    return player.y = player.y - 1 if deadgrid.can_move?(player, 1)
+    return player.y -= 1 if deadgrid.can_move?(player, 1)
     changed
     notify_observers(player, deadgrid)
   when DOWN
     player.direction = 3
     return unless player.y < deadgrid.height
-    return player.y = player.y + 1 if deadgrid.can_move?(player, 1)
+    return player.y += 1 if deadgrid.can_move?(player, 1)
     changed
     notify_observers(player, deadgrid)
   end
