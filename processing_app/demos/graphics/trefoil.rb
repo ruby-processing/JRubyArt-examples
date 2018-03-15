@@ -13,12 +13,11 @@ def setup
   texture_mode(NORMAL)
   no_stroke
   # Creating offscreen surface for 3D rendering.
-  @pg = create_graphics(32, 512, P3D)
-  pg.begin_draw
-  pg.background(0, 0)
-  pg.noStroke
-  pg.fill(255, 0, 0, 200)
-  pg.end_draw
+  @pg = buffer(32, 512, P3D) do |buf|
+    buf.background(0, 0)
+    buf.no_stroke
+    buf.fill(255, 0, 0, 200)
+  end
   # Saving trefoil surface into a PShape3D object
   @trefoil = create_trefoil(350, 60, 15, pg)
 end
@@ -29,7 +28,7 @@ def draw
   pg.ellipse(rand(0.0..pg.width), rand(0.0..pg.height), 4, 4)
   pg.end_draw
   ambient(250, 250, 250)
-  pointLight(255, 255, 255, 0, 0, 200)
+  point_light(255, 255, 255, 0, 0, 200)
   push_matrix
   translate(width / 2, height / 2, -200)
   rotate_x(frame_count * PI / 500)

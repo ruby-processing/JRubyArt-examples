@@ -52,16 +52,15 @@ def draw
 end
 
 def draw_lights
-  lights = create_graphics width, height, P2D
-  lights.begin_draw
-  @flyers.each do |flyer|
-    lights.push_matrix
-    position = flyer.pos
-    lights.translate position.x, position.y
-    lights.image @spotlight, -@spotlight.width / 2, -@spotlight.height / 2
-    lights.pop_matrix
+  lights = buffer(width, height, P2D) do |buffer|
+    @flyers.each do |flyer|
+      buffer.push_matrix
+      position = flyer.pos
+      buffer.translate position.x, position.y
+      buffer.image @spotlight, -@spotlight.width / 2, -@spotlight.height / 2
+      buffer.pop_matrix
+    end
   end
-  lights.end_draw
   image_mask.mask lights
   image image_mask, 0, 0
 end
@@ -152,14 +151,12 @@ end
 
 def create_spotlight
   size = 60
-  spotlight = create_graphics size, size, P2D
-  spotlight.begin_draw
-  spotlight.no_stroke
-  spotlight.fill 255, 60
-  # spotlight.fill 255, 40
   half_size = size / 2
-  spotlight.ellipse half_size, half_size, half_size, half_size
-  spotlight.filter BLUR, 4
-  spotlight.end_draw
-  spotlight
+  spotlight = buffer(size, size, P2D) do |buffer|
+    buffer.no_stroke
+    buffer.fill 255, 60
+    # spotlight.fill 255, 40    
+    buffer.ellipse half_size, half_size, half_size, half_size
+    buffer.filter BLUR, 4
+  end
 end

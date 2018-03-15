@@ -1,6 +1,6 @@
 #
-# Pulses. 
-# 
+# Pulses.
+#
 # Software drawing instruments can follow a rhythm or abide by rules independent
 # of drawn gestures. This is a form of collaborative drawing in which the draftsperson
 # controls some aspects of the image and the software controls others.
@@ -20,8 +20,8 @@ def draw
   # Draw only when mouse is pressed
   if mouse_pressed?
     @angle += 5
-    val = cos(angle.radians) * 12.0
-    (0 ... 360).step(75) do |a|
+    val = DegLut.cos(angle) * 12.0
+    (0...360).step(75) do |a|
       xoff = cos(a.radians) * val
       yoff = sin(a.radians) * val
       fill(0)
@@ -35,4 +35,3 @@ end
 def settings
   size(640, 360)
 end
-
