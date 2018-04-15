@@ -4,7 +4,7 @@
 ########################################################
 
 load_libraries :stochastic_grammar, :control_panel
-attr_reader :plant, :zoom, :rot_y, :panel, :hide
+attr_reader :plant, :zoom, :rot_y
 
 def setup
   sketch_title 'Three D Tree'
@@ -15,7 +15,7 @@ def setup
   plant.create_grammar(5)
   no_stroke
   @rot_y = 0
-  @hide = false
+
 end
 
 def setup_panel
@@ -25,7 +25,6 @@ def setup_panel
     c.slider :zoom, 1..8, 3
     c.slider :rot_y, -PI..PI, 0
     c.button :reset
-    @panel = c
   end
 end
 
@@ -35,10 +34,6 @@ def reset
 end
 
 def draw
-  unless hide
-    @hide = true
-    panel.set_visible(hide)
-  end
   background(0)
   rotate_y rot_y
   scale zoom
@@ -112,4 +107,3 @@ end
 def settings
   size(800, 800, P3D)
 end
-

@@ -3,30 +3,24 @@
 # Ported to JRubyArt by Martin Prout
 load_library :control_panel
 
-attr_reader :bicubic, :my_image, :hide, :panel, :zoom
+attr_reader :bicubic, :my_image, :zoom
 
-def setup  
+def setup
+  sketch_title 'Bicubic'
   control_panel do |c|
     c.look_feel 'Nimbus'
     c.title 'zoom / bicubic'
     c.slider    :zoom, 0.0..100, 60.0
     c.checkbox  :apply_filter, true
-    @panel = c
   end
-  @hide = false
   @my_image  = load_image(data_path('texture.jpg'))
   @bicubic = load_shader(data_path('bicubic.glsl'))
   # @my_image  = load_image('texture.jpg')
   # @bicubic = load_shader('bicubic.glsl')
   bicubic.set('sketchSize', width.to_f, height.to_f)
-  sketch_title 'Bicubic'
 end
 
 def draw
-  unless hide
-    @hide = true
-    panel.set_visible(hide)
-  end
   background(0)
   # Draw the image on the scene
   image(my_image, 0, 0)
@@ -38,11 +32,6 @@ def draw
   filter(bicubic)
 end
 
-def mouse_pressed
-  @hide = false if hide
-end
-
 def settings
   size(512, 512, P2D)
 end
-

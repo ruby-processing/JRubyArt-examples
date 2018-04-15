@@ -1,7 +1,6 @@
 load_library :control_panel
 
-attr_reader :my_filter, :my_image, :panel, :hide, 
-            :brightness, :contrast, :saturation
+attr_reader :my_filter, :my_image, :brightness, :contrast, :saturation
 
 def setup
   sketch_title 'Contrast Sat Bright'
@@ -11,20 +10,12 @@ def setup
     c.slider  :brightness, 0..100, 60
     c.slider  :saturation,  0..100, 70
     c.slider  :contrast,  50..150, 100
-    @panel = c
-  end
-  @hide = false
+  end  
   @my_image  = load_image(data_path('texture.jpg'))
   @my_filter = load_shader(data_path('shader.glsl'))
-  # @my_image  = load_image('texture.jpg')
-  # @my_filter = load_shader('shader.glsl')
 end
 
 def draw
-  unless hide
-    @hide = true
-    panel.set_visible(hide)
-  end
   background(0)
   # Draw the image on the scene
   image(my_image, 0, 0)

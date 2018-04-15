@@ -1,21 +1,22 @@
 # http://processing.org/learning/topics/tree.html
 # by Joe Holt
-
+TIME_FORMAT = "Time after this iteration: %.2f"
+RATE_FORMAT = 'fps = %0.1f'
 def setup
   sketch_title 'Tree'
   color_mode RGB, 1
   frame_rate 30
   @x = 0.0
   @dx = width / 100
-  @start_time = Time.now
-  @frame_time = nil
+  @start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  @frame_time = 0
 end
 
 def draw
-  t = Time.now
-  if @frame_time
+  t = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  if @frame_time % 10 > 8
     fps = 1.0 / (t - @frame_time)
-    # printf "%0.1f fps\n", fps
+    puts format(RATE_FORMAT, fps)
   end
   @frame_time = t
   background 0
@@ -35,7 +36,9 @@ def draw
   branch(h)
   @x += @dx
   if @x < 0
-    puts "Time after this iteration: " + (Time.now - @start_time).to_s
+    puts format(
+      TIME_FORMAT, Process.clock_gettime(Process::CLOCK_MONOTONIC) - @start_time
+    )
   end
   if @x > width || @x < 0
     @dx = - @dx

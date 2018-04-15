@@ -65,21 +65,15 @@ include Olap
 def setup
   sketch_title 'Bezier playground'
   @curves = []
-  @hide = false
   control_panel do |c|
     c.look_feel 'Nimbus'
     c.button :new_curve
     c.button :print_equations
-    @panel = c
   end
   generate_curve
 end
 
 def draw
-  unless hide
-    panel.set_visible true
-    @hide = true
-  end
   background 50
   draw_control_tangent_lines
   draw_curves
@@ -128,8 +122,7 @@ def mouse_pressed
 end
 
 def mouse_released
-  @control, @end_point = nil, nil
-  @hide = false
+  @control, @end_point = nil, nil  
 end
 
 def mouse_dragged

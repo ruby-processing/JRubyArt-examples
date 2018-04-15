@@ -1,6 +1,6 @@
 require 'toxiclibs'
 load_library :control_panel
-attr_reader :gfx, :bool, :panel, :type, :hide, :polies
+attr_reader :gfx, :bool, :type, :polies
 include Toxi
 
 TYPE = [BooleanShapeBuilder::Type::UNION, BooleanShapeBuilder::Type::XOR].freeze
@@ -13,16 +13,10 @@ def setup
   control_panel do |c|
     c.title 'Control Panel'
     c.menu :type, KEY, 'union'
-    @panel = c
   end
-  @hide = false
 end
 
 def draw
-  unless hide
-    @hide = true
-    panel.set_visible(hide)
-  end
   background(160)
   builder = BooleanShapeBuilder.new(bool[type])
   phi = frame_count * 0.01

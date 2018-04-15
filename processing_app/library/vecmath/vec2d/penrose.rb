@@ -5,7 +5,7 @@
 # Translated (and refactored) to JRubyArt July 2015 by Martin Prout
 
 load_libraries :tile, :control_panel
-attr_reader :tris, :s, :panel, :hide, :acute, :tiler
+attr_reader :tris, :s, :acute, :tiler
 
 def setup
   sketch_title 'Penrose'
@@ -16,19 +16,13 @@ def setup
     c.checkbox  :acute
     c.button    :generate
     c.button    :reset!
-    @panel = c
   end
-  @hide = false
+
   @tiler = TileFactory.new(acute) # set the Tiler first
   init false # defaults to regular penrose
 end
 
 def draw
-  # only make control_panel visible once, or again when hide is false
-  unless hide
-    @hide = true
-    panel.set_visible(hide)
-  end
   background(255)
   translate(width / 2, height / 2)
   tris.each(&:display)

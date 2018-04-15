@@ -99,10 +99,10 @@ BILATERAL_SIGMA_COLOR = 0.3
 BILATERAL_SIGMA_SPACE = 5
 PEPPER = 1000
 
-attr_reader :hide, :context, :flowfield, :minmax_global, :harris, :filter
+attr_reader :context, :flowfield, :minmax_global, :harris, :filter
 attr_reader :tex_a, :pg_src_a, :pg_src_b, :pg_src_c, :cp5, :img, :laplace_weight
 attr_reader :pg_voronoi_centers, :show_geom, :show_image, :animations, :passes
-attr_reader :rs, :vel, :pos, :panel, :filters, :blur_radius, :conv_kernel_idx
+attr_reader :rs, :vel, :pos, :filters, :blur_radius, :conv_kernel_idx
 
 def settings
   size VIEW_WIDTH, VIEW_HEIGHT, P2D
@@ -158,17 +158,12 @@ def setup
     c.checkbox :show_image, true
     c.checkbox :show_geom, true
     c.checkbox :animations, true
-    @panel = c
   end
   # frame_rate(60)
   frame_rate(1000)
 end
 
 def draw
-  unless hide
-    @hide = true
-    panel.set_visible(hide)
-  end
   current = FILTERS.index(filters)
   convolution_kernel_index = conv_kernel_idx.to_i
   gaussblur_sigma = blur_radius / 2.0

@@ -1,23 +1,19 @@
-
-#
 # Ported from http://processing.org/learning/topics/chain.html
 #
 # One mass is attached to the mouse position and the other is attached the
 # position of the other mass. The gravity in the environment pulls down on
 # both.
 load_libraries :control_panel
-
-attr_reader :gravity, :panel, :hide
+attr_reader :gravity
 
 def setup
   sketch_title 'Chain'
-  @hide = false
+
   fill 0
   # Control panel for changing gravity
   control_panel do |c|
     c.title 'Gravity Control'
     c.slider :gravity, 0..30, 6
-    @panel = c
   end
   @mass    = 2.0
   @s1      = Spring2d.new(width / 2, height / 2, @mass, gravity)
@@ -25,10 +21,6 @@ def setup
 end
 
 def draw
-  if hide == false
-    panel.set_visible(true)
-    @hide = true
-  end
   background 204
   @s1.update(mouse_x, mouse_y, gravity)
   display(@s1, mouse_x, mouse_y)

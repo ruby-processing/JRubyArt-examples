@@ -5,11 +5,11 @@
 # features use of Vec2D class and grid method
 load_library :control_panel
 
-attr_reader :panel, :hide, :image_mask, :spots
+attr_reader :image_mask, :positions
 ACCURACY = 4
 
 # Firefly holder
-Flyer = Struct.new(:pos, :to_pos, :rotation, :positions)
+Flyer = Struct.new(:pos, :to_pos, :rotation, :tail)
 
 def settings
   size 1024, 480, P2D
@@ -22,18 +22,16 @@ def setup
     control.title 'Firefly Controller'
     control.look_feel 'Nimbus'
     control.slider(:speed, 0..20, 5)
-    control.slider(:tail_length, 0..400, 30)
+    control.slider(:tail_length, 0..70, 30)
     control.slider(:rotation_max, 0..30, 7)
     control.slider(:target_radius, 5...100, 20)
-    control.slider(:spot_distance, 5..200, 80)
+    control.slider(:spot_distance, 10..100, 80)
     control.button :reset
-    @panel = control
   end
-  @hide = false
   @spotlight = create_spotlight
   @background = load_image(data_path('background.png'))
   @image_mask = load_image(data_path('mask.png'))
-  load_spots(image_mask, ACCURACY)
+  load_positions(image_mask, ACCURACY)
   reset
 end
 
@@ -42,10 +40,6 @@ def reset
 end
 
 def draw
-  unless hide
-    @hide = true
-    panel.set_visible(hide)
-  end
   image @background, 0, 0
   draw_lights
   draw_flyers
@@ -85,8 +79,8 @@ def draw_flyers
       flyer.rotation = to_rotation if flyer.rotation < to_rotation
     end
     # add tail position
-    flyer.positions << flyer.pos.dup
-    flyer.positions.shift while flyer.positions.size > @tail_length
+    flyer.tail << flyer.pos.copy
+    flyer.tail.shift while flyer.tail.length > @tail_length
     # set flyer position
     flyer.pos.x = flyer.pos.x + @speed * cos(flyer.rotation)
     flyer.pos.y = flyer.pos.y + @speed * sin(flyer.rotation)
@@ -103,42 +97,38 @@ def draw_flyers
 end
 
 def create_flyer
-  spot = rand_spot
+  spot = positions.sample
   to_spot = find_spot_near spot, @spot_distance
   rotation = rand * TWO_PI
   Flyer.new(spot, to_spot, rotation, [])
 end
 
 def draw_tail(flyer)
-  positions = flyer.positions
-  return unless positions && !positions.empty?
-  alpha_add = (255 / positions.size).to_i
-  positions.each_index do |i|
-    stroke(255, i * alpha_add)
-    if i < positions.size - 2
-      line(positions[i].x, positions[i].y, positions[i + 1].x, positions[i + 1].y)
-    end
+  tail = flyer.tail
+  return unless tail && !tail.empty?
+  alpha_add = 100.0 / tail.length
+  begin_shape(LINES)
+  tail.each_with_index do |vec, i|
+    stroke(color(255, i * alpha_add))
+    vertex(vec.x, vec.y)
   end
+  end_shape
 end
 
-def load_spots(spot_image, accuracy = ACCURACY)
-  @spots = []
+def load_positions(spot_image, accuracy = ACCURACY)
+  @positions = []
   spot_image.load_pixels
-  corner_color = spot_image.get 0, 0
-  grid(spot_image.width, spot_image.height, accuracy, accuracy) do |x, y|
-    color = spot_image.get(x, y)
-    spots << Vec2D.new(x, y) if color != corner_color
+  grid(width, height, accuracy, accuracy) do |x, y|
+    positions << Vec2D.new(x, y) if color(0) == spot_image.pixels[y * width + x]
   end
-end
-
-def rand_spot
-  spots.sample
 end
 
 def find_spot_near(pos, distance)
-  spot = Vec2D.new(Float::INFINITY, Float::INFINITY)
-  spot = rand_spot until spot.dist(pos) < distance
-  spot
+  Vec2D.new.tap do |spot|
+    spot.x = rand(0..width) # target width
+    spot.y = rand(140.0..310) # target text area
+    spot = positions.sample until spot.dist(pos) < distance
+  end
 end
 
 def find_nearest_rotation(from, to)
@@ -155,7 +145,7 @@ def create_spotlight
   spotlight = buffer(size, size, P2D) do |buffer|
     buffer.no_stroke
     buffer.fill 255, 60
-    # spotlight.fill 255, 40    
+    # spotlight.fill 255, 40
     buffer.ellipse half_size, half_size, half_size, half_size
     buffer.filter BLUR, 4
   end

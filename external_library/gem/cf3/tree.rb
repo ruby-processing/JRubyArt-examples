@@ -4,13 +4,11 @@
 require  'cf3'
 load_library :control_panel
 
-attr_reader :panel, :hide
-
 def setup_the_trees
   control_panel do |panel|
+    panel.title 'Random Seed'
     panel.look_feel "Metal"
     panel.slider :srand, (0..100), 50
-    @panel = panel
   end
 
   @tree = ContextFree.define do
@@ -60,7 +58,6 @@ end
 
 def setup
   sketch_title 'Tree'
-  @hide = false
   setup_the_trees
   no_stroke
   frame_rate 5
@@ -68,7 +65,6 @@ def setup
 end
 
 def draw
-  panel.set_visible(true) unless hide
 end
 
 def draw_it
@@ -79,8 +75,5 @@ def draw_it
 end
 
 def mouse_clicked
-  @hide = false
-  panel.set_visible(true)
-  draw_it
-  @hide = true
+  draw_it  
 end

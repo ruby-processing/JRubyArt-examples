@@ -6,30 +6,22 @@
 # translated for JRubyArt by Martin Prout
 # Note how to specify fill and background using hexadecimal string for color,
 # this is different from vanilla processing
-#
-
 load_library :control_panel
 
-attr_reader :debug, :save_one, :step_angle, :cr, :detail, :panel, :hide
+attr_reader :debug, :save_one, :step_angle, :cr, :detail
 
 def setup
   sketch_title 'Quadratic Vertex'
-  @hide = false
   control_panel do |c|
     c.title 'Controller'
     c.menu(:detail, %w(4 5 6 7 8 9 10), '7')
     c.checkbox :debug
     c.button :save_image
-    @panel = c
   end
   @save_one = false
 end
 
 def draw
-  unless hide
-    panel.set_visible true
-    @hide = true
-  end
   background color('#BDF018')
   translate width / 2, height / 2
   @step_angle = TAU / (detail.to_i - 1)
@@ -68,10 +60,6 @@ def draw
   return unless save_one
   save_frame('images/quadraticvertex-#####.png')
   @save_one = false
-end
-
-def mouse_pressed
-  @hide = false
 end
 
 def cos_x(n)
