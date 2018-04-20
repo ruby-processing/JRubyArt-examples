@@ -4,8 +4,6 @@
 # map1d (instead of map), and a somewhat optimized (update_pixels instead of
 # set), and using grid, rather than nested loops
 
-load_library :simple_complex
-
 def setup
   sketch_title 'Mandelbrot'
   load_pixels
@@ -15,7 +13,7 @@ end
 # main drawing method
 def draw
   grid(900, 600) do |x, y|
-    c = SimpleComplex.new(
+    c = Complex(
       map1d(x, (0...900), (-3..1.5)), map1d(y, (0...600), (-1.5..1.5))
     )
     # mandel will return 0..20 (20 is strong) map this to 255..0 (NB: reverse)
@@ -28,11 +26,11 @@ end
 # how many iterations the number survives without becoming chaotic
 def mandel(z, max = 10)
   score = 0
-  c = z.clone
+  c = z
   while score < max
     # z = z^2 + c
-    z.square!
-    z.add! c
+    z *= z
+    z += c
     break if z.abs > 2
     score += 1
   end
