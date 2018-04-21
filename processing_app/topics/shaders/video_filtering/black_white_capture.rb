@@ -4,9 +4,7 @@ attr_reader :cam, :my_shader
 
 def setup
   sketch_title 'Black White Capture'
-  @my_shader = load_shader(data_path('bwfrag.glsl')) # since jruby_art-1.1
-  # @my_shader = load_shader('bwfrag.glsl') # requires --nojruby flag
-  # @my_shader = load_shader(File.absolute_path('data/bwfrag.glsl')) # full path
+  @my_shader = load_shader(data_path('bwfrag.glsl'))
   start_capture(width, height)
 end
 

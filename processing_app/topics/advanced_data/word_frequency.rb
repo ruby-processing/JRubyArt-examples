@@ -17,8 +17,8 @@
 #
 load_library 'word'
 
-DRACULA = 'data/dracula.txt'
-FRANKENSTEIN = 'data/frankenstein.txt'
+DRACULA = 'dracula.txt'
+FRANKENSTEIN = 'frankenstein.txt'
 DRAC = Regexp.new(DRACULA)
 FRANK = Regexp.new(FRANKENSTEIN)
 
@@ -29,8 +29,8 @@ def setup
   # Create the HashMap
   @words = {}
   # Load two files
-  load_file(DRACULA)
-  load_file(FRANKENSTEIN)
+  load_file(data_path(DRACULA))
+  load_file(data_path(FRANKENSTEIN))
   # Create the font
   text_font(create_font('Georgia', 24))
 end
@@ -80,4 +80,3 @@ end
 def settings
   size(640, 360)
 end
-

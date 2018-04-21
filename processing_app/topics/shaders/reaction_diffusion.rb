@@ -6,31 +6,38 @@ end
 
 def setup
   @pass = 0
-  @shader_grayscott = load_shader(sketch_path('grayscott2.frag'))
-  @shader_render = load_shader(sketch_path('render2.frag'))
-  @pg_src = create_texture(width, height)
+  @shader_render = load_shader(data_path('render2.frag'))
   @pg_dst = create_texture(width, height)
-  # init
-  pg_src.begin_draw
-  pg_src.background(color(0xFFFF0000))
-  pg_src.fill(color(0x0000FFFF))
-  pg_src.no_stroke
-  pg_src.rect_mode(CENTER)
-  pg_src.rect(width / 2, height / 2, 20, 20)
-  pg_src.end_draw
-  frame_rate(1000)
+  @pg_src = create_texture(width, height).tap do |src|
+    src.begin_draw
+    src.background(color(0xFFFF0000))
+    src.fill(color(0x0000FFFF))
+    src.no_stroke
+    src.rect_mode(CENTER)
+    src.rect(width / 2, height / 2, 20, 20)
+    src.end_draw
+  end
+  @shader_grayscott = load_shader(data_path('grayscott2.frag'))
+  shader_grayscott.set('dA', 1.0)
+  shader_grayscott.set('dB', 0.5)
+  shader_grayscott.set('feed', 0.055)
+  shader_grayscott.set('kill', 0.062)
+  shader_grayscott.set('dt', 1.0)
+  shader_grayscott.set('wh_rcp', 1.0 / width, 1.0 / height)
+  shader_grayscott.set('tex', pg_src)
+  frame_rate(1_000)
 end
 
 def create_texture(w, h)
-  pg = create_graphics(w, h, P2D)
-  pg.smooth(0)
-  pg.begin_draw
-  pg.texture_sampling(2)
-  pg.blend_mode(REPLACE)
-  pg.clear
-  pg.no_stroke
-  pg.end_draw
-  pg
+  create_graphics(w, h, P2D).tap do |pg|
+    pg.smooth(0)
+    pg.begin_draw
+    pg.texture_sampling(2)
+    pg.blend_mode(REPLACE)
+    pg.clear
+    pg.no_stroke
+    pg.end_draw
+  end
 end
 
 def swap
@@ -39,13 +46,6 @@ end
 
 def reaction_diffusion_pass
   pg_dst.begin_draw
-  shader_grayscott.set('dA' , 1.0)
-  shader_grayscott.set('dB' , 0.5)
-  shader_grayscott.set('feed' , 0.055)
-  shader_grayscott.set('kill' , 0.062)
-  shader_grayscott.set('dt', 1.0    )
-  shader_grayscott.set('wh_rcp', 1.0 / width, 1.0 / height)
-  shader_grayscott.set('tex', pg_src)
   pg_dst.shader(shader_grayscott)
   pg_dst.rect_mode(CORNER)
   pg_dst.rect(0, 0, width, height)
@@ -56,7 +56,7 @@ end
 
 def draw
   # multipass rendering, ping-pong
-  100.times { reaction_diffusion_pass }
+  20.times { reaction_diffusion_pass }
   # display result
   shader_render.set('wh_rcp', 1.0 / width, 1.0 / height)
   shader_render.set('tex', pg_src)

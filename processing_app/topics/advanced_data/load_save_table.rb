@@ -42,7 +42,7 @@ def load_data
   # Load CSV file into an Array of Hash objects
   # headers: option indicates the file has a header row
   @bubbles = BubbleData.new
-  CSV.foreach('data/data.csv', headers: true) do |row|
+  CSV.foreach(data_path('data.csv'), headers: true) do |row|
     x = row['x'].to_f
     y = row['y'].to_f
     d = row['diameter'].to_f
@@ -59,7 +59,7 @@ def mouse_pressed
   # Writing the csv data back to the same file, (also specify UTF-8 format)
   headers = %w(x y diameter name) # create csv headers
   CSV.open(
-    'data/data.csv',
+    data_path('data.csv'),
     'w:UTF-8',
     write_headers: true,
     headers: headers
