@@ -13,7 +13,7 @@ def setup
   ArcBall.init(self)
   background(0)
   noStroke
-  @img = loadImage(data_path('world32k.jpg'))
+  @img = load_image(data_path('world32k.jpg'))
   @res_w = 30
   @res_h = 30
   # Parameters below are the number of vertices around the width and height
@@ -35,12 +35,12 @@ def key_pressed
     @res_h += 1
   end
   # Parameters below are the number of vertices around the width and height
-  initialize_sphere(res_w, res_h)
+  initialize_sphere res_w, res_h
 end
 
 def draw
-  background(0)
-  texture_sphere(200, 200, 200, img)
+  background 0
+  texture_sphere 200, 200, 200, img
 end
 
 def initialize_sphere(res_x, res_y)
@@ -72,7 +72,7 @@ def texture_sphere(rx, ry, rz, image)
   delta_v = image.height / (points_height - 1).to_f
   u = 0 # Width variable for the texture
   v = 0 # Height variable for the texture
-  begin_shape(TRIANGLE_STRIP)
+  begin_shape TRIANGLE_STRIP
   texture(image)
   (0...points_height - 1).each do |i|  # For all the rings but top and bottom
     # Goes into the array here instead of loop to save time
