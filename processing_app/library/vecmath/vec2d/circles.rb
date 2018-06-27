@@ -24,12 +24,7 @@ def draw
   fill(0, 0, 0)
   noStroke
   rect(0, 0, width, height) if (frame_count % 8_000).zero?
-  @points.each do |point|
-    # change direction sometimes
-    point.direction rand(-PI..PI) if rand > 0.96
-    point.update
-    point.check_edges
-  end
+  @points.each(&:run)
   # set the style of the circle
   @dc = map1d(millis, 0..150_000, 0..360) # slowly changes hue
   stroke((@c + @dc) % 360, 50, 100, 5)
@@ -86,6 +81,14 @@ class Point
     @velocity = Vec2D.new
     @acceleration = Vec2D.random
   end
+
+  def run
+    direction(rand(-PI..PI)) if rand > 0.96
+    update
+    check_edges
+  end
+
+  private
 
   # change direction
   def direction(angle)
