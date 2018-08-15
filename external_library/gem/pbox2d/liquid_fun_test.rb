@@ -35,7 +35,7 @@ def draw
   background(255)
   boundaries.each(&:display)
   pos_buffer = box2d.world.particle_position_buffer
-  return if pos_buffer.nil?
+  return unless pos_buffer
   stroke(0)
   stroke_weight(2)
   pos_buffer.each do |buf|
