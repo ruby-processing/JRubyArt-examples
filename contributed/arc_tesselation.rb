@@ -17,8 +17,8 @@ def setup
   sketch_title 'Arc Tesselation'
   # create a java primitive array of signed int
   #  @cols = web_to_color_array(PALETTE)
-  @group = ColorGroup.new(PALETTE)
-  @cols = group.pcolors
+  @group = ColorGroup.from_web_array(PALETTE)
+  @cols = group.colors
   stroke_weight 1.5
   stroke_cap SQUARE
   stroke(0, 200)
@@ -63,7 +63,7 @@ end
 
 def mouse_pressed
   group.shuffle! if coloured
-  @cols = group.pcolors
+  @cols = group.colors
   puts group.ruby_string # prints out current web colors as an array of String
   loop
 end
