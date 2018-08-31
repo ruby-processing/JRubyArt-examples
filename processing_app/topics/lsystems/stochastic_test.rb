@@ -1,6 +1,5 @@
 load_library :stochastic_grammar
 
-Turtle = Struct.new(:x, :y, :angle)
 
 #######################################################
 # StochasticPlant
@@ -13,12 +12,12 @@ class StochasticPlant
 
   attr_reader :grammar, :axiom, :draw_length, :turtle, :production
 
-  DELTA = 23
+  DELTA = 23.radians
 
-  def initialize(xpos, ypos)
+  def initialize(pos)
     @draw_length = 350
     # use Struct as turtle
-    @turtle = Turtle.new(xpos, ypos, 90)        # this way is up?
+    @turtle = Turtle.new(pos, Math::PI / 2)        # this way is up?
     setup_grammar
   end
 
@@ -64,10 +63,10 @@ class StochasticPlant
   ######################################################
 
   def draw_line(turtle, length)
-    new_xpos = turtle.x + length * DegLut.cos(turtle.angle)
-    new_ypos = turtle.y - length * DegLut.sin(turtle.angle)
-    line(turtle.x, turtle.y, new_xpos, new_ypos)
-    Turtle.new(new_xpos, new_ypos, turtle.angle)
+    pos = turtle.position
+    new_pos = pos - Vec2D.from_angle(turtle.angle) * length
+    line(pos.x, pos.y, new_pos.x, new_pos.y)
+    Turtle.new(new_pos, turtle.angle)
   end
 end
 
@@ -75,9 +74,9 @@ attr_reader :stochastic, :stochastic1, :stochastic2
 
 def setup
   sketch_title 'Stochastic Test'
-  @stochastic = StochasticPlant.new 200, 700
-  @stochastic1 = StochasticPlant.new 500, 700
-  @stochastic2 = StochasticPlant.new 700, 700
+  @stochastic = StochasticPlant.new(Vec2D.new(200, 700))
+  @stochastic1 = StochasticPlant.new(Vec2D.new(500, 700))
+  @stochastic2 = StochasticPlant.new(Vec2D.new(700, 700))
   stochastic.create_grammar 5
   stochastic1.create_grammar 4 # simpler plant
   stochastic2.create_grammar 5

@@ -6,9 +6,8 @@ load_libraries :grammar
 
 # MooreCurve class
 class MooreCurve
-  include Processing::Proxy
   attr_reader :draw_length, :vec, :theta, :axiom, :grammar
-  DELTA = 90 # degrees
+  DELTA = Math::PI / 2 # 90 degrees
   def initialize(vec)
     @axiom = 'LFL+F+LFL' # Axiom
     rules = {
@@ -27,17 +26,12 @@ class MooreCurve
   end
 
   def translate_rules(prod)
-    coss = ->(orig, alpha, len) { orig + len * DegLut.cos(alpha) }
-    sinn = ->(orig, alpha, len) { orig - len * DegLut.sin(alpha) }
     [].tap do |pts| # An array to store line vertices as Vec2D
       prod.each do |ch|
         case ch
         when 'F'
-          pts << vec.copy
-          @vec = Vec2D.new(
-            coss.call(vec.x, theta, draw_length),
-            sinn.call(vec.y, theta, draw_length)
-          )
+          pts << vec
+          @vec += Vec2D.from_angle(theta) * draw_length
           pts << vec
         when '+'
           @theta += DELTA
@@ -57,7 +51,7 @@ attr_reader :points
 def setup
   sketch_title 'Moore Curve'
   curve = MooreCurve.new(Vec2D.new(width * 0.125, height * 0.5))
-  production = curve.generate 6 # 4 generations looks good with stroke = 4
+  production = curve.generate 4
   @points = curve.translate_rules(production)
   no_loop
 end
@@ -70,7 +64,7 @@ end
 def render(points)
   no_fill
   stroke 200.0
-  stroke_weight 1
+  stroke_weight 4
   begin_shape
   points.each_slice(2) do |v0, v1|
     v0.to_vertex(renderer)
@@ -85,4 +79,5 @@ end
 
 def settings
   size(800, 800)
+  smooth 8
 end

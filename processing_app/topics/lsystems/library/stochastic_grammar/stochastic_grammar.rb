@@ -51,3 +51,5 @@ class StochasticGrammar
     prod
   end
 end
+
+Turtle = Struct.new(:position, :angle)
