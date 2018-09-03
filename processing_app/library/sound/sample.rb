@@ -1,11 +1,5 @@
-#
-# This is a sound file player.
-# NB: require jruby-complete to run
-# either --nojruby flag or use config
-#
-
 load_library :sound
-include_package 'processing.sound'
+java_import 'processing.sound.SoundFile'
 
 attr_reader :sound_file
 
@@ -48,4 +42,3 @@ end
 def settings
   size 640, 360, P2D
 end
-
