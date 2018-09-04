@@ -1,10 +1,10 @@
 load_library :hype
-include_package 'hype'
-# Use Hype namespace
-module Hype
-  java_import 'hype.extended.layout.HGridLayout'
-  java_import 'hype.extended.behavior.HMagneticField'
-  java_import 'hype.extended.behavior.HSwarm'
+%w[H HRect HShape HDrawablePool].freeze.each do |klass|
+  java_import "hype.#{klass}"
+end
+
+%w[behavior.HMagneticField behavior.HSwarm layout.HGridLayout].freeze.each do |klass|
+  java_import "hype.extended.#{klass}"
 end
 
 attr_reader :pool, :pool_swarm, :field, :swarm
@@ -18,7 +18,7 @@ def setup
   sketch_title 'Magnetic Field'
   H.init(self)
   H.background(color('#000000'))
-  @field = Hype::HMagneticField.new
+  @field = HMagneticField.new
   NUM_MAGNETS.times do
     if rand > 0.5
       # x, y, north polarity / strength =  3 / repel
@@ -32,14 +32,14 @@ def setup
   @pool = HDrawablePool.new(2_500)
   pool.auto_add_to_stage
       .add(HShape.new(data_path('arrow.svg')).enable_style(false).anchor_at(H::CENTER))
-      .layout(Hype::HGridLayout.new.start_x(-60).start_y(-60).spacing(16, 16).cols(50))
+      .layout(HGridLayout.new.start_x(-60).start_y(-60).spacing(16, 16).cols(50))
       .on_create do |obj|
         obj.no_stroke.anchor(-20, -20)
         field.add_target(obj)
       end
       .requestAll
 
-  @swarm = Hype::HSwarm.new.add_goal(width / 2, height / 2).speed(7).turn_ease(0.03).twitch(20)
+  @swarm = HSwarm.new.add_goal(width / 2, height / 2).speed(7).turn_ease(0.03).twitch(20)
   @pool_swarm = HDrawablePool.new(NUM_MAGNETS)
   pool_swarm.auto_add_to_stage
             .add(HRect.new(5))

@@ -1,6 +1,8 @@
 # encoding: utf-8
 load_library :hype
-include_package 'hype'
+%w[H HRect].freeze.each do |klass|
+  java_import "hype.#{klass}"
+end
 java_import 'hype.extended.behavior.HRandomTrigger'
 
 PALETTE = %w[#242424 #999999 #202020].freeze

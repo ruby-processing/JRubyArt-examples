@@ -1,7 +1,11 @@
 # encoding: utf-8
 load_library :hype
-include_package 'hype'
+%w[H HShape].freeze.each do |klass|
+  java_import "hype.#{klass}"
+end
+
 java_import 'hype.extended.behavior.HRotate'
+
 attr_reader :box_x, :box_y, :box_z, :colors
 PALETTE = %w[#242424 #FF3300 #FF6600].freeze
 

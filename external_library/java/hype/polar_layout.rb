@@ -1,9 +1,12 @@
 # encoding: utf-8
 load_library :hype
-include_package 'hype'
-java_import 'hype.extended.layout.HPolarLayout'
-java_import 'hype.extended.behavior.HOscillator'
-java_import 'hype.extended.colorist.HColorPool'
+%w[H HBox HDrawablePool].freeze.each do |klass|
+  java_import "hype.#{klass}"
+end
+
+%w[behavior.HOscillator colorist.HColorPool layout.HPolarLayout].freeze.each do |klass|
+  java_import "hype.extended.#{klass}"
+end
 
 PALETTE = %w[#FFFFFF #F7F7F7 #ECECEC #CCCCCC #999999 #666666 #4D4D4D #333333 #242424 #202020 #111111 #080808 #000000].freeze
 attr_reader :pool, :colors, :box_depth

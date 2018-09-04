@@ -1,6 +1,7 @@
 # encoding: utf-8
 load_library :hype
-include_package 'hype'
+java_import 'hype.H'
+java_import 'hype.HRect'
 
 def settings
   size(640, 640)

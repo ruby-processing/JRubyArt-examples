@@ -1,8 +1,12 @@
 # encoding: utf-8
 load_library :hype
-include_package 'hype'
-java_import 'hype.extended.behavior.HProximity'
-java_import 'hype.extended.behavior.HOscillator'
+%w[H HCanvas HRect HDrawablePool].freeze.each do |klass|
+  java_import "hype.#{klass}"
+end
+
+%w[behavior.HOscillator behavior.HProximity].freeze.each do |klass|
+  java_import "hype.extended.#{klass}"
+end
 
 PALETTE = %w[#242424 #00FF00 #FF3300 #4D4D4D].freeze
 KEY = %i[background fill_one fill_two stroke].freeze
@@ -54,7 +58,7 @@ end
 
 def draw
   H.draw_stage
-  # outline to show area of proximity  
+  # outline to show area of proximity
   ellipse_mode(CENTER)
   stroke(colors[:stroke])
   no_fill
