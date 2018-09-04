@@ -19,7 +19,7 @@ def setup
     c.slider    :alpha,  0.0..1.0, 0.5
     c.checkbox  :go_big
     c.button    :reset
-    c.menu      :shape, %w[oval square triangle)
+    c.menu      :shape, %w[oval square triangle].freeze
   end
   @shape = 'oval'
   @go_big = false

@@ -14,7 +14,7 @@ def setup
   sketch_title 'Quadratic Vertex'
   control_panel do |c|
     c.title 'Controller'
-    c.menu(:detail, %w[4 5 6 7 8 9 10), '7')
+    c.menu(:detail, %w[4 5 6 7 8 9 10], '7')
     c.checkbox :debug
     c.button :save_image
   end
