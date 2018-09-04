@@ -6,7 +6,7 @@ include_package 'processing.pdf'
 # After you run this,
 # open the sketch's folder.
 # See the PDF.
-WEB = %w(#000000 #0000dd #ff0000).freeze
+WEB = %w[#000000 #0000dd #ff0000].freeze
 
 def settings
   size(700, 700, PDF, 'usconst.pdf')

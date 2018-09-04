@@ -2,8 +2,8 @@
 # the size of the generated image (should match the WOVNS quality)
 WIDTH = 2400
 HEIGHT = 6372
-PALETTE = %w(#050505 #B83D4E #FFFFFF).freeze
-COULEURS = %i(petrol geranium white).freeze
+PALETTE = %w[#050505 #B83D4E #FFFFFF].freeze
+COULEURS = %i[petrol geranium white].freeze
 STRPE = 500
 
 # how many repeats of the generated image to show on-screen

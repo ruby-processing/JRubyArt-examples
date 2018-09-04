@@ -1,5 +1,5 @@
 # Divan Quality, Pastel 2 Palette
-PALETTE = %w(#D1D2EA #BFCDE5 #ABC1E5 #EEC3C3 #FFE4F3 #FFEEF8).freeze
+PALETTE = %w[#D1D2EA #BFCDE5 #ABC1E5 #EEC3C3 #FFE4F3 #FFEEF8].freeze
 STEP = 133
 
 def settings

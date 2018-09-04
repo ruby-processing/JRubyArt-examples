@@ -4,7 +4,7 @@ attr_reader :gfx, :bool, :type, :polies
 include Toxi
 
 TYPE = [BooleanShapeBuilder::Type::UNION, BooleanShapeBuilder::Type::XOR].freeze
-KEY = %w(union xor).freeze
+KEY = %w[union xor].freeze
 
 def setup
   sketch_title 'Boolean Shapes'

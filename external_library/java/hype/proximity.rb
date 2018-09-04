@@ -4,8 +4,8 @@ include_package 'hype'
 java_import 'hype.extended.behavior.HProximity'
 java_import 'hype.extended.behavior.HOscillator'
 
-PALETTE = %w(#242424 #00FF00 #FF3300 #4D4D4D).freeze
-KEY = %i(background fill_one fill_two stroke).freeze
+PALETTE = %w[#242424 #00FF00 #FF3300 #4D4D4D].freeze
+KEY = %i[background fill_one fill_two stroke].freeze
 
 attr_reader :colors
 

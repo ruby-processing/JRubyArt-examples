@@ -2,7 +2,7 @@ load_library :hype
 include_package 'hype'
 java_import 'hype.extended.layout.HGridLayout'
 # string color array
-PALETTE = %w(
+PALETTE = %w[
   CLEAR
   WHITE
   BLACK
@@ -15,7 +15,7 @@ PALETTE = %w(
   CYAN
   YELLOW
   MAGENTA
-).freeze
+].freeze
 # format string see fill below
 FSTRING = 'H::%s'.freeze
 

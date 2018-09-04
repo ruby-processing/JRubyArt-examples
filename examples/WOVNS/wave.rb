@@ -1,5 +1,5 @@
 # Talma Quality, Eden 20 Quality
-PALETTE = %w( #C9E0F6 #BAE1D5 #C9E0F6 #BAE1D5 #C9E0F6 #BAE1D5).freeze
+PALETTE = %w[ #C9E0F6 #BAE1D5 #C9E0F6 #BAE1D5 #C9E0F6 #BAE1D5].freeze
 
 def settings
   size(3984, 3000) # 46-48" x 36", 84 DPI

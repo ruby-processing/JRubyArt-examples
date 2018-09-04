@@ -5,7 +5,7 @@ java_import 'hype.extended.layout.HPolarLayout'
 java_import 'hype.extended.behavior.HOscillator'
 java_import 'hype.extended.colorist.HColorPool'
 
-PALETTE = %w(#FFFFFF #F7F7F7 #ECECEC #CCCCCC #999999 #666666 #4D4D4D #333333 #242424 #202020 #111111 #080808 #000000).freeze
+PALETTE = %w[#FFFFFF #F7F7F7 #ECECEC #CCCCCC #999999 #666666 #4D4D4D #333333 #242424 #202020 #111111 #080808 #000000].freeze
 attr_reader :pool, :colors, :box_depth
 
 def settings

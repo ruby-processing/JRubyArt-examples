@@ -7,7 +7,7 @@ module Hype
   java_import 'hype.extended.layout.HGridLayout'
 end
 
-PALETTE = %w(#B83D4E #B56A8C #4688B5 #A53643 #5869A0 #487A9C #95577E #302D32 #0C0000 #020100 #070707)
+PALETTE = %w[#B83D4E #B56A8C #4688B5 #A53643 #5869A0 #487A9C #95577E #302D32 #0C0000 #020100 #070707].freeze
 
 def settings
   size(2400, 6372)

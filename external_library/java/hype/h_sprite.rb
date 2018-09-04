@@ -7,7 +7,7 @@ EXTENDED = %w[
 hype_extended_format = 'hype.extended.%s'
 EXTENDED.each { |klass| java_import format(hype_extended_format, klass) }
 
-PALETTE = %w(#FFFFFF #F7F7F7 #ECECEC #CCCCCC #999999 #666666 #4D4D4D #333333 #FF3300 #FF6600).freeze
+PALETTE = %w[#FFFFFF #F7F7F7 #ECECEC #CCCCCC #999999 #666666 #4D4D4D #333333 #FF3300 #FF6600].freeze
 attr_reader :pool,
 
 def settings

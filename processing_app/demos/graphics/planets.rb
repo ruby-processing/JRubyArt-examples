@@ -5,8 +5,8 @@
 
 attr_reader :textures, :sun, :planet, :mercury
 
-IMAGES = %w(starfield sun planet mercury)
-KEY = %i(starfield sun planet mercury)
+IMAGES = %w[starfield sun planet mercury)
+KEY = %i[starfield sun planet mercury)
 
 def setup
   sketch_title 'Planets'

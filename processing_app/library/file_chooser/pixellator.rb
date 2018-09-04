@@ -5,7 +5,7 @@ attr_reader :img, :data, :skip, :poster
 # Sophisticated example of file chooser.
 ###########
 
-KEYS = %w(0 4 5 6 7 8 9)
+KEYS = %w[0 4 5 6 7 8 9)
 
 def settings
   size 500, 500

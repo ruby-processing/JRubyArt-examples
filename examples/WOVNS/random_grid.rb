@@ -1,6 +1,6 @@
 # takes quite a long time to render
-PALETTE = %w(#74AED7 #FFE4F3 #FEE597).freeze
-COULEURS = %i(ciel pinking yolk).freeze
+PALETTE = %w[#74AED7 #FFE4F3 #FEE597].freeze
+COULEURS = %i[ciel pinking yolk].freeze
 STEP = 84
 attr_reader :shapes, :web
 

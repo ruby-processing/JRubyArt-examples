@@ -57,7 +57,7 @@ def mouse_pressed
   # If there are more than 10 bubbles delete the oldest bubble
   bubbles.shift if bubbles.size > 10
   # Writing the csv data back to the same file, (also specify UTF-8 format)
-  headers = %w(x y diameter name) # create csv headers
+  headers = %w[x y diameter name) # create csv headers
   CSV.open(
     data_path('data.csv'),
     'w:UTF-8',

@@ -10,8 +10,8 @@ module Hype
   java_import 'hype.interfaces.HLocatable'
 end
 
-PALETTE = %w(#FFFFFF #F7F7F7 #ECECEC #333333 #0095a8 #00616f #FF3300 #FF6600).freeze
-PALETTE2 = %w(#242424 #111111 #ECECEC).freeze
+PALETTE = %w[#FFFFFF #F7F7F7 #ECECEC #333333 #0095a8 #00616f #FF3300 #FF6600].freeze
+PALETTE2 = %w[#242424 #111111 #ECECEC].freeze
 include Hype
 
 attr_reader :swarm, :canvas, :colors, :pool, :tween, :count

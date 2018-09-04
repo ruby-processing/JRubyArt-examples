@@ -3,7 +3,7 @@ load_library :hype
 include_package 'hype'
 java_import 'hype.extended.behavior.HRotate'
 attr_reader :box_x, :box_y, :box_z, :colors
-PALETTE = %w(#242424 #FF3300 #00CC00).freeze
+PALETTE = %w[#242424 #FF3300 #00CC00].freeze
 
 def settings
   size(640, 640, P3D)

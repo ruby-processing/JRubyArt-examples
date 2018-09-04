@@ -1,6 +1,6 @@
 # Talma Quality, Spectrum 2 Palette
-PALETTE = %w(#D5C9D9 #B83D4E #95577E #A884A1).freeze
-COULEURS = %i(pink_pearl geranium orchid lilac).freeze
+PALETTE = %w[#D5C9D9 #B83D4E #95577E #A884A1].freeze
+COULEURS = %i[pink_pearl geranium orchid lilac].freeze
 STRPE = 500
 
 def settings

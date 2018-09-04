@@ -5,7 +5,7 @@
 # offscreen canvas.
 
 attr_reader :ball, :canvas, :glossy, :fisheye, :img, :use_fish_eye
-SHADERS = %w(FishEye.glsl GlossyFrag.glsl GlossyVert.glsl).freeze
+SHADERS = %w[FishEye.glsl GlossyFrag.glsl GlossyVert.glsl].freeze
 
 def setup
   sketch_title 'Glossy fish eye'

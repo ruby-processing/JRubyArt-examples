@@ -2,7 +2,7 @@
 # Liberation Serif font from RedHat: https://www.redhat.com/promo/fonts/
 require 'ruby_wordcram'
 
-WEB = %w(#0033ff #0055ff #0088ff #00bbff #00ffdd).freeze
+WEB = %w[#0033ff #0055ff #0088ff #00bbff #00ffdd].freeze
 LETTERS = ('A'..'Z').to_a
 
 def settings

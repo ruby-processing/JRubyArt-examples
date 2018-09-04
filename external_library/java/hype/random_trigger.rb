@@ -3,8 +3,8 @@ load_library :hype
 include_package 'hype'
 java_import 'hype.extended.behavior.HRandomTrigger'
 
-PALETTE = %w(#242424 #999999 #202020).freeze
-KEY = %i(background stroke fill).freeze
+PALETTE = %w[#242424 #999999 #202020].freeze
+KEY = %i[background stroke fill].freeze
 
 def settings
   size(640,640)

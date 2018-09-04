@@ -18,7 +18,7 @@ end
 class Tile
   include Processing::Proxy
   PHI = (1.0 + Math.sqrt(5)) / 2.0 # golden ratio
-  COLORS = %w(#ff0000 #0000ff).freeze # red blue
+  COLORS = %w[#ff0000 #0000ff].freeze # red blue
   attr_reader :a, :b, :c, :col
 
   def initialize(col, a,  b,  c)

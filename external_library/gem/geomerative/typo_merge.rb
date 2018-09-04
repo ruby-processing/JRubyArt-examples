@@ -27,7 +27,7 @@
 require 'geomerative'
 
 attr_reader :my_font, :stop, :xoff, :yoff, :x_inc, :y_inc
-TEXT = %w(Merge Design).freeze
+TEXT = %w[Merge Design].freeze
 
 def settings
   size(900, 500)

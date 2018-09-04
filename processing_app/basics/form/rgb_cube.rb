@@ -49,7 +49,7 @@ def draw
   rotate_y(-@xmag)
   scale 90
   begin_shape QUADS
-  %i(top front left back right bottom).each do |s|
+  %i[top front left back right bottom].each do |s|
     @box[s].each do |p|
       fill_from_points p
       vertex_from_points p

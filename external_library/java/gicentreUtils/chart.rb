@@ -30,10 +30,10 @@ def setup
       7_657, 9_649, 9_767, 12_167, 15_154, 18_200, 23_124, 28_645, 39_471
     ].to_java(:float)
   bar_chart.bar_labels =
-    %w(
+    %w[
       1830 1840 1850 1860 1870 1880 1890 1900 1910 1920
       1930 1940 1950 1960 1970 1980 1990 2000 2010
-    )
+    ]
   bar_chart.bar_colour = color(200, 80, 80, 100)
   bar_chart.bar_gap = 2
   bar_chart.value_format = '$###,###'

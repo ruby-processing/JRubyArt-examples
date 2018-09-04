@@ -6,13 +6,13 @@
 # Example 22-2: Polymorphism
 
 # Circle class inherits Processing:Proxy module methods from Shape
-# Inherits all instance variables from parent + adding one using the 
+# Inherits all instance variables from parent + adding one using the
 # post_initialize hook method. Use of change_color makes initialization of @c
 # irrelevant, but without example is spoiled.
 require_relative 'shape'
 
 class Circle < Shape
-  COLORS = %w(#ff0000 #ffff00 #3333ff #33cc33)
+  COLORS = %w[#ff0000 #ffff00 #3333ff #33cc33].freeze
   attr_reader :c, :x, :y, :r
 
   def post_initialize(args)
@@ -34,7 +34,7 @@ class Circle < Shape
     stroke(0)
     ellipse(x, y, r, r)
   end
-  
+
   def run
     jiggle
     display

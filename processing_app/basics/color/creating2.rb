@@ -4,7 +4,7 @@
 # in the program by their name, rather than a number.
 # An alternative using palette
 attr_reader :palette
-WEB = %w(#CC6600 #CC9900 #993300).freeze
+WEB = %w[#CC6600 #CC9900 #993300].freeze
 REDDER = 0
 YELLOWER = 1
 ORANGISH = 2

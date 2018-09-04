@@ -10,7 +10,7 @@ module Hype
 end
 
 attr_reader :canvas
-PALETTE = %w(#FFFFFF #F7F7F7 #ECECEC #333333 #0095a8 #00616f #FF3300 #FF6600).freeze
+PALETTE = %w[#FFFFFF #F7F7F7 #ECECEC #333333 #0095a8 #00616f #FF3300 #FF6600].freeze
 
 def settings
   size(640, 640)

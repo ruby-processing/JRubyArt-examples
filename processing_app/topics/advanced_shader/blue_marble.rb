@@ -6,10 +6,10 @@
 attr_reader :earth, :clouds, :earth_shader, :cloud_shader, :earth_rotation
 attr_reader :clouds_rotation, :target_angle
 
-SHADERS = %w(EarthFrag.glsl EarthVert.glsl CloudFrag.glsl CloudVert.glsl).freeze
-SHADER_NAME = %i(earth_frag earth_vert cloud_frag cloud_vert).freeze
-IMAGES = %w(earthmap1k earthcloudmap earthcloudmaptrans earthbump1k earthspec1k).freeze
-IMAGE_NAME = %i(earth_tex cloud_tex alpha_tex bump_map spec_map).freeze
+SHADERS = %w[EarthFrag.glsl EarthVert.glsl CloudFrag.glsl CloudVert.glsl].freeze
+SHADER_NAME = %i[earth_frag earth_vert cloud_frag cloud_vert].freeze
+IMAGES = %w[earthmap1k earthcloudmap earthcloudmaptrans earthbump1k earthspec1k].freeze
+IMAGE_NAME = %i[earth_tex cloud_tex alpha_tex bump_map spec_map].freeze
 
 def setup
   sketch_title 'Blue Marble'

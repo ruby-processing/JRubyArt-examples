@@ -29,11 +29,11 @@ def setup
   @resize_factor = 0.25
   displace_strength = 0.25 # the displace strength of the GLSL shader
   # load the images
-  textures = %w(Texture01.jpg Texture02.jpg)
+  textures = %w[Texture01.jpg Texture02.jpg)
   @images = textures.map { |texture| load_image(data_path(texture)) }
   @color_map = 0
   # load the PShader with a fragment and a vertex shader
-  shader_name = %w(displaceFrag.glsl displaceVert.glsl)
+  shader_name = %w[displaceFrag.glsl displaceVert.glsl)
   shaders = shader_name.map { |s| data_path(s) }
   @displace = load_shader(shaders[0], shaders[1])
   displace.set('displaceStrength', displace_strength) # set the displace_strength
