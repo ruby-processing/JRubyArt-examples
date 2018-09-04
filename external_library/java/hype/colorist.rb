@@ -1,8 +1,11 @@
 load_library 'hype'
+%w[H HDrawablePool HRect].freeze.each do |klass|
+  java_import "hype.#{klass}"
+end
 
-java_import 'hype.extended.colorist.HPixelColorist'
-java_import 'hype.extended.layout.HGridLayout'
-include_package 'hype'
+%w[colorist.HPixelColorist layout.HGridLayout].freeze.each do |klass|
+  java_import "hype.extended.#{klass}"
+end
 
 CELL_SIZE = 25
 

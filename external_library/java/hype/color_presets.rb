@@ -1,5 +1,7 @@
 load_library :hype
-include_package 'hype'
+%w[H HDrawablePool HRect].freeze.each do |klass|
+  java_import "hype.#{klass}"
+end
 java_import 'hype.extended.layout.HGridLayout'
 # string color array
 PALETTE = %w[

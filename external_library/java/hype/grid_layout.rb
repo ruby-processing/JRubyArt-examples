@@ -1,9 +1,13 @@
 # encoding: utf-8
 load_library :hype
-include_package 'hype'
-java_import 'hype.extended.layout.HGridLayout'
-java_import 'hype.extended.behavior.HOscillator'
-java_import 'hype.extended.colorist.HColorPool'
+
+%w[H HDrawablePool HBox].freeze.each do |klass|
+  java_import "hype.#{klass}"
+end
+
+%w[behavior.HOscillator colorist.HColorPool layout.HGridLayout].freeze.each do |klass|
+  java_import "hype.extended.#{klass}"
+end
 
 attr_reader :pool, :osc, :scale, :r
 

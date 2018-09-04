@@ -1,10 +1,11 @@
 # encoding: utf-8
 load_library :hype
-include_package 'hype'
-# namespace for imported classes
-module Hype
-  java_import 'hype.extended.behavior.HOrbiter3D'
-  java_import 'hype.extended.colorist.HColorPool'
+%w[H HBundle HSphere HDrawablePool].freeze.each do |klass|
+  java_import "hype.#{klass}"
+end
+
+%w[colorist.HColorPool behavior.HOrbiter3D].freeze.each do |klass|
+  java_import "hype.extended.#{klass}"
 end
 
 attr_reader :colors, :pool
@@ -29,11 +30,11 @@ def setup
   @pool = HDrawablePool.new(100)
   pool.autoAddToStage
       .add(HSphere.new)
-      .colorist(Hype::HColorPool.new(web_to_color_array(PALETTE)).fill_only)
+      .colorist(HColorPool.new(web_to_color_array(PALETTE)).fill_only)
       .on_create do |obj|
         ran_size = 10 + (rand(0..3) * 7)
         obj.size(ran_size).stroke_weight(0).no_stroke.anchor_at(H::CENTER)
-        orb = Hype::HOrbiter3D.new(width / 2, height / 2, 0)
+        orb = HOrbiter3D.new(width / 2, height / 2, 0)
                               .target(obj)
                               .z_speed(rand(-1.5..1.5))
                               .y_speed(rand(-0.5..0.5))
