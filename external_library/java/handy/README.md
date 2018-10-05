@@ -1,4 +1,4 @@
-# The Handy Library by Jo Wood et al gicentre
+# The Handy Library by Jo Wood et al giCentre
 
 The Handy library allows you to produce graphics with a hand-drawn appearance in Processing sketches. This can be customised to produce a variety of styles including pencil, watercolour and ink and marker pen appearance.
 
