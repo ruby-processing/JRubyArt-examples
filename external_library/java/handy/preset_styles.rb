@@ -2,18 +2,21 @@
 # Version 2.0, 4th April, 2016
 # Author Jo Wood
 
-load_libraries :ball, :handy
+load_library :handy
 java_import 'org.gicentre.handy.HandyPresets'
 
 attr_reader :h1, :h2, :h3, :h4
 FIVE = 5
 
 def settings
-  size(610, 200)
+  size(1200, 800)
+  # size(1200, 800, P2D)
+  # size(1200, 800, P3D)
+  # size(1200, 800, FX2D)
 end
 
 def setup
-  sketch_title 'Simple Preset Styles'
+  sketch_title 'Preset Styles Test'
   @h1 = HandyPresets.create_pencil(self)
   @h2 = HandyPresets.create_coloured_pencil(self)
   @h3 = HandyPresets.create_water_and_ink(self)
