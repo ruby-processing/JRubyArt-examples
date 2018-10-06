@@ -17,11 +17,13 @@ end
 def draw
   background(234, 215, 182)
   fill(0, 255, 0)
-  handy.instance_eval do
-    rect(20, 20, 360, 20)
-    rect(20, 360, 360, 20)
-    rect(20, 40, 20, 320)
-    rect(360, 40, 20, 320)
-  end
+  draw_borders(handy)
   balls.each(&:draw)
+end
+
+def draw_borders(renderer)
+  renderer.rect(20, 20, 360, 20)
+  renderer.rect(20, 360, 360, 20)
+  renderer.rect(20, 40, 20, 320)
+  renderer.rect(360, 40, 20, 320)
 end
