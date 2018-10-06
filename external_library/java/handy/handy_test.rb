@@ -1,4 +1,4 @@
-load_libraries :ball, :handy
+load_libraries :balls, :handy
 java_import 'org.gicentre.handy.HandyRenderer'
 BALL_NUM = 6
 attr_reader :handy, :balls
@@ -9,7 +9,6 @@ end
 
 def setup
   sketch_title 'Handy Ball Collision'
-  HandyRenderer.__persistent__ = true # supress singleton warning
   @handy = HandyRenderer.new(self)
   @balls = (0...BALL_NUM).map { |idx| Ball.new(self, idx) }
 end
