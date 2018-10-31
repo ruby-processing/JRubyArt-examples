@@ -1,5 +1,4 @@
 require 'geomerative'
-load_library :boundary
 
 attr_reader :bounds, :my_rect
 
@@ -11,7 +10,7 @@ def setup
   sketch_title 'Geomerative Boundary Test'
   RG.init(self)
   RG.set_polygonizer(RG.ADAPTATIVE)
-  @bounds = Boundary.create_bounding_rectangle(100, 100, 100, 50)
+  @bounds = RShape.create_rectangle(100, 100, 100, 50)
 end
 
 def draw
@@ -23,7 +22,7 @@ def draw
 end
 
 def draw_my_rect
-  if bounds.inside(my_rect)
+  if bounds.contains_shape(my_rect)
     no_stroke
     fill 255, 0, 0
   else

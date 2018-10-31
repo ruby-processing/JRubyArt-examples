@@ -13,7 +13,7 @@ def setup
   RG.set_polygonizer(RG.ADAPTATIVE)
   circle = RShape.createCircle(100, 100, 100);
   rectangle = RShape.createRectangle(100, 100, 100, 50);
-  @bounds = Boundary.create_bounding_shape(circle.union(rectangle))
+  @bounds = RShape.new(circle.union(rectangle))
 end
 
 def draw
@@ -25,7 +25,7 @@ def draw
 end
 
 def draw_my_rect
-  if bounds.inside(my_rect)
+  if bounds.contains_shape(my_rect)
     no_stroke
     fill 255, 0, 0
   else
