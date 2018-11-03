@@ -39,7 +39,7 @@ attr_reader :gs, :tone_map, :img
 def setup
   sketch_title 'Gray Scott Image'
   @gs = Simulation::GrayScott.new width, height, true
-  @img = load_image 'ti_yong.png'
+  @img = load_image(data_path('ti_yong.png'))
   # create a duo-tone gradient map with 256 steps
   # NB: use '::' in place of '.' here for these java constants
   @tone_map = Toxi::ToneMap.new(0,  0.33, Toxi::NamedColor::CRIMSON, Toxi::NamedColor::WHITE, 256)
@@ -62,9 +62,9 @@ def key_pressed
   control_key = %w[1 2 3 4 5 6 7 8 9].freeze
   case key
   when *control_key
-    @gs.setF(0.02 + (key.ord - 48) * 0.001)
+    @gs.setF(0.02 + (key.to_i) * 0.001)
   when 's'
-    save_frame 'toxi.png'
+    save_frame(data_path('toxi.png'))
   else
     @gs.reset()
   end
