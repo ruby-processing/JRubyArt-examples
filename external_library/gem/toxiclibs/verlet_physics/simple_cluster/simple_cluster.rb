@@ -18,7 +18,7 @@ end
 
 def setup
   sketch_title 'Simple Cluster'
-  @f = createFont('Georgia', 12, true)
+  @f = create_font('Georgia', 12, true)
   @show_physics = true
   @show_particles = true
   @show_physics = true

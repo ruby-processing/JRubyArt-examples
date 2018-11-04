@@ -13,7 +13,7 @@ def setup
   sketch_title 'Physics Type'
   @input = 'Hello!'
   RG.init(self)
-  fnt = RG.loadFont('ReplicaBold.ttf')  # file name
+  fnt = RG.loadFont(data_path('ReplicaBold.ttf'))  # file name
   RG.textFont(fnt, 330)   # RFont object, size
   @font = RG.getText(input)  # String to RShape
   RG.setPolygonizer(RCommand::UNIFORMLENGTH)
@@ -41,7 +41,7 @@ def init_physics
   # add gravity along positive Y axis
   physics.add_behavior(Physics::GravityBehavior2D.new(TVec2D.new(0, 0.1)))
   # multidimensional array of x and y coordinates
-  paths = font.get_points_in_paths 
+  paths = font.get_points_in_paths
   offset = TVec2D.new(200, 250)
   return if (paths.nil?)
   paths.length.times do |ii|

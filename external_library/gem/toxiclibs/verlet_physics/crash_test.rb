@@ -52,8 +52,8 @@ def init_physics
   @physics = Physics::VerletPhysics3D.new
   @mesh = WETriangleMesh.new.addMesh(
     STLReader.new.load_binary(
-      create_input('audi.stl'), 
-      'car', 
+      create_input(data_path('audi.stl')), 
+      'car',
       STLReader::WEMESH
     )
   )

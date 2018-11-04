@@ -1,9 +1,7 @@
 require 'toxiclibs'
 
 RES = 64
-
 attr_reader :gfx, :mesh, :is_wireframe
-
 # A factory wrapper can be used to create a more literate
 # constructor for a java class (keyword args)
 module Vector

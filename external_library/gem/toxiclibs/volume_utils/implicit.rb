@@ -130,9 +130,8 @@ class EvaluatingVolume < Volume::VolumetricSpace
     function1 = lambda do |x, y, z, c|
       3 * x**2 + 3 * y**2 - (3 * x**2 - y**2) * y + z**3
     end
-    val = function1.call(value.call(x, resX),value.call(y, resY), value.call(z, resZ), FREQ)
-    # val = cos(xx * FREQ) * sin(yy * FREQ) + cos(yy * FREQ) * sin(zz * FREQ) + cos(zz * FREQ) * sin(xx * FREQ)
-    # 3*pow(x,2) + 3*pow(y,2) - (3*pow(x,2) - pow(y,2))*y + pow(z,3)
+    # val = function1.call(value.call(x, resX),value.call(y, resY), value.call(z, resZ), FREQ)
+    val = function0.call(value.call(x, resX),value.call(y, resY), value.call(z, resZ), FREQ)
     return 0 if val > upper_bound
     val
   end
