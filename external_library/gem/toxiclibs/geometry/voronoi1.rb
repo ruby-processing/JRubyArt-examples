@@ -15,10 +15,10 @@ def draw
   background 0
   fill 0
   smooth
-  strokeWeight 1
+  stroke_weight 1
   stroke 255
   voronoi.get_regions.each {  |polygon| gfx.polygon2D(polygon) }
-  save_frame("voronoi-001.png")
+  save_frame(data_path('voronoi-001.png'))
 end
 
 def settings

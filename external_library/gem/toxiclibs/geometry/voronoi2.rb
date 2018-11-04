@@ -20,7 +20,7 @@ def draw
     fill colors.sample.toARGB
     gfx.polygon2D(polygon)
   end
-  save_frame('voronoi-002.png')
+  save_frame(data_path('voronoi-002.png'))
   no_loop
 end
 
