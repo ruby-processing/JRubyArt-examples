@@ -2,8 +2,8 @@ require 'forwardable'
 
 module Runnable
   def run
-    reject! { |item| item.done }
-    each { |item| item.display }
+    reject!(&:done)
+    each(&:display)
   end
 end
 
@@ -14,15 +14,15 @@ class ParticleSystem
   def_delegator(:@particles, :empty?, :dead?)
 
   attr_reader :x, :y
-  
+
   def initialize(bd, num, x, y)
     @particles = []          # Initialize the Array
-    @x, @y = x, y            # Store the origin point  
+    @x, @y = x, y            # Store the origin point
     num.times do
       self << Particle.new(bd, x, y)
     end
   end
-  
+
   def add_particles(bd, n)
     n.times do
       self << Particle.new(bd, x, y)
@@ -37,9 +37,9 @@ class Particle
   include Processing::Proxy
   TRAIL_SIZE = 6
   # We need to keep track of a Body
-  
+
   attr_reader :trail, :body, :box2d
-  
+
   # Constructor
   def initialize(b2d, x, y)
     @box2d = b2d
@@ -49,12 +49,12 @@ class Particle
     # This way we have collisions, but they don't overwhelm the system
     make_body(x, y, 0.2)
   end
-  
+
   # This function removes the particle from the box2d world
   def kill_body
     box2d.destroy_body(body)
   end
-  
+
   # Is the particle ready for deletion?
   def done
     # Let's find the screen position of the particle
@@ -64,7 +64,7 @@ class Particle
     kill_body
     true
   end
-  
+
   # Drawing the box
   def display
     # We look at each body and get its screen position
@@ -84,7 +84,7 @@ class Particle
     end
     end_shape
   end
-  
+
   # This function adds the rectangle to the box2d world
   def make_body(x, y, r)
     # Define and create the body
