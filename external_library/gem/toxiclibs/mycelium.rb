@@ -5,7 +5,7 @@ require 'toxiclibs'
 # The vanilla processing sketch was part of the SAC 2013 workshop project
 # (c) 2013 Karsten Schmidt
 # LGPLv3 licensed
-# translated to PiCrate by Martin Prout 2018
+# translated to JRubyArt by Martin Prout 2018
 
 load_library :branch
 
