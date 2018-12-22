@@ -1,9 +1,9 @@
 require 'forwardable'
 
-# Here we use our own Vec2D class, until we create a path as an array of TVec2D
-# toxis Vec2D. Required to use the ToxicLibsSupport lineStrip2D method.
-# further we can and should use power of ruby to make Branch enumerable and
-# Forwardable to define which enumerable methods we want to use
+# Here we use the JRubyArt Vec2D class, and not toxis Vec2D. We avoid using
+# ToxicLibsSupport, by using our own AppRender to translate Vec2D to vertices.
+# Further we use the power of ruby (metaprogramming) to make Branch enumerable
+# and use Forwardable to define which enumerable methods we want to use.
 class Branch
   include Enumerable
   extend Forwardable
@@ -29,7 +29,7 @@ class Branch
     @children = []
     @xbound = Boundary.new(0, app.width)
     @ybound = Boundary.new(0, app.height)
-    path << TVec2D.new(pos.x, pos.y)
+    path << pos
   end
 
   def run
@@ -39,12 +39,12 @@ class Branch
 
   private
 
-  # Note use of both rotate! (changes original) rotate (returns a copy) of Vec2D
+  # NB: use of both rotate! (changes original) rotate (returns a copy) of Vec2D
   def grow
     check_bounds(position + (dir * speed)) if path.length < MAX_LEN
     @position += (dir * speed)
     dir.rotate!(rand(-0.5..0.5) * THETA)
-    path << TVec2D.new(position.x, position.y)
+    path << position
     if (length < MAX_GEN) && (rand < BRANCH_CHANCE)
       branch_dir = dir.rotate(rand(-0.5..0.5) * BRANCH_THETA)
       self << Branch.new(app, position.copy, branch_dir, speed * 0.99)
@@ -53,7 +53,11 @@ class Branch
   end
 
   def display
-    app.gfx.lineStrip2D(path)
+    app.begin_shape
+    app.stroke(255)
+    app.no_fill
+    path.each { |vec| vec.to_vertex(app.renderer) }
+    app.end_shape
     each(&:display)
   end
 
@@ -66,6 +70,6 @@ end
 # we are looking for excluded values
 Boundary = Struct.new(:lower, :upper) do
   def exclude?(val)
-    true unless (lower...upper).cover? val
+    !(lower...upper).cover? val
   end
 end
