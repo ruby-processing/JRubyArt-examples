@@ -1,4 +1,5 @@
-# Rotator module is required because rotate is not implemented for PiCrate Vec3D
+# Rotator module is required because rotate is not implemented for JRubyArt
+# Vec3D (below implementation based on Euler angles)
 # NB: we use quaternions in ArcBall (avoiding possible gimbal lock)
 module Rotate
   def self.rotate_x!(vec, theta)
