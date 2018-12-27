@@ -40,15 +40,15 @@ class Branch
   def grow
     check_bounds(position + (dir * speed))
     @position += (dir * speed)
-    Rotate.rotate_x!(dir, rand(-0.5..0.5) * THETA)
-    Rotate.rotate_y!(dir, rand(-0.5..0.5) * THETA)
-    Rotate.rotate_z!(dir, rand(-0.5..0.5) * THETA)
+    (0..2).each do |axis|
+      Rotate.axis!(axis, dir, rand(-0.5..0.5) * THETA)
+    end
     path << position
     if (length < MAX_GEN) && (rand < BRANCH_CHANCE)
       branch_dir = dir.copy
-      Rotate.rotate_x!(branch_dir, rand(-0.5..0.5) * BRANCH_THETA)
-      Rotate.rotate_y!(branch_dir, rand(-0.5..0.5) * BRANCH_THETA)
-      Rotate.rotate_z!(branch_dir, rand(-0.5..0.5) * BRANCH_THETA)
+      (0..2).each do |axis|
+        Rotate.axis!(axis, branch_dir, rand(-0.5..0.5) * BRANCH_THETA)
+      end
       self << Branch.new(app, position.copy, branch_dir, speed * 0.99)
     end
     each(&:grow)
