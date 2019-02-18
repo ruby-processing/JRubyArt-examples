@@ -1,10 +1,8 @@
 # Rotator module is required because rotate is not implemented for
 # JRubyArt 3D. Here we use Vec2D.rotate! to do Euclid rotation about an
-# axis (we can then apply the rotation to each axis in turn) we mimic Toxiclibs
-# Vec3D implementation
+# axis (we can then apply the rotation to each axis in turn)
+# Does not take account of processing axis convention but works OK here
 # NB: we use quaternions in ArcBall (to avoid gimbal lock)
-# See:
-# https://medium.com/@behreajj/3d-rotations-in-processing-vectors-matrices-quaternions-10e2fed5f0a3
 module Rotate
   def self.axis!(axis, vec, theta)
     array = vec.to_a
@@ -12,8 +10,8 @@ module Rotate
     other = Vec2D.new(*array).rotate! theta
     case axis
     when 0 # xaxis
-      vec.y = other.y
-      vec.z = other.x
+      vec.y = other.x
+      vec.z = other.y
     when 1 # yaxis
       vec.x = other.x
       vec.z = other.y

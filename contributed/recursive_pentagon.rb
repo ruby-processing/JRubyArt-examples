@@ -1,4 +1,4 @@
-# After an openprocessing sketch by C.Andrews
+# After an openprocessing sketch by
 load_library :color_group
 attr_reader :strut_factor, :renderer, :cols
 PALETTE = %w[#fff0a5 #ffd500 #594a00 #9999ff #000059].freeze
@@ -9,7 +9,7 @@ def setup
   @renderer = AppRender.new self # so we can send Vec2D :to_vertex
   group = ColorGroup.from_web_array(PALETTE.to_java(:string))
   @cols = group.colors
-  background(0)
+  background(cols.last)
   no_loop
 end
 
