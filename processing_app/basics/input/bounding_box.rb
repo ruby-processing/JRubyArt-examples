@@ -14,7 +14,7 @@ def setup
   @bounds = AaBb.new(
     center: Vec2D.new(width / 2, height / 2),
     extent: Vec2D.new(width - BLOCK_WIDTH, height - BLOCK_WIDTH))
-  @renderer = AppRender.new(self)
+  @renderer = GfxRender.new(self.g)
 end
 
 def draw

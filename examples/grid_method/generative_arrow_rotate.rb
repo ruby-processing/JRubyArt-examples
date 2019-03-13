@@ -2,10 +2,17 @@
 #  Example of using noise to rotate a grid of arrows
 #
 load_library :pdf
-attr_reader :version, :time_seed, :save_one_frame, :arrow
+attr_reader :version, :time_seed, :save_one_frame, :arrow, :renderer
 STEP = 40
 POINTS = [
-  [0, -55], [6, 0], [16, 10], [2, 10], [0, -10], [-2, 10], [-16, 10], [-6, 0]
+  Vec2D.new(0, -55),
+  Vec2D.new(6, 0),
+  Vec2D.new(16, 10),
+  Vec2D.new(2, 10),
+  Vec2D.new(0, -10),
+  Vec2D.new(-2, 10),
+  Vec2D.new(-16, 10),
+  Vec2D.new(-6, 0)
 ].freeze
 
 def setup
@@ -45,11 +52,12 @@ end
 
 def create_arrow # custom shape for our arrow
   @arrow = create_shape
+  @renderer ||= ShapeRender.new(arrow)
   arrow.begin_shape
   arrow.fill(200, 0, 0)
   arrow.no_stroke
   arrow.stroke_weight(2)
-  POINTS.each { |pt| arrow.vertex(*pt) }
+  POINTS.each { |pt| pt.to_vertex(renderer) }
   arrow.end_shape(CLOSE)
 end
 

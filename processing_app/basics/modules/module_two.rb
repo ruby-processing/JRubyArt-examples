@@ -26,7 +26,7 @@ end
 
 def setup 
   sketch_title 'Module Two'
-  @renderer = AppRender.new(self)
+  @renderer = GfxRender.new(self.g)
   frame_rate 30 
   reset_scene
 end

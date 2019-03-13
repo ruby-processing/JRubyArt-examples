@@ -5,12 +5,12 @@
 
 load_library :branch3D
 
-attr_reader :renderer, :root
+attr_reader :root, :renderer
 
 def setup
   sketch_title 'Mycelium Box'
   ArcBall.init self
-  @renderer = AppRender.new(self)
+  @renderer = GfxRender.new(self.g)
   @root = Branch.new(
     self,
     Vec3D.new(0, 10, 10),

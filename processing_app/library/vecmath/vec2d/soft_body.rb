@@ -36,7 +36,7 @@ def draw
 end
 
 def renderer
-  @renderer ||= AppRender.new(self)
+  @renderer ||= GfxRender.new(self.g)
 end
 
 def draw_shape

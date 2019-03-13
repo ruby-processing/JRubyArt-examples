@@ -30,7 +30,7 @@ def setup
   @pnt = Vec2D.new
   @points = SimplePoints.new
   ellipse_mode RADIUS
-  @renderer = AppRender.new(self)
+  @renderer = GfxRender.new(self.g)
 end
 
 def draw

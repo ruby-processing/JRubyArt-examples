@@ -1,7 +1,7 @@
 require 'forwardable'
 
 # Here we use the JRubyArt Vec2D class, and not toxis Vec2D. We avoid using
-# ToxicLibsSupport, by using our own AppRender to translate Vec2D to vertices.
+# ToxicLibsSupport, by using our own GfxRender to translate Vec2D to vertices.
 # Further we use the power of ruby (metaprogramming) to make Branch enumerable
 # and use Forwardable to define which enumerable methods we want to use.
 class Branch

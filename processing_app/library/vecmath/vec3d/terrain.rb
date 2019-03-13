@@ -51,5 +51,5 @@ def hash_key(x, y)
 end
 
 def renderer
-  @renderer ||= AppRender.new(self)
+  @renderer ||= GfxRender.new(self.g)
 end

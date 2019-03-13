@@ -6,8 +6,8 @@ PALETTE = %w[#fff0a5 #ffd500 #594a00 #9999ff #000059].freeze
 def setup
   sketch_title 'Recursive Pentagons'
   @strut_factor = 0.2
-  @renderer = AppRender.new self # so we can send Vec2D :to_vertex
-  group = ColorGroup.from_web_array(PALETTE.to_java(:string))
+  @renderer = GfxRender.new self.g # so we can send Vec2D :to_vertex
+  group = ColorGroup.from_web_array(PALETTE)
   @cols = group.colors
   background(cols.last)
   no_loop
