@@ -1,4 +1,4 @@
-load_library :guido
+load_library :Guido
 include_package 'de.bezier.guido'
 
 # see https://github.com/fjenett/Guido/
