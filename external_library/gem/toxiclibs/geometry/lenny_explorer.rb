@@ -1,4 +1,6 @@
-# lenny_explorer.rb
+# This sketch is ruby version of Karsten Schmidts homage to 'The Explorer'
+# by Leander Herzog https://leanderherzog.ch/explorer/
+# JRubyArt version by Martin Prout (makes use of DuckTyping see library)
 require 'toxiclibs'
 java_import 'toxi.geom.Circle'
 java_import 'toxi.geom.Rect'
