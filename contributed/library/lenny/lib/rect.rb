@@ -11,8 +11,8 @@ class Rect
   end
 
   def contains?(vec)
-    xminmax = [vec1.x, vec2.x]
-    yminmax = [vec1.y, vec2.y]
+    xminmax = [vec1.x, vec2.x].minmax
+    yminmax = [vec1.y, vec2.y].minmax
     return false if vec.x < xminmax[0]
     return false if vec.x > xminmax[1]
     return false if vec.y < yminmax[0]
