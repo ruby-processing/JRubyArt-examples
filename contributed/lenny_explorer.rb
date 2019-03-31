@@ -23,7 +23,13 @@ end
 def draw
   background(255)
   50.times { path.grow }
-  path.render(g, renderer)
+  draw_path(path.points)
+end
+
+def draw_path(points)
+  begin_shape
+  points.map { |vec| vec.to_curve_vertex(renderer) }
+  end_shape
 end
 
 def mouse_pressed

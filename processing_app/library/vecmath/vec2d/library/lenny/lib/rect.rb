@@ -1,22 +1,21 @@
 # For use with Boundary
 class Rect
-  attr_reader :vec1, :vec2
-  def initialize(vec1, vec2)
-    @vec1 = vec1
-    @vec2 = vec2
+  attr_reader :lbt, :rtp
+  def initialize(lbt, rtp)
+    @lbt = lbt
+    @rtp = rtp
   end
 
   def centroid
-    (vec1 + vec2) / 2
+    (lbt + rtp) / 2
   end
 
   def contains?(vec)
-    xminmax = [vec1.x, vec2.x].minmax
-    yminmax = [vec1.y, vec2.y].minmax
-    return false if vec.x < xminmax[0]
-    return false if vec.x > xminmax[1]
-    return false if vec.y < yminmax[0]
+    otherx = vec.x
+    othery = vec.y
+    return false if otherx < lbt.x || otherx > rtp.x
+    return false if othery < lbt.y
 
-    vec.y < yminmax[1]
+    othery < rtp.y
   end
 end

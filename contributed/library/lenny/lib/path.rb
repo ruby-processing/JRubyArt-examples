@@ -1,15 +1,15 @@
-# Stores and manipulates the path
+# Stores and manipulates the points
 class Path
-  attr_reader :path, :last, :bounds, :cut, :theta, :delta, :speed, :searches
+  attr_reader :points, :last, :bounds, :cut, :theta, :delta, :speed, :searches
 
   def initialize(bounds, speed, delta, history)
     @bounds = bounds
     @speed = speed
     @delta = delta
     @theta = 0
-    @path = (0..history).map { bounds.centroid.copy }
+    @points = (0..history).map { bounds.centroid.copy }
     @searches = 0
-    @last = Vec2D.new(path.first)
+    @last = Vec2D.new(points.first)
   end
 
   def grow
@@ -22,33 +22,27 @@ class Path
   end
 
   def move
-    @last = path.first
-    path.pop
+    @last = points.first
+    points.pop
     @theta += delta
-    path.unshift last + Vec2D.new(speed * Math.cos(theta), speed * Math.sin(theta))
+    points.unshift last + Vec2D.new(speed * Math.cos(theta), speed * Math.sin(theta))
     @searches = 0
   end
 
   def search
     @theta += delta
-    path[0] = last + Vec2D.new(speed * Math.cos(theta), speed * Math.sin(theta))
+    points[0] = last + Vec2D.new(speed * Math.cos(theta), speed * Math.sin(theta))
     @searches += 1
   end
 
-  def render(gfx, renderer)
-    gfx.begin_shape
-    path.map { |vec| vec.to_curve_vertex(renderer) }
-    gfx.end_shape
-  end
-
   def intersecting?
-    return true unless bounds.contains?(path.first)
+    return true unless bounds.contains?(points.first)
 
     if searches < 100
-      a = Line2D.new(path[0], path[1])
-      (3...path.length).each do |i|
-        b = Line2D.new(path[i], path[i - 1])
-        return true if a.intersecting?(b)
+      one = Line2D.new(points[0], points[1])
+      (3...points.length).each do |idx|
+        two = Line2D.new(points[idx], points[idx - 1])
+        return true if one.intersecting?(two)
       end
     end
     false
