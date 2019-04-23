@@ -31,12 +31,11 @@ def draw
 end
 
 def key_pressed
-  case(key) 
-  when 'k', 'K'
-    @mesh = spherical_mesh(random_parameters.to_java(:float))
-   # no_stroke
-    @spherical = gfx.mesh_to_colored_shape(mesh, true) # harmonic colors
-  end
+  return unless key == 'r'
+
+  @mesh = spherical_mesh(random_parameters)
+  # no_stroke
+  @spherical = gfx.mesh_to_colored_shape(mesh) # harmonic colors
 end
 
 def random_parameters
@@ -44,8 +43,8 @@ def random_parameters
 end
 
 def spherical_mesh(param)
-  b = SurfaceMeshBuilder.new(SphericalHarmonics.new(param.to_java(:float)))
-  b.create_mesh(nil, 80, 60)
+  bld = SurfaceMeshBuilder.new(SphericalHarmonics.new(param.to_java(:float)))
+  bld.create_mesh(nil, 80, 60)
 end
 
 def settings

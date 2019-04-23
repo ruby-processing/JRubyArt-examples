@@ -42,7 +42,9 @@ def setup
   @img = load_image(data_path('ti_yong.png'))
   # create a duo-tone gradient map with 256 steps
   # NB: use '::' in place of '.' here for these java constants
-  @tone_map = Toxi::ToneMap.new(0,  0.33, Toxi::NamedColor::CRIMSON, Toxi::NamedColor::WHITE, 256)
+  @tone_map = Toxi::ToneMap.new(
+    0, 0.33, Toxi::NamedColor::CRIMSON, Toxi::NamedColor::WHITE, 256
+  )
 end
 
 def draw
@@ -52,8 +54,8 @@ def draw
   10.times { @gs.update(1) }
   # read out the V result array
   # and use tone map to render colours
-  @gs.v.each_with_index do |v, i|
-    pixels[i] = tone_map.getARGBToneFor(v)  # NB: don't camel case convert here
+  @gs.v.each_with_index do |vec, idx|
+    pixels[idx] = tone_map.getARGBToneFor(vec) # NB: don't camel case convert
   end
   update_pixels
 end
@@ -62,14 +64,13 @@ def key_pressed
   control_key = %w[1 2 3 4 5 6 7 8 9].freeze
   case key
   when *control_key
-    @gs.setF(0.02 + (key.to_i) * 0.001)
+    @gs.setF(0.02 + key.to_i * 0.001)
   when 's'
     save_frame(data_path('toxi.png'))
   else
-    @gs.reset()
+    @gs.reset
   end
 end
-
 
 def settings
   size(256, 256, P2D)

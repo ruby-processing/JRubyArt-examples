@@ -16,9 +16,9 @@ end
 
 def draw
   voronoi.get_regions.each do |polygon|
-    voronoi.get_sites.each do |v|
-      if polygon.contains_point(v)
-        fill pixels[v.y * img.width + v.x]
+    voronoi.get_sites.each do |vec|
+      if polygon.contains_point(vec)
+        fill pixels[vec.y * img.width + vec.x]
         gfx.polygon2D(polygon)
       end
     end

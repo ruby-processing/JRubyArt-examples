@@ -14,12 +14,12 @@ def setup
   @vbo = Gfx::MeshToVBO.new(self)
   no_stroke
   @meshes = create_shape(GROUP)
-  600.times do |i|
+  600.times do |idx|
     # create a new direction vector for each box
     dir = TVec3D.new(
-      cos(i * TWO_PI / 75),
-      sin(i * TWO_PI / 50),
-      sin(i * TWO_PI / 25)
+      cos(idx * TWO_PI / 75),
+      sin(idx * TWO_PI / 50),
+      sin(idx * TWO_PI / 25)
     ).normalize
     # create a position on a sphere, using the direction vector
     pos = dir.scale(SCALE)

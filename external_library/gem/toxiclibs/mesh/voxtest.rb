@@ -40,10 +40,10 @@ end
 def init_mesh
   @mesh = WETriangleMesh.new
   Toxi::AABB.new(Vector.create(x: 0, y: 0, z: 0), 100).to_mesh(mesh)
-  5.times do |i|
+  5.times do |idx|
     subdiv = Toxi::MidpointDisplacementSubdivision.new(
       mesh.compute_centroid,
-      i.even? ? 0.35 : -0.2
+      idx.even? ? 0.35 : -0.2
     )
     mesh.subdivide(subdiv, 0)
   end

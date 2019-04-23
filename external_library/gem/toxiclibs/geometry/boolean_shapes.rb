@@ -34,7 +34,7 @@ def draw
   fill(125)
   stroke(255, 0, 0)
   @polies = builder.compute_shapes
-  polies.each { |p| gfx.polygon2D(p) }
+  polies.each { |pgn| gfx.polygon2D(pgn) }
 end
 
 def settings

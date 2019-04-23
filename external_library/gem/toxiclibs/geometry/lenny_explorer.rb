@@ -1,6 +1,7 @@
 # This sketch is ruby version of Karsten Schmidts homage to 'The Explorer'
 # by Leander Herzog https://leanderherzog.ch/explorer/
 # JRubyArt version by Martin Prout (makes use of DuckTyping see library)
+# For a simpler version see contributed folder
 require 'toxiclibs'
 java_import 'toxi.geom.Circle'
 java_import 'toxi.geom.Rect'

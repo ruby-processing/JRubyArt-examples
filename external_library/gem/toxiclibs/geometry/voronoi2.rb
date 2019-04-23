@@ -4,7 +4,9 @@ attr_reader :colors, :gfx, :voronoi
 def setup
   sketch_title 'Colored Voronoi'
   @gfx = Gfx::ToxiclibsSupport.new(self)
-  complement = Toxi::ComplementaryStrategy.new.create_list_from_color(TColor::BLUE)
+  complement = Toxi::ComplementaryStrategy.new.create_list_from_color(
+    TColor::BLUE
+  )
   @colors = complement.to_a # a ruby Array of TColors
   @voronoi = Toxi::Voronoi.new
   50.times do

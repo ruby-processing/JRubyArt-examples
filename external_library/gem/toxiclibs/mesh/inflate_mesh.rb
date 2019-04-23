@@ -1,4 +1,3 @@
-
 require 'toxiclibs'
 # A JRubyArt sketch needs refactoring for JRubyArt
 #
@@ -71,13 +70,13 @@ def init_physics
   @physics = Physics::VerletPhysics3D.new
   physics.set_world_bounds(AABB.new(TVec3D.new, 180))
   # turn mesh vertices into physics particles
-  box.vertices.values.each do |v|
-    physics.add_particle(Physics::VerletParticle3D.new(v))
+  box.vertices.values.each do |vec|
+    physics.add_particle(Physics::VerletParticle3D.new(vec))
   end
   # turn mesh edges into springs
-  box.edges.values.each do |e|
-    a = physics.particles.get((e.a).id)
-    b = physics.particles.get((e.b).id)
+  box.edges.values.each do |edg|
+    a = physics.particles.get((edg.a).id)
+    b = physics.particles.get((edg.b).id)
     physics.add_spring(
       Physics::VerletSpring3D.new(a, b, a.distance_to(b), 0.005)
     )

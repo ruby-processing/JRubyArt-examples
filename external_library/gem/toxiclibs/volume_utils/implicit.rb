@@ -123,6 +123,7 @@ class EvaluatingVolume < Volume::VolumetricSpace
   def get_voxel(x, y, z) # can't overload so we renamed
     out = ->(val, res) { val <= 0 || val >= res }
     return 0 if out.call(x, resX1) || out.call(y, resY1) || out.call(z, resZ1)
+
     value = ->(val, res) { val * 1.0 / res - 0.5 }
     function0 = lambda do |x, y, z, c|
       cos(x * c) * sin(y * c) + cos(y * c) * sin(z * c) + cos(z * c) * sin(x * c)
@@ -131,8 +132,14 @@ class EvaluatingVolume < Volume::VolumetricSpace
       3 * x**2 + 3 * y**2 - (3 * x**2 - y**2) * y + z**3
     end
     # val = function1.call(value.call(x, resX),value.call(y, resY), value.call(z, resZ), FREQ)
-    val = function0.call(value.call(x, resX),value.call(y, resY), value.call(z, resZ), FREQ)
+    val = function0.call(
+      value.call(x, resX),
+      value.call(y, resY),
+      value.call(z, resZ),
+      FREQ
+    )
     return 0 if val > upper_bound
+
     val
   end
 end

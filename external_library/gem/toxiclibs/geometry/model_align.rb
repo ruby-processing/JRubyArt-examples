@@ -20,7 +20,7 @@ def setup
   Processing::ArcBall.init(self)
   @gfx = Gfx::ToxiclibsSupport.new(self)
   # compute mesh positions on circle in XZ plane
-  @positions = (Toxi::Circle.new(200).toPolygon2D(8)).map(&:to3DXZ)
+  @positions = Toxi::Circle.new(200).toPolygon2D(8).map(&:to3DXZ)
 end
 
 def draw
@@ -31,16 +31,19 @@ def draw
   focus = TVec3D.new((mouse_x - width / 2), (mouse_y - height / 2), 0)
   # create mesh prototype to draw at all generated positions
   # the mesh is a simple box placed at the world origin
-  m = AABB.new(25).to_mesh
+  msh = AABB.new(25).to_mesh
   # draw focus
   gfx.box(AABB.new(focus, 5))
   # align the positive z-axis of mesh to point at focus
   # mesh needs to be located at world origin for it to work correctly
   # only once rotated, move it to actual position
-  positions.map do |p|
-    gfx.mesh(m.copy.pointTowards(focus.sub(p), TVec3D::Z_AXIS).translate(p))
+  positions.map do |pos|
+    no_stroke
+    gfx.mesh(
+      msh.copy.pointTowards(focus.sub(pos), TVec3D::Z_AXIS).translate(pos)
+    )
+    # draw connections from mesh centers to focal point
+    stroke(0, 255, 255)
+    gfx.line(pos, focus)
   end
-  # draw connections from mesh centers to focal point
-  stroke(0, 255, 255)
-  positions.map { |p| gfx.line(p, focus) }
 end

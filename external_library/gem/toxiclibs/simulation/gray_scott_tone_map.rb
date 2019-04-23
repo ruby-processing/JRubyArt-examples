@@ -60,8 +60,8 @@ def draw
   NUM_ITERATIONS.times { @gs.update(1) }
   # read out the V result array
   # and use tone map to render colours
-  gs.v.each_with_index do |v, i|
-    pixels[i] = tone_map.getARGBToneFor(v)  # NB: don't camel case convert here
+  gs.v.each_with_index do |vec, idx|
+    pixels[idx] = tone_map.getARGBToneFor(vec) # NB: don't camel case convert
   end
   update_pixels
 end

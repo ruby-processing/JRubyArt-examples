@@ -1,21 +1,17 @@
-
-#
-# <p>NoiseSurface demo showing how to utilize the IsoSurface class to efficiently
+# NoiseSurface demo showing how to utilize the IsoSurface class to efficiently
 # visualise volumetric data, in this case using 3D SimplexNoise. The demo also
 # shows how to save the generated mesh as binary STL file (or alternatively in
-# OBJ format) for later use in other 3D tools/digital fabrication.</p>
+# OBJ format) for later use in other 3D tools/digital fabrication.
 #
-# <p>Further classes for the toxi.volume package are planned to easier draw
-# and manipulate volumetric data.</p>
+# Further classes for the toxi.volume package are planned to easier draw
+# and manipulate volumetric data.
 #
-# <p>Key controls:</p>
-# <ul>
-# <li>w : toggle rendering style between shaded/wireframe</li>
-# <li>s : save model as STL & quit</li>
-# <li>1-9 : adjust brush density</li>
-# <li>a-z : adjust density threshold for calculating surface</li>
-# <li>-/= : adjust zoom</li>
-# </ul>
+# Key controls:
+# w : toggle rendering style between shaded/wireframe
+# s : save model as STL & quit
+# 1-9 : adjust brush density
+# a-z : adjust density threshold for calculating surface
+# -/= : adjust zoom
 #
 # Copyright (c) 2009 Karsten Schmidt
 #
@@ -103,7 +99,8 @@ def draw
   isurface.computeSurfaceMesh(mesh, iso_threshold)
   if do_save
     # save mesh as STL or OBJ file
-    mesh.saveAsSTL(data_path(format('cup%d.stl', millis / 1_000 )))
+    cup_stl = 'cup%d.stl'
+    mesh.saveAsSTL(data_path(format(cup_stl, millis / 1_000)))
     @do_save = false
     exit
   end
@@ -113,7 +110,7 @@ def draw
   directional_light(255, 255, 255, 1, 1, -1)
   shininess(1.0)
   rotate_x(-0.4)
-  rotate_y(frame_count*0.05)
+  rotate_y(frame_count * 0.05)
   scale(curr_scale)
   no_stroke
   gfx.mesh(mesh)
@@ -128,7 +125,7 @@ def key_pressed
   when 's'
     @do_save = true
   when '1'..'9'
-    density = -0.5 + (key.to_i) * 0.1
+    density = -0.5 + key.to_i * 0.1
     puts density
   when '0'
     @density = 0.5

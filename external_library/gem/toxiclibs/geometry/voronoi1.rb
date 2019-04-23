@@ -5,9 +5,7 @@ def setup
   sketch_title 'Basic Voronoi'
   @gfx = Gfx::ToxiclibsSupport.new(self)
   @voronoi = Toxi::Voronoi.new
-  50.times do
-    voronoi.add_point(TVec2D.new(rand(width), rand(height)))
-  end
+  50.times { voronoi.add_point(TVec2D.new(rand(width), rand(height))) }
   no_loop
 end
 
@@ -17,7 +15,7 @@ def draw
   smooth
   stroke_weight 1
   stroke 255
-  voronoi.get_regions.each {  |polygon| gfx.polygon2D(polygon) }
+  voronoi.get_regions.each { |polygon| gfx.polygon2D(polygon) }
   save_frame(data_path('voronoi-001.png'))
 end
 

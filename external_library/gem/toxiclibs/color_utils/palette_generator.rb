@@ -8,8 +8,12 @@ end
 
 def setup
   sketch_title 'Monochrome and Complementary Blue Swatches'
-  @mono = Toxi::MonochromeTheoryStrategy.new.create_list_from_color(TColor::BLUE)
-  @complement = Toxi::ComplementaryStrategy.new.create_list_from_color(TColor::BLUE)
+  @mono = Toxi::MonochromeTheoryStrategy.new.create_list_from_color(
+    TColor::BLUE
+  )
+  @complement = Toxi::ComplementaryStrategy.new.create_list_from_color(
+    TColor::BLUE
+  )
   render_palette(mono)
   render_palette(complement, 200)
 end
@@ -27,10 +31,8 @@ def key_pressed
 end
 
 def render_palette(palette, ypos = 0)
-  x = 0
-  palette.each do |col|
+  palette.each_with_index do |col, idx|
     fill col.toARGB
-    rect x, ypos, x + 100, 100
-    x += 100
+    rect idx * 100, ypos, idx + 100, 100
   end
 end
