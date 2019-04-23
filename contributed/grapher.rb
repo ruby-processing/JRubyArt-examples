@@ -35,5 +35,5 @@ def dot(px, py, c)
 end
 
 def settings
-  size 600, 600, FX2D
+  size 600, 600, P2D
 end

@@ -14,5 +14,5 @@ def draw
 end
 
 def settings
-  size(800, 600, FX2D)
+  size(800, 600, P2D)
 end

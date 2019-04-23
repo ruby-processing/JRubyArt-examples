@@ -111,6 +111,6 @@ class Particle
 end
 
 def settings
-  size 600, 500, FX2D
+  size 600, 500, P2D
   smooth 4
 end

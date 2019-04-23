@@ -44,7 +44,7 @@ Vect = Struct.new(:x, :y)
 
 # Initialises the window in which animated discs and graph are shown.
 def settings
-  size(900, 300, FX2D)
+  size(900, 300, P2D)
 end
 
 def setup

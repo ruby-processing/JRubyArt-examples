@@ -26,6 +26,6 @@ end
 
 
 def settings
-  size 125, 250, FX2D
+  size 125, 250, P2D
 end
 

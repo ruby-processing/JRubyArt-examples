@@ -89,5 +89,5 @@ def mouse_pressed
 end
 
 def settings
-  size 640, 360, FX2D
+  size 640, 360, P2D
 end

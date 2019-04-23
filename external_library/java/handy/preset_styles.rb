@@ -12,7 +12,7 @@ def settings
   size(1200, 800)
   # size(1200, 800, P2D)
   # size(1200, 800, P3D)
-  # size(1200, 800, FX2D)
+  # size(1200, 800, P2D)
 end
 
 def setup
