@@ -1,6 +1,5 @@
-# JRubyArt-examples for JRubyArt-1.4.4+
-Replaces `$app` with `Processing.app`, new `library_loader` (_but latter change should be transparent_).
-Uses a simplified `control_panel` interface, ie use `c.title('PanelTitle')` instead of `c.title = 'PanelTitle'`, the old examples still work with the the latest version of JRubyArt, but these examples require the latest version.
+# JRubyArt-examples for JRubyArt-1.7.0+
+Replaces `AppRender` with `GfxRender`, and removal of bashisms in autorun Rakefiles
 
 Description
 ================
