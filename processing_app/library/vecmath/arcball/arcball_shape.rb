@@ -4,8 +4,9 @@ attr_reader :my_cube
 def setup
   sketch_title 'Arcball Shape'
   ArcBall.init(self)
-  @my_cube = create_shape BOX, 400, 400, 400
-  my_cube.set_fill(color(100, 10, 100))
+  @my_cube = create_shape(BOX, 400, 400, 400).tap do |shp|
+    shp.set_fill(color(100, 10, 100))
+  end
 end
 
 def draw

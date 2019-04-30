@@ -76,14 +76,14 @@ def create_plane(xsegs, ysegs)
   grid(xsegs, ysegs) do |x, y| # using JRubyArt grid method
     u = x / xsegs.to_f
     v = y / ysegs.to_f
-    
+
     # generate positions for the vertices of each cell
     # (-0.5 to center the shape around the origin)
     positions << Vec3D.new(u - 0.5, v - 0.5, 0)
     positions << Vec3D.new(u + usegsize - 0.5, v - 0.5, 0)
     positions << Vec3D.new(u + usegsize - 0.5, v + vsegsize - 0.5, 0)
     positions << Vec3D.new(u - 0.5, v + vsegsize - 0.5, 0)
-    
+
     # generate texture coordinates for the vertices of each cell
     tex_coords << Vec2D.new(u, v)
     tex_coords << Vec2D.new(u + usegsize, v)
@@ -95,19 +95,24 @@ def create_plane(xsegs, ysegs)
 
   texture_mode(NORMAL) # set texture_mode to normalized (range 0 to 1)
   tex = images[0]
-
-  mesh = create_shape # create the initial PShape
-  renderer = ShapeRender.new(mesh) # initialize the shape renderer
-  mesh.begin_shape(QUADS) # define the PShape type: QUADS
-  mesh.no_stroke
-  mesh.texture(tex) # set a texture to make a textured PShape
-  # put all the vertices, uv texture coordinates and normals into the PShape
-  positions.each_with_index do |p, i|
-    p.to_vertex_uv(renderer, tex_coords[i]) # NB: tex_coords as Vec2D
-    # p.to_vertex_uv(renderer, u, v) # u, v as floats is the alternate form
+  # create the initial PShape
+  create_shape.tap do |mesh|
+    # initialize the shape renderer
+    renderer = ShapeRender.new(mesh)
+    # define the PShape type: QUADS
+    mesh.begin_shape(QUADS)
+    # set a texture to make a textured PShape
+    mesh.no_stroke
+    mesh.texture(tex)
+    # put all the vertices, uv texture coordinates and normals into the PShape
+    positions.each_with_index do |p, i|
+      # NB: tex_coords as Vec2D
+      p.to_vertex_uv(renderer, tex_coords[i])
+      # p.to_vertex_uv(renderer, u, v) # u, v as floats is the alternate form
+    end
+    mesh.end_shape
   end
-  mesh.end_shape
-  mesh # our work is done here, return DA MESH! -)
+  # our work is done here, return DA MESH! -)
 end
 
 def key_pressed
