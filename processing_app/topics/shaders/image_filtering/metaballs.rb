@@ -10,15 +10,15 @@ def setup
   @gaussian_blur = load_shader(data_path('gaussianBlur.glsl'))
   # @gaussian_blur = load_shader('gaussianBlur.glsl') # requires --nojruby flag
   gaussian_blur.set('kernelSize', 32) # How big is the sampling kernel?
-  gaussian_blur.set('strength', 7.0) # How strong is the blur?  
+  gaussian_blur.set('strength', 7.0) # How strong is the blur?
   @threshold = load_shader(data_path('threshold.glsl'))
   # @threshold = load_shader('threshold.glsl')
   threshold.set('threshold', 0.5)
-  threshold.set('antialiasing', 0.05) # values between 0.00 and 0.10 work best  
+  threshold.set('antialiasing', 0.05) # values between 0.00 and 0.10 work best
 end
 
-def draw   
-  background(255)  
+def draw
+  background(200)
   # Draw some moving circles
   translate(width / 2,height / 2)
   no_stroke
@@ -29,18 +29,17 @@ def draw
   ellipse(-x, 0, 100, 100)
   y = map1d(sin(frame_count * 0.01), (-1.0..1.0), (-120.0..120.0))
   ellipse(0, y, 100, 100)
-  ellipse(0, -y, 100, 100)  
+  ellipse(0, -y, 100, 100)
   # Vertical blur pass
   gaussian_blur.set('horizontalPass', 0)
-  filter(gaussian_blur)  
+  filter(gaussian_blur)
   # Horizontal blur pass
   gaussian_blur.set('horizontalPass', 1)
-  filter(gaussian_blur)  
-  filter(threshold)  
+  filter(gaussian_blur)
+  filter(threshold)
 end
 
 
 def settings
   size(500, 500, P2D)
 end
-

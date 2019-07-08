@@ -36,13 +36,13 @@ task :vecmath do
 end
 
 desc 'run shader samples'
-task :shader do
+task :shaders do
   FileUtils.cd(
     File.join(
       K9WD,
       'processing_app',
       'topics',
-      'shader'
+      'shaders'
     )
   )
   system 'rake'

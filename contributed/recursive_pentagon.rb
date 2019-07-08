@@ -7,7 +7,7 @@ def setup
   sketch_title 'Recursive Pentagons'
   @strut_factor = 0.2
   @renderer = GfxRender.new self.g # so we can send Vec2D :to_vertex
-  group = ColorGroup.from_web_array(PALETTE)
+  group = ColorGroup.from_web_array(PALETTE.to_java(:string))
   @cols = group.colors
   background(cols.last)
   no_loop
