@@ -35,7 +35,7 @@ def settings
 end
 
 def setup
-  sketch_title TEXT.join ' '
+  sketch_title 'JRuby Processing'
   RG.init(self)
   @my_font = RFont.new(data_path('FreeSans.ttf'), 200, CENTER)
   @stop = false

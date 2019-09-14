@@ -10,7 +10,7 @@
 # Canvas (Client) program so see how they interact.
 #
 load_library :net
-include_package 'processing.net'
+java_import 'processing.net.Server'
 
 attr_reader :s
 
@@ -39,7 +39,7 @@ def draw
   return if c.nil?
   input = c.read_string
   # Split values into an array and convert to int
-  data = input.split(' ').map(&:to_i)
+  data = input.split(' ').map(&:to_f).to_java(:float)
   # Draw line using received coords
   line(*data)
 end
