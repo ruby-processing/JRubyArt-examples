@@ -19,7 +19,7 @@ def settings
 end
 
 def setup
-  sketch_title 'Server'
+  sketch_title 'Canvas Server'
   background(204)
   stroke(0)
   frame_rate(5) # Slow it down a little
@@ -29,17 +29,19 @@ end
 def draw
   if mouse_pressed?
     # Draw our line
-    stroke(255)
+    stroke 255
     line(pmouse_x, pmouse_y, mouse_x, mouse_y)
     # Send mouse coords to other person
-    s.write(format("%d %d %d %d\n", pmouse_x, pmouse_y, mouse_x, mouse_y))
+    s.write(format("%f %f %f %f\n", pmouse_x, pmouse_y, mouse_x, mouse_y))
   end
   # Receive data from client
-  c = s.available
-  return if c.nil?
+  return unless c = s.available
+  stroke 255, 0, 0
   input = c.read_string
-  # Split values into an array and convert to int
-  data = input.split(' ').map(&:to_f).to_java(:float)
+  # Split input into an array of lines
+  data = input.split("\n")
+  # Split first line to array of string and convert to array of java float
+  coords = data[0].split(' ').map(&:to_f).to_java(:float)
   # Draw line using received coords
-  line(*data)
+  line(*coords)
 end

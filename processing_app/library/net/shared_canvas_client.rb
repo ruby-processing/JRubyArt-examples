@@ -16,7 +16,7 @@ def settings
 end
 
 def setup
-  sketch_title 'Client'
+  sketch_title 'Canvas Client'
   background(204)
   stroke(0)
   frame_rate(5) # Slow it down a little
@@ -29,15 +29,17 @@ def draw
     # Draw our line
     stroke(255)
     line(pmouse_x, pmouse_y, mouse_x, mouse_y)
-    # Send mouse coords to other person
-    c.write(format("%d %d %d %d\n", pmouse_x, pmouse_y, mouse_x, mouse_y))
+    # Send mouse coords to other person as spc separated string
+    c.write(format("%f %f %f %f\n", pmouse_x, pmouse_y, mouse_x, mouse_y))
   end
   # Receive data from server
   return unless c.available > 0
+  stroke 255, 0, 0
   input = c.read_string
-  # Split values into an array and convert to int
-  data = input.split(' ').map(&:to_i)
+  # Split input into an array of lines
+  data = input.split("\n")
+  # Split each line to array of string and convert to array of java float
+  coords = data[0].split(' ').map(&:to_f).to_java(:float)
   # Draw line using received coords
-  stroke(0)
-  line(*data)
+  line(*coords)
 end
