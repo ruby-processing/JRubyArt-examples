@@ -1,14 +1,13 @@
-load_libraries :my_dot, :color_group
+load_libraries :my_dot
 
 NUM_ELEM = 100
 PALETTE = %w[#F58F12 #0B9EE7 #4EA731 #F4D910 #F334E3 #202020]
-attr_reader :my_dots, :frm, :save_anim, :group
+attr_reader :my_dots, :frm, :save_anim, :colors
 
 def setup
   sketch_title 'Fading Arcs'
-  @group = ColorGroup.from_web_array(PALETTE)
-  colors = group.colors
-  background(group.last)
+  @colors = web_to_color_array(PALETTE)
+  background(colors.last)
   no_stroke
   @save_anim = false
   @my_dots = (0..NUM_ELEM).map do
@@ -22,7 +21,7 @@ def setup
 end
 
 def draw
-  fill(group.last, 10)
+  fill(colors.last, 10)
   rect(0, 0, width, height)
   my_dots.each(&:display)
   return unless save_anim

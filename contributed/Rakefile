@@ -15,5 +15,5 @@ end
 
 def run_sample(sample_name)
   puts "Running #{sample_name}...quit to run next sample"
-  system "k9 -r #{sample_name}"
+  system "jruby --dev -S k9 -r #{sample_name}"
 end
