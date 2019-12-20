@@ -1,4 +1,4 @@
-# JRubyArt-examples for JRubyArt-1.7.0+
+# JRubyArt-examples for JRubyArt-2.2.0+
 Replaces `AppRender` with `GfxRender`, and removal of bashisms in autorun Rakefiles
 
 Description

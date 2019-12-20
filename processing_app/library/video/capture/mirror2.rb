@@ -1,57 +1,50 @@
-#
-# Mirror 2
+# Mirror Two
 # by Daniel Shiffman.
 #
-# Each pixel from the video source is drawn as a rectangle with size based
-# on brightness.
+# Each pixel from the video source is drawn as a rectangle with rotation
+# based on brightness.
 
 load_library :video
-include_package 'processing.video'
-
+java_import 'processing.video.Capture'
+attr_reader :video, :cols, :rows
+# Size of each cell in the grid
 CELL_SIZE = 15
 
-attr_reader :cols, :rows, :video
-
 def setup
-  sketch_title 'Mirror2'
-  # Set up columns and rows
+  sketch_title 'mirror'
+  frame_rate(30)
   @cols = width / CELL_SIZE
   @rows = height / CELL_SIZE
-  color_mode(RGB, 255, 255, 255, 100)
-  rect_mode(CENTER)
-  # This the default video input, see the GettingStartedCapture
-  # example if it creates an error
-  @video = Capture.new(self, width, height)
+  colorMode(RGB, 255, 255, 255, 100)
+  # Try test_capture to find name of your Camera
+  @video = Capture.new(self, width, height, "UVC Camera (046d:0825)")
   # Start capturing the images from the camera
   video.start
-  background(0)
 end
 
 def draw
-  return unless video.available
+  return unless video.available # ruby guard clause
+
+  background(0, 0, 255)
   video.read
   video.load_pixels
-  background(0, 0, 255)
-  # Begin loop for columns
-  cols.times do |i|
-    # Begin loop for rows
-    rows.times do |j|
-      # Where are we, pixel-wise?
-      x = i * CELL_SIZE
-      y = j * CELL_SIZE
-      # Reversing x to mirror the image
-      loc = (video.width - x - 1) + y * video.width
-      # Each rect is colored white with a size determined by brightness
-      c = video.pixels[loc]
-      sz = (brightness(c) / 255.0) * CELL_SIZE
-      fill(255)
-      no_stroke
-      rect(x + CELL_SIZE / 2, y + CELL_SIZE / 2, sz, sz)
-    end
+  grid(cols, rows) do |i, j|
+    x = i * CELL_SIZE
+    y = j * CELL_SIZE
+    loc = (width - x - 1 + y * width)# Reversing x to mirror the image
+    col = video.pixels[loc]
+    # Code for drawing a single rect
+    # Using translate in order for rotation to work properly
+    # rectangle size is based on brightness
+    sz = g.brightness(col) / 255 * CELL_SIZE
+    rect_mode(CENTER)
+    fill(255)
+    no_stroke
+    # Rects are larger than the cell for some overlap
+    rect(x + CELL_SIZE / 2, y + CELL_SIZE / 2, sz, sz)
   end
 end
 
 def settings
-  size(960, 544, P2D)
+  size(480, 360)
 end
-
