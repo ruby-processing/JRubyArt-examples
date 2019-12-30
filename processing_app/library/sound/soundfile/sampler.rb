@@ -34,11 +34,10 @@ def draw
     background 255
     NUM_SOUND.times do |i|
       unless play_sound[i].zero?
-        fill rand(360), 1.0, 1.0
+        fill(rand(360), 1.0, 1.0)
         no_stroke
         rect(POSX[i], 50, 128, 260)
-        rate = OCTAVE.sample
-        files[i].play(rate, 1.0)
+        files[i].play(OCTAVE.sample, 1.0)
       end
       play_sound[i] = rand(0..1)
     end
