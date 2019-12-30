@@ -1,30 +1,34 @@
-# Simple demo Rakefile to autorun samples in current directory
-# adjust path to rp5 executable, and or opts as required
+# -*- encoding: utf-8 -*-
 
-SAMPLES_DIR = './'
+PRWD = File.expand_path(__dir__)
 
 desc 'run demo'
-task default: [:demo]
+task :default => [:all]
 
-desc 'demo'
-task :demo do
-  samples_list.shuffle.each { |sample| run_sample sample }
+desc 'autorun all samples'
+task :all do
+  Rake::Task[:soundfile].execute
+  Rake::Task[:oscillators].execute
+  Rake::Task[:noise].execute
+  Rake::Task[:effects].execute
 end
 
-def samples_list
-  files = []
-  Dir.chdir(SAMPLES_DIR)
-  Dir.glob('*.rb').each do |file|
-    files << File.join(SAMPLES_DIR, file)
-  end
-  return files
+desc 'run soundfile samples'
+task :soundfile do
+  sh "cd #{PRWD}/soundfile && rake"
 end
 
-def run_sample(sample_name)
-  puts "Running #{sample_name}...quit to run next sample"
-  open("|k9 -r #{sample_name}", 'r') do |io|
-    while l = io.gets
-      puts(l.chop)
-    end
-  end
+desc 'oscillators'
+task :oscillators do
+  sh "cd #{PRWD}/oscillators && rake"
+end
+
+desc 'noise'
+task :noise do
+  sh "cd #{PRWD}/noise && rake"
+end
+
+desc 'effects'
+task :effects do
+  sh "cd #{PRWD}/effects && rake"
 end

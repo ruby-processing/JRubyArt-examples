@@ -1,3 +1,4 @@
 ### README
+Remember you need to install processing sound library, either using processing ide or to `~/.jruby_art/libraries`.
 
-You can use processing-3.0+ to install the sound library from processing.org.  This sound library has been adopted by processing.org, although the minim library is still available to install from the processing ide.
+To use processing ide installed libraries then set `processing_ide: true` in `./jruby_art.config.yml` else set `processing_ide: false` in `./jruby_art.config.yml` for k9 or manually installed libraries.
