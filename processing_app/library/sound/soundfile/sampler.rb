@@ -41,6 +41,6 @@ def draw
       end
       play_sound[i] = rand(0..1)
     end
-  end
-  @trigger = millis + rand(200..1000)
+    @trigger = millis + rand(200..1000)
+  end 
 end
