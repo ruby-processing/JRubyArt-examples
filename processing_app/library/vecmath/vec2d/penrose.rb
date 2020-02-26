@@ -30,11 +30,8 @@ end
 
 def generate
   next_level = []
-  tris.each do |t|
-    more = t.subdivide
-    more.each do |m|
-      next_level << m
-    end
+  tris.each do |tri|
+    tri.subdivide.each { |sub| next_level << sub }
   end
   @tris = next_level
 end

@@ -1,66 +1,62 @@
 # The Flock (a list of Boid objects)
 require 'forwardable'
 
-class Flock 
+# The flock class is enumerable
+class Flock
   extend Forwardable
-  def_delegators(:@boids, :each, :<<, :reject)
+  def_delegators(:@boids, :each, :reject, :<<)
   include Enumerable
-  
+
   def initialize(size, position)
-    @boids = (0..size).map{ Boid.new(position) }	  
+    @boids = (0..size).map{ Boid.new(position) }
   end
 
   def run
     self.each do |bird|
       bird.run(self)  # Passing the entire list of boids to each boid individually
     end
-  end  
+  end
 end
 
 # The Boid class
 
 class Boid
   include Processing::Proxy
-  attr_reader :location, :velocity, :acceleration, :r, :maxforce, :maxspeed
-  attr_reader :width, :height
+  attr_reader :location, :velocity, :acceleration, :rad, :maxforce, :maxspeed
   def initialize(loc)
     @acceleration = Vec2D.new
     @velocity = Vec2D.random
     @location = loc
-    @r = 2.0
+    @rad = 2.0
     @maxspeed = 2
     @maxforce = 0.03
-    @width = Processing.app.width    
-    @height = Processing.app.height
   end
-  
+
   def run(boids)
     flock(boids)
     update
     borders
     render
   end
-  
+
   def apply_force(force)
     # We could add mass here if we want A = F / M
     @acceleration += force
   end
-  
-  # We accumulate a new acceleration each time based on three rules
+
   def flock(boids)
-    sep = separate(boids)   # Separation
-    ali = align(boids)      # Alignment
-    coh = cohesion(boids)   # Cohesion
-    # Arbitrarily weight these forces
-    sep *= 1.5
-    ali *= 1.0
-    coh *= 1.0
-    # Add the force vectors to acceleration
-    apply_force(sep)
-    apply_force(ali)
-    apply_force(coh)
+    calculate_forces(boids).each {  |force| apply_force(force) }
   end
-  
+
+  # We calculate the forces each time based on three rules
+  def calculate_forces(boids)
+    forces = []
+    forces << separate(boids) * 1.5   # Separation weighted 1.5
+    forces << align(boids)            # Alignment weighted 1.0
+    forces << cohesion(boids)         # Cohesion weighted 1.0
+  end
+
+
   # Method to update location
   def update
     # Update velocity
@@ -71,7 +67,7 @@ class Boid
     # Reset accelertion to 0 each cycle
     @acceleration *= 0
   end
-  
+
   # A method that calculates and applies a steering force towards a target
   # STEER = DESIRED MINUS VELOCITY
   def seek(target)
@@ -82,7 +78,7 @@ class Boid
     # Steering = Desired minus Velocity
     steer = desired - velocity
     # Limit to maximum steering force
-    steer.set_mag(maxforce) { steer.mag > maxforce }   
+    steer.set_mag(maxforce) { steer.mag > maxforce }
     return steer
   end
 
@@ -95,21 +91,21 @@ class Boid
     translate(location.x,location.y)
     rotate(theta)
     begin_shape(TRIANGLES)
-    vertex(0, -r * 2)
-    vertex(-r, r * 2)
-    vertex(r, r * 2)
+    vertex(0, -rad * 2)
+    vertex(-rad, rad * 2)
+    vertex(rad, rad * 2)
     end_shape
     pop_matrix
   end
 
   # Wraparound
   def borders
-    location.x = width + r if location.x < -r
-    location.y = height + r if location.y < -r
-    location.x = -r if location.x > width + r
-    location.y = -r if location.y > height + r
+    location.x = width + rad if location.x < -rad
+    location.y = height + rad if location.y < -rad
+    location.x = -rad if location.x > width + rad
+    location.y = -rad if location.y > height + rad
   end
-          
+
   # Separation
   # Method checks for nearby boids and steers away
   def separate(boids)
@@ -119,7 +115,7 @@ class Boid
     # For every other bird in the system, check if it's too close
     boids.reject{ |bd| bd.equal? self }.each do |other|
       d = location.dist(other.location)
-      # If the distance is greater than 0 and less than an arbitrary amount 
+      # If the distance is greater than 0 and less than an arbitrary amount
       if (0.0001..desiredseparation).include? d
         # Calculate vector pointing away from neighbor
         diff = location - other.location
@@ -133,18 +129,18 @@ class Boid
     if count > 0
       steer /= count.to_f
     end
-    
+
     # As long as the vector is greater than 0
     if steer.mag > 0
       # Implement Reynolds: Steering = Desired - Velocity
       steer.normalize!
       steer *= maxspeed
-      steer -= velocity      
-      steer.set_mag(maxforce) { steer.mag > maxforce } 
+      steer -= velocity
+      steer.set_mag(maxforce) { steer.mag > maxforce }
     end
     return steer
   end
-    
+
   # Alignment
   # For every other nearby boid in the system, calculate the average velocity
   def align(boids)
@@ -168,7 +164,7 @@ class Boid
     end
     return steer
   end
-    
+
   # Cohesion
   # For the average location (i.e. center) of all other nearby boids, calculate
   # steering vector towards that location
@@ -184,6 +180,6 @@ class Boid
       end
     end
     sum /= count unless count == 0        # avoid div by zero
-    (count > 0) ? seek(sum) : Vec2D.new 
+    (count > 0) ? seek(sum) : Vec2D.new
   end
 end
