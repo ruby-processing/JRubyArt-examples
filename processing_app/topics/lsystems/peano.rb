@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ########################################################
 # A Peano fractal implemented using a
 # Lindenmayer System in JRubyArt by Martin Prout
@@ -80,7 +82,7 @@ def render(points)
 end
 
 def renderer
-  @renderer ||= GfxRender.new(self.g)
+  @renderer ||= GfxRender.new(g)
 end
 
 def settings

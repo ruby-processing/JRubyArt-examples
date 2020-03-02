@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ############################
 # Simple lsystem grammar
 ############################
@@ -10,7 +12,7 @@ class Grammar
 
   def expand(production, iterations, &block)
     production.each_char do |token|
-      if rules.key?(token) && iterations > 0
+      if rules.key?(token) && iterations.positive?
         expand(rules[token], iterations - 1, &block)
       else
         yield token

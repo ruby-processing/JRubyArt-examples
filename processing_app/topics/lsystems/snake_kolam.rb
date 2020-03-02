@@ -1,8 +1,30 @@
+# frozen_string_literal: true
+
 #######################################################
 # Lindenmayer System in ruby-procesDegLut.sing by Martin Prout
 # snake_kolam.rb uDegLut.sing l-systems
 #######################################################
 load_library :grammar
+
+attr_reader :kolam
+
+def setup
+  sketch_title 'Snake Kolam'
+  @kolam = SnakeKolam.new width / 8, height * 0.8
+  kolam.create_grammar 3 # create grammar from rules
+  no_loop
+end
+
+def draw
+  background 0
+  stroke_weight 3
+  stroke 200
+  kolam.render
+end
+
+def settings
+  size 500, 500
+end
 
 # class SnakeKolam
 class SnakeKolam
@@ -27,10 +49,11 @@ class SnakeKolam
     @axiom = 'FX+F+FX+F'
     @grammar = Grammar.new(
       axiom,
-      'X' => 'X-F-F+FX+F+FX-F-F+FX')
+      'X' => 'X-F-F+FX+F+FX-F-F+FX'
+    )
   end
 
-  def render                     # NB not using affine transforms here
+  def render # NB not using affine transforms here
     turtle = [xpos, ypos, 0.0]
     production.each do |element|
       case element
@@ -72,24 +95,3 @@ class SnakeKolam
     [new_xpos, new_ypos, turtle[ANGLE]]
   end
 end
-
-attr_reader :kolam
-
-def setup
-  sketch_title 'Snake Kolam'
-  @kolam = SnakeKolam.new width / 8, height * 0.8
-  kolam.create_grammar 3          # create grammar from rules
-  no_loop
-end
-
-def draw
-  background 0
-  stroke_weight 3
-  stroke 200
-  kolam.render
-end
-
-def settings
-  size 500, 500
-end
-
