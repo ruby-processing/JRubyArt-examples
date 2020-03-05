@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##################################
 # The grammar class stores rules
 # in two Hashes, one for cs rules,
@@ -39,7 +41,7 @@ class Grammar
     prod
   end
 
-  def new_production(prod)  # single iteration grammar rules
+  def new_production(prod) # single iteration grammar rules
     @idx = -1
     prod.gsub!(/./) do |ch|
       get_rule(prod, ch)

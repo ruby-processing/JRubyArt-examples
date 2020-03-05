@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Lindenmayer System in JRubyArt by Martin Prout
 load_libraries :grammar, :snowflake
 attr_reader :penrose

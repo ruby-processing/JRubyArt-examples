@@ -1,8 +1,6 @@
-#######################################################
-# penrose tiling in ruby processing using LSystems
-# in JRubyArt by Martin Prout
-######################################################
-load_libraries :grammar, :penrose
+# frozen_string_literal: true
+
+load_library :grammar, :penrose
 attr_reader :penrose
 
 def settings
@@ -10,9 +8,9 @@ def settings
 end
 
 def setup
-  sketch_title 'Penrose'
+  sketch_title 'Penrose Colored'
   stroke_weight 2
-  @penrose = PenroseColored.new(Vec2D.new(width / 2, height / 2))
+  @penrose = PenroseColored.new(width / 2, height / 2)
   penrose.create_grammar 5
   no_loop
 end

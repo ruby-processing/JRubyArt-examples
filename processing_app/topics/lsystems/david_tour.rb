@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 load_library :grammar
 
 ########################################################
 # A David Tour fractal implemented using a
 # Lindenmayer System in JRubyArt by Martin Prout
 ########################################################
-class DavidTour  
+class DavidTour
   attr_reader :draw_length, :xpos, :ypos, :theta, :axiom, :grammar
   DELTA = Math::PI / 3 # 60 degrees
 
   def initialize(xpos, ypos)
     @axiom = 'FX-XFX-XFX-XFX-XFX-XF'   # Axiom
-    @theta  = 0
+    @theta = 0
     @grammar = Grammar.new(
       axiom,
       'F' => '!F!-F-!F!',              # Rules
@@ -29,7 +31,7 @@ class DavidTour
   def translate_rules(prod)
     swap = false
     [].tap do |points| # An array to store lines as a flat array of points
-      prod.each do |ch|
+      prod.scan(/./) do |ch|
         case ch
         when 'F'
           points << xpos << ypos << (@xpos += draw_length * Math.cos(theta)) << (@ypos -= draw_length * Math.sin(theta))
@@ -69,4 +71,3 @@ end
 def settings
   size(800, 900, P2D)
 end
-

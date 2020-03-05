@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ###########################
 # cstest.rb (use rp5 run ..
 # test of cs_grammar library
@@ -17,15 +19,13 @@ def draw
   (0..7).each do |i|
     grammar = Grammar.new(
       'baaaaaa',
-      'b<a' => 'b',   # context sensitive rule replace a when preceded by b
+      'b<a' => 'b', # context sensitive rule replace a when preceded by b
       'b' => 'a'
     )
     text grammar.generate(i), 30, i * 25
   end
 end
 
-
 def settings
   size 125, 250, P2D
 end
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Simple demo Rakefile to autorun samples in current directory
 # adjust path to k9 executable, and or opts as required
 
@@ -8,7 +10,7 @@ task default: [:demo]
 
 desc 'demo'
 task :demo do
-  samples_list.shuffle.each{ |sample| run_sample sample }
+  samples_list.shuffle.each { |sample| run_sample sample }
 end
 
 def samples_list

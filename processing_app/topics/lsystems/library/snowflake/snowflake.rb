@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Using abbreviated lsystem syntax NB: 9 = 10 repeats and 3 = 4 repeats
 class PenroseSnowflake
   include Processing::Proxy

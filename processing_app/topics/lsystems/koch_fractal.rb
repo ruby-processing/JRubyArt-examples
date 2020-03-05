@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 load_library :koch
 
 def setup
   sketch_title 'Koch'
   background(255)
-  frame_rate(1)  # Animate slowly
+  frame_rate(1) # Animate slowly
   @k = KochFractal.new(width, height)
 end
 
@@ -21,4 +23,3 @@ def settings
   size(800, 250)
   smooth 8
 end
-

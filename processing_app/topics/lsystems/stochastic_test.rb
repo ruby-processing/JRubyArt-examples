@@ -1,5 +1,6 @@
-load_library :stochastic_grammar
+# frozen_string_literal: true
 
+load_library :stochastic_grammar
 
 #######################################################
 # StochasticPlant
@@ -17,7 +18,7 @@ class StochasticPlant
   def initialize(pos)
     @draw_length = 350
     # use Struct as turtle
-    @turtle = Turtle.new(pos, Math::PI / 2)        # this way is up?
+    @turtle = Turtle.new(pos, Math::PI / 2) # this way is up?
     setup_grammar
   end
 
@@ -95,4 +96,3 @@ end
 def settings
   size 1000, 800
 end
-

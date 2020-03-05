@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ############################
 # pentagonal.rb here I roll one of my own
 ###########################
@@ -9,7 +11,7 @@ load_library :grammar
 ###
 class Pentagonal
   include Processing::Proxy
-  DELTA = 72    # degrees
+  DELTA = 72 # degrees
   attr_accessor :draw_length
   attr_reader :axiom, :grammar, :theta, :production, :xpos, :ypos
   def initialize
@@ -64,7 +66,7 @@ class Pentagonal
 end
 
 #  Empirically determined position adjustments
-ADJUST = [[800, 50], [500, 500], [500, 500], [300, 280], [50, 600]]
+ADJUST = [[800, 50], [500, 500], [500, 500], [300, 280], [50, 600]].freeze
 
 attr_reader :pentagonal, :pentive
 
@@ -83,7 +85,7 @@ end
 
 def key_pressed
   case key
-  when '1', '2', '3', '4', '5'  # key corresponds to generation
+  when '1', '2', '3', '4', '5' # key corresponds to generation
     gen = key.to_i
     @pentagonal = Pentagonal.new
     pentagonal.create_grammar gen

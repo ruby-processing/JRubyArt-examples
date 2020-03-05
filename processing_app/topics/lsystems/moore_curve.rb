@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ########################################################
 # A Moore Curve fractal implemented using a
 # Lindenmayer System in JRubyArt by Martin Prout
@@ -27,7 +29,7 @@ class MooreCurve
 
   def translate_rules(prod)
     [].tap do |pts| # An array to store line vertices as Vec2D
-      prod.each do |ch|
+      prod.scan(/./) do |ch|
         case ch
         when 'F'
           pts << vec
@@ -74,7 +76,7 @@ def render(points)
 end
 
 def renderer
-  @renderer ||= GfxRender.new(self.g)
+  @renderer ||= GfxRender.new(g)
 end
 
 def settings

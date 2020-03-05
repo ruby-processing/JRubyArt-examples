@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ########################################################
 # Chequer implemented using a grammar library
 # Lindenmayer System in JRubyArt by Martin Prout
@@ -30,7 +32,7 @@ class Chequer
   def initialize(xpos, ypos)
     @xpos = xpos
     @ypos = ypos
-    @axiom = 'F-F-F-F'        # Axiom
+    @axiom = 'F-F-F-F' # Axiom
     @grammar = Grammar.new(axiom, 'F' => 'FF-F-F-F-FF')
     @draw_length = 500
     stroke 0, 255, 0
@@ -67,6 +69,3 @@ class Chequer
     @production = @grammar.generate gen
   end
 end
-
-
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Kochline class
 class KochLine
   include Processing::Proxy
@@ -83,7 +85,7 @@ class KochFractal
   # for the structure. As we do this over and over again, each line gets broken
   # into 4 lines, which gets broken into 4 lines, and so on. . .
   def iterate(before)
-    [].tap do |now|    # Create empty list
+    [].tap do |now| # Create empty list
       before.each do |l|
         # Calculate 5 koch vectors (done for us by the line object)
         a = l.start

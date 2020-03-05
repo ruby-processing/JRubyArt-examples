@@ -10,23 +10,17 @@ class Grammar
     @rules = rules
   end
 
-  def expand(production, iterations, &block)
-    production.each_char do |token|
-      if rules.key?(token) && iterations.positive?
-        expand(rules[token], iterations - 1, &block)
-      else
-        yield token
-      end
-    end
-  end
-
-  def each(gen)
-    expand(axiom, gen) { |token| yield token }
+  def apply_rules(prod)
+    prod.gsub(/./) { |token| rules.fetch(token, token) }
   end
 
   def generate(gen)
-    [].tap do |output|
-      each(gen) { |token| output << token }
+    return axiom if gen.zero?
+
+    prod = axiom
+    gen.times do
+      prod = apply_rules(prod)
     end
+    prod
   end
 end

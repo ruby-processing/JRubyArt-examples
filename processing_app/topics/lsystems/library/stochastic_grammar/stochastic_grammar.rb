@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ########################
 # stochastic_grammar.rb
 # unweighted rules accepted
@@ -22,6 +24,7 @@ class StochasticGrammar
     chance = rand(0..total)
     rules.each do |item, weight|
       return item unless chance > weight
+
       chance -= weight
     end
   end
@@ -39,7 +42,7 @@ class StochasticGrammar
     end
   end
 
-  def new_production(prod)  # note the use of gsub!
+  def new_production(prod) # note the use of gsub!
     prod.gsub!(/./) do |ch|
       rule?(ch) ? stochastic_rule(srules[ch]) : ch
     end

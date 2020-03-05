@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 # The Mandelbrot Set
 # by Daniel Shiffman.
@@ -26,8 +27,6 @@ def setup
   # Only need to do this once since we don't do any other drawing.
   load_pixels
 
-
-
   # x goes from xmin to xmax
   xmax = xmin + w
   # y goes from ymin to ymax
@@ -43,7 +42,6 @@ def setup
     # Start x
     x = xmin
     (0...width).each do |i|
-
       # Now we test, as we iterate z = z^2 + cm does z tend towards infinity?
       a = x
       b = y
@@ -55,18 +53,19 @@ def setup
         a = aa - bb + x
         b = twoab + y
         # Infinity in our finite world is simple, let's just consider it 16
-        break if (dist(aa, bb, 0, 0) > 4.0) # Bail
+        break if dist(aa, bb, 0, 0) > 4.0 # Bail
+
         n += 1
       end
 
       # We color each pixel based on how long it takes to get to infinity
       # If we never got there, let's pick the color black
       if n == MAXITERATIONS
-        pixels[i+j*width] = color(0)
+        pixels[i + j * width] = color(0)
       else
         # Gosh, we could make fancy colors here if we wanted
         norm = map1d(n, 0..MAXITERATIONS, 0..1.0)
-        pixels[i+j*width] = color(map1d(sqrt(norm), 0..1.0, 0..255))
+        pixels[i + j * width] = color(map1d(sqrt(norm), 0..1.0, 0..255))
       end
       x += dx
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ########################################################
 # csplant.rb
 # A 3D Plant implemented using a Context Sensitive
@@ -54,7 +56,7 @@ class CSPlant
     specular(255, 255, 255)
     shininess(1.0)
     repeat = 1
-    production.each_char do |ch|
+    production.scan(/./) do |ch|
       case ch
       when 'F'
         translate(0, len / -2, 0)
@@ -98,4 +100,3 @@ end
 def settings
   size 800, 800, P3D
 end
-
