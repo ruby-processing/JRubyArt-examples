@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 ##
-# Voronoi.
+# Voronoi Distance.
 #
 # GLSL version of the 1k intro Voronoi from the demoscene
 # (http://www.pouet.net/prod.php?which=52761)
@@ -13,11 +15,11 @@ def setup
   sketch_title 'Voronoi Distance'
   no_stroke
   @voronoi = load_shader(data_path('voronoi_distance.glsl'))
-  voronoi.set('resolution', width.to_f, height.to_f)
+  voronoi.set('iResolution', width.to_f, height.to_f, 0.0)
 end
 
 def draw
-  voronoi.set('time', millis / 1000)
+  voronoi.set('iTime', millis / 1000.0)
   shader(voronoi)
   # This kind of effects are entirely implemented in the
   # fragment shader, they only need a quad covering the

@@ -1,4 +1,0 @@
---add-opens java.logging/java.util.logging=org.jruby.dist --add-opens java.base/java.lang=org.jruby.dist --add-opens java.base/java.io=org.jruby.dist --add-opens java.desktop/java.awt=org.jruby.dist --add-opens java.base/sun.nio.ch=org.jruby.dist
-
-
-

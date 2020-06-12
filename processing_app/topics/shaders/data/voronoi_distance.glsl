@@ -1,31 +1,84 @@
+// After Inigo Quilez adapted for processing by Martin Prout
+// The MIT License
+// Copyright © 2013 Inigo Quilez
+
 #ifdef GL_ES
 precision mediump float;
 precision mediump int;
 #endif
 
-#define PROCESSING_COLOR_SHADER
+uniform vec3      iResolution;
+uniform float     iTime;
+uniform sampler2D texture;
 
-uniform vec2 resolution;
-out vec4 color;
-uniform float time;
+void mainImage( out vec4 fragColor, in vec2 fragCoord );
 
-void main(void){
+void main() {
+  mainImage(gl_FragColor,gl_FragCoord.xy);
+}
 
-    vec4 uv = vec4(gl_FragCoord.xy, gl_FragCoord.xy) / resolution.xy;
-    vec4 a = vec4(1.01, 1.11, 1.21, 1.31) * time * 0.2, p;
+vec2 hash2( vec2 p )
+{
+  // procedural white noise
+  return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);
+}
 
-    float d = 0.5;
+vec3 voronoi( in vec2 x )
+{
+  vec2 n = floor(x);
+  vec2 f = fract(x);
 
-    for(float i = 0.; i < 20.; i++) {
+  //----------------------------------
+  // first pass: regular voronoi
+  //----------------------------------
+  vec2 mg, mr;
 
-        a += i * vec4(3.,4.,5.,6.) + vec4(1.3,2.5,3.3,4.1);
-		p = fract(uv + sin(a)) - 0.5; // Wrapping the offset point.
-        d = min(d, min(dot(p.xy, p.xy), dot(p.zw, p.zw))); // Take square root outside loop for efficiency.
+  float md = 8.0;
+  for( int j=-1; j<=1; j++ )
+  for( int i=-1; i<=1; i++ )
+  {
+    vec2 g = vec2(float(i),float(j));
+    vec2 o = 0.5 + 0.5*sin( iTime + 6.2831 * hash2( n + g ));
+    vec2 r = g + o - f;
+    float d = dot(r,r);
+    if( d<md )
+    {
+      md = d;
+      mr = r;
+      mg = g;
     }
+  }
 
-    // "dist>=0." and sqrt(Max)*4. = 1., so no clamping needed, in this case.
-    d = sqrt(d)*4.;
+  //----------------------------------
+  // second pass: distance to borders
+  //----------------------------------
+  md = 8.0;
+  for( int j=-2; j<=2; j++ )
+  for( int i=-2; i<=2; i++ )
+  {
+    vec2 g = mg + vec2(float(i),float(j));
+    vec2 o = 0.5 + 0.5*sin( iTime + 6.2831 * hash2( n + g ) );
+    vec2 r = g + o - f;
+    if( dot(mr-r,mr-r)>0.00001 )
+    md = min( md, dot( 0.5*(mr+r), normalize(r-mr) ) );
+  }
+  return vec3( md, mr );
+}
 
-    gl_FragColor = vec4(vec3(d*d*.5, d, pow(d, 0.66)), 1.0);
-    color = gl_FragColor
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+  vec2 p = fragCoord/iResolution.xx;
+
+  vec3 c = voronoi( 8.0*p );
+
+  // isolines
+  vec3 col = c.x*(0.5 + 0.5*sin(64.0*c.x))*vec3(1.0);
+  // borders
+  col = mix( vec3(1.0,0.6,0.0), col, smoothstep( 0.04, 0.07, c.x ) );
+  // feature points
+  float dd = length( c.yz );
+  col = mix( vec3(1.0,0.6,0.1), col, smoothstep( 0.0, 0.12, dd) );
+  col += vec3(1.0,0.6,0.1)*(1.0-smoothstep( 0.0, 0.04, dd));
+
+  fragColor = vec4(col,1.0);
 }

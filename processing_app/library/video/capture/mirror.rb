@@ -1,57 +1,39 @@
-#
-# Mirror
+# Mirror 2
 # by Daniel Shiffman.
 #
-# Each pixel from the video source is drawn as a rectangle with rotation
-# based on brightness.
-
+# Each pixel from the video source is drawn as a rectangle with size based
+# on brightness.
 load_library :video
-attr_reader :video, :cols, :rows
+java_import 'processing.video.Capture'
+attr_reader :video
 # Size of each cell in the grid
-CELL_SIZE = 40
-java_alias :color_float, :color, [Java::float, Java::float, Java::float, Java::float]
+CELL_SIZE = 15
+OFFSET = CELL_SIZE / 2.0
 
 def setup
   sketch_title 'mirror'
-  frame_rate(30)
-  @cols = width / CELL_SIZE
-  @rows = height / CELL_SIZE
   colorMode(RGB, 255, 255, 255, 100)
-  # This the default video input, try test_capture to find name of your Camera
-  @video = Java::ProcessingVideo::Capture.new(self, 960, 720, "UVC Camera (046d:0825)")
-  # Start capturing the images from the camera
+  # Try test_capture to find the name of your Camera
+  @video = Capture.new(self, width, height, 'UVC Camera (046d:0825)')
   video.start
-  background(0)
 end
 
 def draw
   return unless video.available # ruby guard clause
 
+  background(0, 0, 255)
   video.read
-  video.loadPixels
-  grid(width, height, cols, rows) do |x, y|
-    loc = (video.width - x - 1) + y * video.width # Reversing x to mirror the image
-    col = color_float(
-      red(video.pixels[loc]),
-      green(video.pixels[loc]),
-      blue(video.pixels[loc]),
-      75 # alpha
-    )
-    # Code for drawing a single rect
-    # Using translate in order for rotation to work properly
-    push_matrix
-    translate(x + CELL_SIZE / 2, y + CELL_SIZE / 2)
-    # Rotation formula based on brightness
-    rotate((2 * PI * brightness(col) / 255.0))
+  video.load_pixels
+  grid(width, height, CELL_SIZE, CELL_SIZE) do |x, y|
+    loc = (width - x - 1 + y * width) # Reversing x to mirror the image
+    sz = brightness(video.pixels[loc]) / 255 * CELL_SIZE
     rect_mode(CENTER)
-    fill(col)
+    fill(255)
     no_stroke
-    # Rects are larger than the cell for some overlap
-    rect(0, 0, CELL_SIZE + 6, CELL_SIZE + 6)
-    pop_matrix
+    rect(x + OFFSET, y + OFFSET, sz, sz)
   end
 end
 
 def settings
-  size(960, 720)
+  size(960, 544)
 end
