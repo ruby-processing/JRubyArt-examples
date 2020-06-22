@@ -9,7 +9,6 @@ precision mediump int;
 
 uniform vec3      iResolution;
 uniform float     iTime;
-uniform sampler2D texture;
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord );
 
