@@ -1,7 +1,7 @@
 #
 # Brightness
-# by Daniel Shiffman. 
-# 
+# by Daniel Shiffman.
+#
 # This program adjusts the brightness of a part of the image by
 # calculating the distance of each pixel to the mouse.
 #
@@ -28,7 +28,7 @@ def draw
       d = dist(x, y, mouseX, mouseY)
       adjustbrightness = 255 * (maxdist - d) / maxdist
       r += adjustbrightness
-      r = constrain(r, 0, 255)
+      r = r.clamp(0, 255)
       pixels[y * width + x] = color(r)
     end
   end
@@ -38,4 +38,3 @@ end
 def settings
   size(640, 360)
 end
-

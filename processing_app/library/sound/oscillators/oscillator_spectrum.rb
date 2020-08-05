@@ -36,11 +36,7 @@ end
 
 def draw
   # Only play one of the four oscillators, based on mouseY
-  next_oscillator = constrain(
-    map1d(mouseY, 0..height, 0..count),
-    0,
-    count - 1
-  )
+  next_oscillator = constrained_map(mouseY, 0..height, 0..count)
   unless next_oscillator == current
     oscillators[current].stop
     @current = next_oscillator

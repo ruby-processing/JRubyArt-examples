@@ -38,9 +38,8 @@ class EulerBall
   end
 end
 
-# Convenient boundary class, we only include MathTool module for constrain
+# Convenient boundary class
 class Bounds
-  include Processing::MathTool
   attr_reader :low, :high, :inside
   def initialize(lower:, upper:)
     @low = lower
@@ -51,6 +50,6 @@ class Bounds
   # Returns the current position or the limit, sets the `inside` flag
   def position(val)
     @inside = (low..high).cover? val
-    constrain(val, low, high)
+    val.clamp(low, high)
   end
 end

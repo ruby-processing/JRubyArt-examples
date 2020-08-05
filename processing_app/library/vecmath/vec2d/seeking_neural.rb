@@ -9,32 +9,32 @@ module SeekingNeural
       @weights = Array.new(n) { rand(0..1.0) }
       @c = c
     end
-    
+
     # Function to train the Perceptron
     # Weights are adjusted based on vehicle's error
     def train(forces, error)
       trained = @weights.zip(forces.map { |f| f.to_a }
         .map { |a, b| (a * error.x + b * error.y) * @c })
-      .map { |w, c| constrain(w + c, 0, 1.0) }
+      .map { |w, c| (w + c).clamp(0, 1.0) }
       @weights = trained
     end
-    
+
     # Give me a steering result
     def feedforward(forces)
       # Sum all values
       forces.zip(@weights).map { |a, b| a * b }.reduce(Vec2D.new, :+)
       # forces.zip(@weights).map { |a, b| a * b }.reduce(:+)
     end
-  end  
+  end
   # Seek
   # Daniel Shiffman <http://www.shiffman.net>
-  
+
   class Vehicle
     MAX_SPEED = 4
     MAX_FORCE = 0.1
 
     attr_reader :brain, :sz, :location, :targets, :desired
-    
+
     def initialize(n, x, y)
       @brain = Perceptron.new(n, 0.001)
       @acceleration = Vec2D.new
@@ -42,7 +42,7 @@ module SeekingNeural
       @location = Vec2D.new(x, y)
       @sz = 6.0
     end
-    
+
     # Method to update location
     def update(width, height)
       # Update velocity
@@ -52,15 +52,15 @@ module SeekingNeural
       @location += @velocity
       # Reset acceleration to 0 each cycle
       @acceleration *= 0
-      @location.x = constrain(location.x, 0, width)
-      @location.y = constrain(location.y, 0, height)
+      @location.x = location.x.clamp(0, width)
+      @location.y = location.y.clamp(0, height)
     end
-    
+
     def apply_force(force)
       # We could add mass here if we want A = F / M
       @acceleration += force
     end
-    
+
     # Here is where the brain processes everything
     def steer(targets, desired)
       # Steer towards all targets
@@ -73,7 +73,7 @@ module SeekingNeural
       error = desired - location
       brain.train(forces, error)
     end
-    
+
     # A method that calculates a steering force towards a target
     # STEER = DESIRED MINUS VELOCITY
     def seek(target)
@@ -86,8 +86,8 @@ module SeekingNeural
       steer.set_mag(MAX_FORCE) { steer.mag > MAX_FORCE } # Limit to a maximum steering force
       steer
     end
-    
-    def display      
+
+    def display
       # Draw a triangle rotated in the direction of velocity
       theta = @velocity.heading + PI / 2
       fill(175)
@@ -103,7 +103,7 @@ module SeekingNeural
       end_shape(CLOSE)
       pop_matrix
     end
-  end    
+  end
 end
 
 include SeekingNeural
@@ -114,9 +114,9 @@ attr_reader :targets, :desired, :v
 def setup
   sketch_title 'Seeking Neural'
   # The Vehicle's desired location
-  @desired = Vec2D.new(width / 2, height / 2)  
+  @desired = Vec2D.new(width / 2, height / 2)
   # Create a list of targets
-  make_targets  
+  make_targets
   # Create the Vehicle (it has to know about the number of targets
   # in order to configure its brain)
   @v = Vehicle.new(targets.size, rand(width), rand(height))
@@ -128,12 +128,12 @@ def make_targets
 end
 
 def draw
-  background(255)  
+  background(255)
   # Draw a circle to show the Vehicle's goal
   stroke(0)
   stroke_weight(2)
   fill(0, 100)
-  ellipse(desired.x, desired.y, 36, 36)  
+  ellipse(desired.x, desired.y, 36, 36)
   # Draw the targets
   targets.each do |target|
     no_fill
@@ -142,7 +142,7 @@ def draw
     ellipse(target.x, target.y, 16, 16)
     line(target.x, target.y - 16, target.x, target.y + 16)
     line(target.x - 16, target.y, target.x + 16, target.y)
-  end  
+  end
   # Update the Vehicle
   v.steer(targets, desired)
   v.update(width, height)

@@ -26,8 +26,8 @@ def draw
   ax[NUM - 1] += rand(-RANGE..RANGE)
   ay[NUM - 1] += rand(-RANGE..RANGE)
   # Constrain all points to the screen
-  ax[NUM - 1] = constrain(ax[NUM - 1], 0, width)
-  ay[NUM - 1] = constrain(ay[NUM - 1], 0, height)
+  ax[NUM - 1] = ax[NUM - 1].clamp(0, width)
+  ay[NUM - 1] = ay[NUM - 1].clamp(0, height)
   # Draw a line connecting the points
   (1...NUM).each do |i|
     val = i.to_f / NUM * 204.0 + 51

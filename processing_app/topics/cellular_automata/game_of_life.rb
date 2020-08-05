@@ -52,9 +52,9 @@ def draw
   if pause && mouse_pressed?
     # # Map and avoid out of bound errors
     over_x = (map1d(mouse_x, (0..width), (0..row))).to_i
-    over_x = constrain(over_x, 0, row - 1)
+    over_x = over_x.clamp(0, row - 1)
     over_y = (map1d(mouse_y, (0..height), (0..column))).to_i
-    over_y = constrain(over_y, 0, column - 1)
+    over_y = over_y.clamp(0, column - 1)
     # Check against cells in buffer
     if cells_buffer[over_x][over_y]  # Cell is alive
       cells[over_x][over_y] = DEAD # Kill

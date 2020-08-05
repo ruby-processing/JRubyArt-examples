@@ -21,8 +21,8 @@ end
 def draw
   @direction = direction * -1 if signal > img.width * img.height - 1 || signal < 0
   if mouse_pressed?
-    mx = constrain(mouse_x, 0, img.width - 1)
-    my = constrain(mouse_y, 0, img.height - 1)
+    mx = mouse_x.clamp(0, img.width - 1)
+    my = mouse_y.clamp(0, img.height - 1)
     @signal = my * img.width + mx
   else
     @signal += 0.33 * direction
@@ -42,4 +42,3 @@ end
 def settings
   size(640, 360)
 end
-

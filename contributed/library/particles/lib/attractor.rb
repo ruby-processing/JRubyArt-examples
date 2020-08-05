@@ -23,7 +23,7 @@ class Attractor
     dir = loc - p.loc # Calculate direction of force
     d = dir.mag # Distance between objects
     # Limit the distance to eliminate "extreme" result of very close or very far objects
-    d = constrain(d, 5.0, 50.0)
+    d = d.clamp(5.0, 50.0)
     # Normalize vector (distance doesn't matter here, we just want this vector for direction)
     dir.normalize!
     force = (gravity * mass * 1 / (d * d)) # Calculate gravitional force magnitude

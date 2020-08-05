@@ -107,7 +107,7 @@ class Point
   end
 
   def check_edges # could be more sophisticated, eg reverse velocity
-    pos.x = constrain(pos.x, 0, width)
-    pos.y = constrain(pos.y, 0, height)
+    pos.x = pos.x.clamp(0, width)
+    pos.y = pos.y.clamp(0, height)
   end
 end

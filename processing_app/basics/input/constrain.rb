@@ -18,8 +18,8 @@ def draw
   @mx += (mouse_x - @mx) * @easing if (mouse_x - @mx).abs > 0.1
   @my += (mouse_y - @my) * @easing if (mouse_y - @my).abs > 0.1
   distance = @ellipse_size * 2
-  @mx = constrain @mx, @inner, (width  - @inner)
-  @my = constrain @my, @inner, (height - @inner)
+  @mx = @mx.clamp(@inner, width  - @inner)
+  @my = @my.clamp(@inner, height - @inner)
   fill 76
   rect @edge, @edge, width - @edge, height - @edge
   fill 255

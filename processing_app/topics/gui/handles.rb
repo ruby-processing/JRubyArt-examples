@@ -58,7 +58,7 @@ class Handle
       press_event
     end
     return unless press
-    @stretch = constrain(mouse_x - width / 2 - size / 2, 0, width / 2 - size - 1)
+    @stretch = (mouse_x - width / 2 - size / 2).clamp(0, width / 2 - size - 1)
   end
 
   def over_event

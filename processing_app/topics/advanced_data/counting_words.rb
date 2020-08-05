@@ -6,7 +6,7 @@ class Word
     @word = word
     @count = 1
   end
-  
+
   def increment
     @count += 1
   end
@@ -55,7 +55,7 @@ def draw
     # Only display words that appear 3 times
     if w.count > 3  # access word count
       # The size is the count
-      fsize = constrain(w.count, 0, 100)
+      fsize = w.count.clamp(0, 100)
       text_size(fsize)
       text(w.word, x, y)
       # Move along the x-axis

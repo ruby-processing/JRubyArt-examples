@@ -25,7 +25,7 @@ class Circle < Shape
     super
     # The Circle jiggles both size and location.
     @r += rand(-1..1.0)
-    @r = constrain(r, 0, 100)
+    @r = r.clamp(0, 100)
   end
 
   def display

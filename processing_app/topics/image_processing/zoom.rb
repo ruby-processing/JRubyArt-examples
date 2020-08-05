@@ -35,7 +35,7 @@ def draw
   else
     @sval -= 0.01
   end
-  @sval = constrain(sval, 1.0, 2.0)
+  @sval = sval.clamp(1.0, 2.0)
   translate(width / 2 + nmx * sval - 100, height / 2 + nmy * sval - 100, -50)
   scale(sval)
   rotate_z(PI / 9 - sval + 1.0)

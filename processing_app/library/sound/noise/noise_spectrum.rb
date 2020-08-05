@@ -28,11 +28,7 @@ end
 
 def draw
   # Only play one of the four noises, based on mouseY
-  next_noise = constrain(
-    map1d(mouseY, 0..height, 0..noises.length),
-    0,
-    noises.length - 1
-  )
+  next_noise = constrained_map(mouseY, 0..height, 0..noises.length)  )
   unless next_noise == current
     noises[current].stop
     @current = next_noise

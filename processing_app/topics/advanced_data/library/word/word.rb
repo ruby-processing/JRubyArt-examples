@@ -39,7 +39,7 @@ class Word
   # The more often it appears, the faster it falls
   def move
     @speed = map1d(total_count, (5..25), (0.1..0.4))
-    @speed = constrain(speed, 0, 10.0)
+    @speed = speed.clamp(0, 10.0)
     @position[Y] += speed
     @position[Y] = -height if position[Y] > height * 2
   end
@@ -53,7 +53,7 @@ class Word
     end
     # Its size is also tied to number of occurences
     fs = map1d(total_count, (5..25), (2..24.0))
-    fs = constrain(fs, 2, 48)
+    fs = fs.clamp(2, 48)
     text_size(fs)
     text_align(CENTER)
     text(word, position[X], position[Y])

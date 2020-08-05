@@ -6,9 +6,6 @@ java_import 'wblut.geom.WB_Vector'
 java_import 'wblut.processing.WB_Render3D'
 java_import 'wblut.math.WB_Ease'
 
-
-
-
 boolean ORTHOROT
 boolean ORTHO
 
@@ -329,7 +326,7 @@ float fracf
 transform=WB_Transform.new
 do
 if (p.parentToChild.nil?)
-  fracf=constrain((float)(p.level-f), 0.0, 1.0)
+  fracf=(p.level-f).clamp(0.0, 1.0)
   if (counter<numFrames/2)
     fracf=1.0-fracf
   end

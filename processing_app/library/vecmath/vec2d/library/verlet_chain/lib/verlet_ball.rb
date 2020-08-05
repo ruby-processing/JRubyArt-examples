@@ -39,11 +39,11 @@ class VerletBall
 
   def bounds_collision
     if x_bound.exclude? pos.x
-      pos_old.x = constrain pos.x, x_bound.lower, x_bound.upper
+      pos_old.x = pos.x.clamp(x_bound.lower, x_bound.upper)
       pos.x = (pos.x <= radius)? pos_old.x + push.x : pos_old.x - push.x
     end
     return unless y_bound.exclude? pos.y
-    pos_old.y = constrain pos.y, y_bound.lower, y_bound.upper
+    pos_old.y = pos.y.clamp(y_bound.lower, y_bound.upper)
     pos.y = (pos.y <= radius)? pos_old.y + push.y : pos_old.y - push.y
   end
 end
