@@ -1,3 +1,0 @@
---add-opens java.base/java.nio=ALL-UNNAMED
---add-opens java.desktop/java.awt=ALL-UNNAMED
-
