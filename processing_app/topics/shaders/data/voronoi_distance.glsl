@@ -9,13 +9,6 @@ precision mediump int;
 
 uniform vec3      iResolution;
 uniform float     iTime;
-
-void mainImage( out vec4 fragColor, in vec2 fragCoord );
-
-void main() {
-  mainImage(gl_FragColor,gl_FragCoord.xy);
-}
-
 vec2 hash2( vec2 p )
 {
   // procedural white noise
@@ -64,12 +57,9 @@ vec3 voronoi( in vec2 x )
   return vec3( md, mr );
 }
 
-void mainImage( out vec4 fragColor, in vec2 fragCoord )
-{
-  vec2 p = fragCoord/iResolution.xx;
-
+void main() {
+  vec2 p = gl_FragCoord.xy/iResolution.xx;
   vec3 c = voronoi( 8.0*p );
-
   // isolines
   vec3 col = c.x*(0.5 + 0.5*sin(64.0*c.x))*vec3(1.0);
   // borders
@@ -78,6 +68,5 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
   float dd = length( c.yz );
   col = mix( vec3(1.0,0.6,0.1), col, smoothstep( 0.0, 0.12, dd) );
   col += vec3(1.0,0.6,0.1)*(1.0-smoothstep( 0.0, 0.04, dd));
-
-  fragColor = vec4(col,1.0);
+  gl_FragColor = vec4(col,1.0);
 }
