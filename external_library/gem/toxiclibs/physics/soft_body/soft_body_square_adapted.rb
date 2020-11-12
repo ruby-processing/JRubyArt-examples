@@ -31,9 +31,7 @@
 #
 require 'forwardable'
 require 'toxiclibs'
-require_relative 'blanket'
-require_relative 'connection'
-require_relative 'particle'
+load_library :blanket
 
 attr_reader :b, :physics
 

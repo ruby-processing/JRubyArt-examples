@@ -1,6 +1,6 @@
 // This implementation is based on GLSL code by ArKano22:
 // http://www.gamedev.net/topic/590070-glsl-droste/
-uniform float time;
+uniform int frameCount;
 uniform sampler2D texture; // iChannel0 in Shadertoy
 uniform vec2 resolution; // iResolution in Shadertoy
 uniform int mode;
@@ -48,14 +48,13 @@ void main( void ){
 	uv= complexPower(uv, complexDiv(vec2( log(factor) ,TWO_PI), vec2(0.0,TWO_PI) ) );
 
 	//RECTANGULAR DROSTE EFFECT:
-	float FT = fract(time);
+	float FT = float(frameCount % 100 / 100.0);
 	FT = log(FT+1.)/log(2.);
 	uv *= 1.0+FT*(scale-1.0);
 
   float npower = max(nearestPower(uv.x,scale),nearestPower(uv.y,scale));
-//	uv.x = map(uv.x,-npower,npower,-1.0,1.0);
-//	uv.y = map(uv.y,-npower,npower,-1.0,1.0);
-   uv = normalize(uv) * 2;
+	uv.x = map(uv.x,-npower,npower,-1.0,1.0);
+	uv.y = map(uv.y,-npower,npower,-1.0,1.0);
 
 	//UNDO SHIFT AND SCALE:
 	gl_FragColor =  texture(texture,uv*off+vec2(off));

@@ -6,7 +6,7 @@
 # (c) 2012 Karsten Schmidt / LGPL2 licensed
 #
 require 'toxiclibs'
-
+java_import 'toxi.geom.Circle'
 # container for mesh positions
 
 attr_reader :gfx, :positions
@@ -20,7 +20,7 @@ def setup
   Processing::ArcBall.init(self)
   @gfx = Gfx::ToxiclibsSupport.new(self)
   # compute mesh positions on circle in XZ plane
-  @positions = Toxi::Circle.new(200).toPolygon2D(8).map(&:to3DXZ)
+  @positions = Circle.new(200).toPolygon2D(8).map(&:to3DXZ)
 end
 
 def draw
