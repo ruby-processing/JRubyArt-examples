@@ -17,7 +17,7 @@ def setup
   @rows = height / CELL_SIZE
   colorMode(RGB, 255, 255, 255, 100)
   # Try test_capture to find name of your Camera
-  @video = Capture.new(self, width, height, "UVC Camera (046d:0825)")
+  @video = Capture.new(self, width, height, 'pipeline:autovideosrc')
   # Start capturing the images from the camera
   video.start
 end

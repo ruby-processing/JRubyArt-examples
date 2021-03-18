@@ -6,8 +6,7 @@
 # than the screen. When PDF is used as the renderer
 # (the third parameter of size) the display window
 # does not open. The file is saved to the sketch folder.
-load_libraries 'pdf'
-include_package 'processing.pdf'
+load_library :pdf
 
 def setup
   sketch_title 'Large Page'

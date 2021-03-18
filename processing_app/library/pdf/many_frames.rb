@@ -1,10 +1,9 @@
-# Multiple Frames. 
-# 
+# Multiple Frames.
+#
 # Saves one PDF document of many frames drawn to the screen.
 # Starts the file when the mouse is pressed and end the file
 # when the mouse is released.
-load_library 'pdf'
-include_package 'processing.pdf'
+load_library :pdf
 
 def setup
   sketch_title 'Many Frames'
@@ -19,7 +18,7 @@ def draw
 end
 
 def mouse_pressed
-  begin_record(PDF, data_path('Lines.pdf')) 
+  begin_record(PDF, data_path('Lines.pdf'))
   background(255)
 end
 

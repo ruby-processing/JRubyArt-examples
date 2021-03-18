@@ -3,8 +3,7 @@
 # Saves a new page into a PDF file each loop through draw().
 # Pressing the mouse finishes writing the file and exits the program.
 #
-load_library 'pdf'
-include_package 'processing.pdf'
+load_library :pdf
 
 attr_reader :pdf
 

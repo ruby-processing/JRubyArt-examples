@@ -2,7 +2,7 @@
 # Liberation Serif font from RedHat: https://www.redhat.com/promo/fonts/
 require 'ruby_wordcram'
 load_library :pdf
-include_package 'processing.pdf'
+
 # After you run this,
 # open the sketch's folder.
 # See the PDF.

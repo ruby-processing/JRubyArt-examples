@@ -1,35 +1,48 @@
+# frozen_string_literal: true
+
 # RULE 110
-# 2 + 4 + 8 + 32 + 64 = 110
 # using axiom in sense of an LSystem, starting condition
 # see https://en.wikipedia.org/wiki/Rule_110
-attr_reader :row, :axiom, :black
+attr_reader :row, :axiom, :black, :white
 
 def setup
   sketch_title 'Wolfram CA Rule 110'
+  # Starting point for Sierpinski
+  @axiom = decimal_rule_to_a(170)
+  color_mode(HSB, 1.0)
   @black = color(0)
-  # one of most interesting starting points
-  @axiom = [0, 1, 1, 1, 0, 1, 1, 0]
+  @white = color(1.0)
   initial
 end
 
+def decimal_rule_to_a(dec)
+  format('%08b', dec).split('').map(&:to_i)
+end
+
 def draw
-  reset if row > height
+  reset if row > height - 2
   display
 end
 
 def display
   (0..width).each_cons(3) do |triple|
     left, center, right = *triple
-    a = get(left, row)
-    b = get(center, row)
-    c = get(right, row)
+    a = pixels[row * width + left]
+    b = pixels[row * width + center]
+    c = pixels[row * width + right]
     idx = 0
-    idx += 1 if a == black
-    idx += 2 if b == black
-    idx += 4 if c == black
-    set(center, row.succ, black) unless axiom[idx].zero?
+    case a + b + c
+    when 3 * white
+      idx = 7
+    when 2 * black + white
+      idx = (a == b)? 1 : (a == c)? 2 : 4
+    when 2 * white + black
+      idx = (b == c)? 3 : (a == c)? 5 : 6
+    end
+    pixels[row.succ * width + center] = black unless axiom[idx].zero?
   end
   @row += 1
+  update_pixels
 end
 
 def settings
@@ -37,18 +50,21 @@ def settings
 end
 
 def initial
-  background(255)
-  set(1, 0, black)
+  # start from a single point at one end
+  background(white)
+  load_pixels
+  pixels[width - 2] = black
+  update_pixels
   @row = 0
 end
 
 def reset
-  # create some random starting conditions and re-start
-  initial
-  asum = 0
-  # filter out some of less interesting results
-  while asum < 4 || asum > 5
-    @axiom = Array.new(8) { rand(0..1) }
-    asum = axiom.inject(:+)
-  end
+  # create random starting conditions and re-start
+  @black = color(rand, 1.0, 1.0)
+  @white = color(rand, 1.0, 1.0)
+  background(white)
+  load_pixels # reload after background set
+  (0..width).map { |idx| pixels[idx] = black if rand > 0.5 }
+  update_pixels
+  @row = 0
 end

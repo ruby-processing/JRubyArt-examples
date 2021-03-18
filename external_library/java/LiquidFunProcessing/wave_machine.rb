@@ -150,8 +150,9 @@ end
 #######################################
 
 def wave
-  @m_time += 1 / 120.0
-  m_joint.set_motor_speed(0.1 * cos(m_time) * PI)
+ @m_time += 1 / 120.0
+#  m_joint.set_motor_speed(0.1 * cos(m_time) * PI)
+ m_joint.set_motor_speed(0.001 * cos(m_time) * PI)
   world.update
 end
 

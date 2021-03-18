@@ -1,10 +1,9 @@
-# Many PDFs. 
-# 
+# Many PDFs.
+#
 # Saves one PDF file each each frame while the mouse is pressed.
 # When the mouse is released, the PDF creation stops.
 #
-load_library 'pdf'
-include_package 'processing.pdf'
+load_library :pdf
 
 attr_reader :pdf, :save_pdf
 
@@ -16,7 +15,7 @@ end
 
 def draw
   begin_record(PDF, data_path("lines#{frame_count}.pdf")) unless !save_pdf
-  background(255) 
+  background(255)
   stroke(0, 20)
   stroke_weight(20.0)
   line(mouse_x, 0, width-mouse_y, height)

@@ -1,32 +1,34 @@
-# Noise3D. 
-# 
-# Using 3D noise to create simple animated texture. 
+# Noise3D.
+#
+# Using 3D noise to create simple animated texture.
 # Here, the third dimension ('z') is treated as time.
-attr_reader :increment, :z_increment
+# SimplexNoise is in range -1.0 to 1.0
+DELTA = 0.01
+DELTA_TIME = 0.02
+
+attr_reader :zoff
 
 def setup
   sketch_title 'Noise 3D'
-  frame_rate 30    
-  @increment = 0.01
+  frame_rate 30
   @zoff = 0.0
-  @z_increment = 0.02    
 end
 
-def draw    
-  background 0  	
-  load_pixels  	
-  xoff = 0.0  	
-  (0...width).each do |x|  	    
-    xoff += increment
-    yoff = 0.0  		
-    (0...height).each do |y|  		    
-      yoff += increment  			
-      bright = noise(xoff, yoff, @zoff) * 255  			
+def draw
+  background 0
+  load_pixels
+  xoff = 0.0
+  (0...width).each do |x|
+    xoff += DELTA
+    yoff = 0.0
+    (0...height).each do |y|
+      yoff += DELTA
+      bright = (noise(xoff, yoff, zoff) + 1) * 128
       pixels[x + y * width] = color(bright, bright, bright)
     end
-  end  	
-  update_pixels  	
-  @zoff += z_increment  	
+  end
+  update_pixels
+  @zoff += DELTA_TIME
 end
 
 def settings
