@@ -3,33 +3,27 @@ require 'toxiclibs'
 #
 # Using 3D noise to create simple animated texture.
 # Here, the third dimension ('z') is treated as time.
-
-
-attr_reader :increment, :z_increment
+DELTA = 0.01
+DELTA_TIME = 0.02
+attr_reader :zoff
 
 def setup
-  sketch_title 'Simplex Noise 3D'
+  sketch_title 'Noise 3D'
   frame_rate 30
-  @increment = 0.01
   @zoff = 0.0
-  @z_increment = 0.02
 end
 
 def draw
   background 0
   load_pixels
-  xoff = 0.0
-  (0...width).each do |x|
-    xoff += increment
-    yoff = 0.0
-    (0...height).each do |y|
-      yoff += increment
-      bright = Toxi::SimplexNoise.noise(xoff, yoff, @zoff) * 255
-      pixels[x + y * width] = color(bright, bright, bright)
-    end
+  grid(width, height) do |x, y|
+    bright = (Toxi::SimplexNoise.noise(x * DELTA, y * DELTA, zoff) + 1) * 128
+    # perlin = Toxi::PerlinNoise.new
+    # bright = perlin.noise(x * DELTA, y * DELTA, zoff) * 255
+    pixels[x + y * width] = color(bright, bright, bright)
   end
   update_pixels
-  @zoff += z_increment
+  @zoff += DELTA_TIME
 end
 
 def settings

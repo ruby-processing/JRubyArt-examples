@@ -17,15 +17,9 @@ end
 def draw
   background 0
   load_pixels
-  xoff = 0.0
-  (0...width).each do |x|
-    xoff += DELTA
-    yoff = 0.0
-    (0...height).each do |y|
-      yoff += DELTA
-      bright = (noise(xoff, yoff, zoff) + 1) * 128
-      pixels[x + y * width] = color(bright, bright, bright)
-    end
+  grid(width, height) do |x, y|
+    bright = (noise(x * DELTA, y * DELTA, zoff) + 1) * 128
+    pixels[x + y * width] = color(bright, bright, bright)
   end
   update_pixels
   @zoff += DELTA_TIME

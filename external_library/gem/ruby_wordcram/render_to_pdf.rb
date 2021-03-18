@@ -9,7 +9,7 @@ load_library :pdf
 WEB = %w[#000000 #0000dd #ff0000].freeze
 
 def settings
-  size(700, 700, PDF, 'usconst.pdf')
+  size(700, 700, PDF, data_path('usconst.pdf'))
 end
 
 def setup
