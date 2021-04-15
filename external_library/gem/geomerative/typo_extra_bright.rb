@@ -16,12 +16,9 @@
 # developed by Ricard Marxer.
 # http://www.ricardmarxer.com/geomerative/
 #
-# More info on these tutorials and workshops at :
-# www.freeartbureau.org/blog
 # translated for JRubyArt by Martin Prout
 require 'geomerative'
 load_library :f_agent
-
 attr_reader :my_agents
 
 def settings
@@ -40,7 +37,7 @@ def setup
   RCommand.set_segmentator(RCommand::UNIFORMLENGTH)
   @my_agents = my_font.to_group(my_text).get_points.map do |point|
     FontAgent.new(
-      loc: Vec2D.new(point.x, point.y),
+      loc: Vec2D.new(point),
       increment: Vec2D.new(x_incr, y_incr)
     )
   end

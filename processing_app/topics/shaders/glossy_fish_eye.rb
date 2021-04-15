@@ -36,15 +36,11 @@ def draw
   canvas.rotate_y(frame_count * 0.01)
   canvas.point_light(204, 204, 204, 1_000, 1_000, 1_000)
   canvas.pop_matrix
-  (0...canvas.width + 100).step(100) do |x|
-    (0...canvas.width + 100).step(100) do |y|
-      (0...canvas.width + 100).step(100) do |z|
+  grid(width, width, width, 100, 100, 100) do |x, y, z|
         canvas.push_matrix
         canvas.translate(x, y, -z)
         canvas.shape(ball)
         canvas.pop_matrix
-      end
-    end
   end
   canvas.end_draw
   shader(fisheye) if use_fish_eye

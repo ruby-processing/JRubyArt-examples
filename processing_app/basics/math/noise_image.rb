@@ -18,9 +18,14 @@ def draw
     pixels[x + width * y] = color(col, 0, 0)
   end
   update_pixels
-  save(data_path('noise_image.png'))
 end
 
 def settings
   size 500, 500
+end
+
+def key_pressed
+  return unless key == 's'
+
+  save_frame(data_path('noise_image.png'))
 end

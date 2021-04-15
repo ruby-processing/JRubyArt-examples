@@ -50,8 +50,8 @@ end
 
 def draw
   background(0, 50)
-  displace_x = noise(xoff) * width
-  displace_y = noise(yoff) * height
+  displace_x = (noise(xoff) + 1) * width / 2
+  displace_y = (noise(yoff) + 1) * height / 2
   @xoff += x_inc
   @yoff += y_inc
   translate(width / 2, height / 1.7)

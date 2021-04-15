@@ -1,3 +1,5 @@
+require 'geomerative'
+
 # --------- GEOMERATIVE EXAMPLES ---------------
 # //////////////////////////////////////////////
 # Title   :   TypoGeo_Deform
@@ -20,15 +22,13 @@
 # More info on these tutorials and workshops at :
 # www.freeartbureau.org/blog
 #
-require 'geomerative'
-load_library :font_agent
 
+load_library :font_agent
 attr_reader :my_font, :my_group, :my_points, :my_text
 attr_reader :my_agents, :step, :stop_anime
 
 def settings
   size(800, 350)
-  smooth
 end
 
 def setup

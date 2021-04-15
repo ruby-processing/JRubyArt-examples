@@ -37,14 +37,14 @@ def calculate_wave
   @theta += 0.02
 
   # Set all height values to zero
-  @y_values = Array.new @wave_width/@x_spacing, 0
+  @y_values = Array.new @wave_width / @x_spacing, 0
 
   # Accumulate wave height values
   max_waves.times do |j|
     x = @theta
     y_values.length.times do |i|
       # Every other wave is Math.cosine instead of Math.sine
-      value = (j % 2) == 0 ? Math.sin(x) : Math.cos(x)
+      value = j.even? ? Math.sin(x) : Math.cos(x)
       y_values[i] += value * amplitude[j]
       x += dx[j]
     end
@@ -57,7 +57,7 @@ def render_wave
   fill 255, 50
   ellipse_mode CENTER
   y_values.each_with_index do |y, i|
-    ellipse i*@x_spacing, width/2+y, 16, 16
+    ellipse i*@x_spacing, height / 2 + y, 16, 16
   end
 end
 

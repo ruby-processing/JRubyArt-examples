@@ -1,7 +1,7 @@
 # Example of a grid of decagons with perlin noise after Lenny Herzog
 
-load_library :pdf
-NOISE_STRENGTH = 80.0
+# load_library :pdf
+NOISE_STRENGTH = 40.0
 THETA = 36
 attr_reader :version, :save, :noise_generator
 
@@ -11,12 +11,12 @@ def setup
   @version = 0
   @save = false
   @noise_generator = lambda do |x, y, seed|
-    NOISE_STRENGTH * noise(
+    NOISE_STRENGTH * SmoothNoise.tnoise(
       x / 150.0,
       y / 150.0 + seed * 2,
       seed
-      ) - 100
-    end
+    ) - 100
+  end
   end
 
   def draw

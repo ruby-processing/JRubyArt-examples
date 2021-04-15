@@ -2,6 +2,7 @@
 # After a vanilla processing sketch by
 # Ben Notorianni aka lazydog
 # Features dynamic creation of a colour table
+# Use 's' key to toggle spikes
 BALL_RADIUS = 160
 
 attr_reader :colour_table, :orb_vertices, :flat, :smoothing, :sub_division_depth
@@ -140,7 +141,7 @@ def generate_radii(base_radius, depth)
   return (0..depth).map { base_radius } if flat
 
   (0..depth).map do |i|
-    r = 2 * noise(frame_count * 0.003, (i.to_f / depth) - 1.0)
+    r = noise(frame_count * 0.003, (i.to_f / depth) - 1) + 1
     base_radius * (0.9 * r)
   end
 end

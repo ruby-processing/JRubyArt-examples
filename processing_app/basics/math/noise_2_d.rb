@@ -3,7 +3,6 @@
 # NB: SimplexNoise is in range -1.0 to 1.0
 # Using 2D noise to create simple texture.
 DELTA = 0.01
-attr_reader :xoff, :yoff
 
 def setup
   sketch_title 'Noise 2D'
@@ -12,15 +11,8 @@ end
 def draw
   background 0
   load_pixels
-  @xoff = 0.0
-  (0...width).each do |x|
-    @xoff += DELTA
-    @yoff = 0.0
-    (0...height).each do |y|
-      @yoff += DELTA
-      bright = (noise(xoff, yoff) + 1) * 128
-      pixels[x + y * width] = color(bright)
-    end
+  grid(width, height) do |x, y|
+    pixels[x + y * width] = color((noise(x * DELTA, y * DELTA) + 1) * 128)
   end
   update_pixels
 end

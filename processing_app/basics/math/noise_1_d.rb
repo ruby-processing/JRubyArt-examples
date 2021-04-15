@@ -1,3 +1,4 @@
+
 # Noise1D.
 #
 # Using 1D SimplexNoise2 to assign location.
@@ -14,7 +15,7 @@ end
 def draw
   fill 0, 10
   rect 0, 0, width, height
-  n = noise(xoff) * width / 2.0
+  n = (noise(xoff) + 1) * width / 2.0
   @xoff += DELTA
   fill 200
   ellipse n, height / 2, 64, 64

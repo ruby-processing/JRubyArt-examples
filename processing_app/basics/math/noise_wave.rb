@@ -1,15 +1,13 @@
-#
 # Noise Wave
 # by Daniel Shiffman.
 #
-# Using Perlin Noise to generate a wave-like pattern.
-#
 
-attr_reader :yoff         # 2nd dimension of perlin noise
+attr_reader :smth, :yoff # 2nd dimension of perlin noise
 
 def setup
   sketch_title 'Noise Wave'
   @yoff = 0.0
+  @smth = false
 end
 
 def draw
@@ -22,8 +20,12 @@ def draw
   # Iterate over horizontal pixels
   (0..width).step(10) do |x|
     # Calculate a y value according to noise, map to
-    y = map1d(noise(xoff, yoff), (-1.0..1.0), (200..300)) # Option #1: 2D Noise
-    # y = map1d(noise(xoff), (-1.0..1.0), (200..300))    # Option #2: 1D Noise    
+    if smth
+      y = map1d(SmoothNoise.noise(xoff, yoff), (-1.0..1.0), (200..300))
+    else
+      y = map1d(noise(xoff, yoff), (-1.0..1.0), (200..300)) # Option #1: 2D Noise
+    end
+    # y = map1d(noise(xoff), (-1.0..1.0), (200..300))    # Option #2: 1D Noise
     # Set the vertex
     vertex(x, y)
     # Increment x dimension for noise
@@ -38,4 +40,8 @@ end
 
 def settings
   size(640, 360)
+end
+
+def mouse_pressed
+  @smth = !smth
 end

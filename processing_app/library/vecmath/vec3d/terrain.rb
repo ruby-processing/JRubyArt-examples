@@ -23,7 +23,7 @@ def draw
   (0..rows).each do |y|
     xoff = 0
     (0..columns).each do |x|
-      terrain[hash_key(x, y)] = Vec3D.new(x * SCL, y * SCL, map1d(noise(xoff, yoff), 0..1.0, -65..65))
+      terrain[hash_key(x, y)] = Vec3D.new(x * SCL, y * SCL, map1d(noise(xoff, yoff), -1.0..1.0, -65..65))
       xoff += 0.2
     end
     yoff += 0.2
@@ -47,7 +47,7 @@ private
 
 # HACK should be safe here
 def hash_key(x, y)
-  WIDTH * y + x
+  (WIDTH * y + x).to_s.freeze
 end
 
 def renderer
