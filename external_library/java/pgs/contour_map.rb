@@ -35,7 +35,7 @@ def populate_height_map
   anim_speed = 0.005
 
   grid(width + res, height + res, res, res) do |x, y|
-    z = norm(noise(x*0.01 + frame_count*anim_speed, y*0.01 + frame_count*anim_speed), -1.0, 1.0)
+    z = norm(SmoothNoise.noise(x*0.01 + frame_count*anim_speed, y*0.01 + frame_count*anim_speed), -1.0, 1.0)
     h = Vec3D.new(x, y, 0)
     z += h.dist(Vec3D.new(mouse_x, mouse_y, 0))*0.005
     h.z = z
@@ -43,9 +43,12 @@ def populate_height_map
     @max = [max, z].max
     @min = [min, z].min
   end
+  if frame_count > 20
+    save_frame(data_path('sk0####.tif')) if (5..100).include? frame_count
+  end
+  stop if frame_count > 120
 end
 
 def settings
-  size(800, 800)
-  smooth
+  size(800, 800, P2D)
 end

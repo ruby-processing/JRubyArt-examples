@@ -1,3 +1,5 @@
+java_import 'processing.core.PFont'
+
 attr_reader :sans, :serif, :sans_font, :serif_font
 
 def settings
@@ -8,9 +10,8 @@ def setup
   sketch_title 'System Fonts Explorer'
   sans_fonts = PFont.list.select { |f| f =~ /Sans/i }
   serif_fonts = PFont.list.select { |f| f =~ /Serif/i }
-  # adjust array index as required
-  @sans = sans_fonts[sans_fonts.length / 2]
-  @serif = serif_fonts[serif_fonts.length / 2]
+  @sans = sans_fonts[0]
+  @serif = serif_fonts.sample
   @sans_font = create_font(sans, 40, true)
   @serif_font = create_font(serif, 40, true)
   puts sans_fonts

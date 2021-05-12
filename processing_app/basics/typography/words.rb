@@ -1,16 +1,16 @@
-# Words. 
-# 
-# The text() function is used for writing words to the screen. 
+# Words.
+#
+# The text() function is used for writing words to the screen.
 
-PFont = Java::ProcessingCore::PFont
+java_import 'processing.core.PFont'
 
 def setup
   sketch_title 'Words'
   @x = 30
   puts 'Available Fonts:'
-  PFont::list.each{ |f| puts f } 
-  @font = create_font('Georgia', 24)     
-  text_font @font, 32    
+  PFont::list.each{ |f| puts f }
+  @font = create_font('SansSerif.bold', 24)     
+  text_font @font, 32
   no_loop
 end
 
@@ -24,9 +24,9 @@ def draw
   draw_type(width * 0.75)
 end
 
-def draw_type(x)   
+def draw_type(x)
   line(x, 0, x, 65)
-  line(x, 220, x, height)   
+  line(x, 220, x, height)
   fill 0
   text 'ichi', x, 95
   fill 51
@@ -34,7 +34,7 @@ def draw_type(x)
   fill 204
   text 'san', x, 165
   fill 255
-  text 'shi', x, 210    
+  text 'shi', x, 210
 end
 
 def settings
