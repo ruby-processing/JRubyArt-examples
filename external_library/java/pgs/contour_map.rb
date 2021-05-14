@@ -1,5 +1,5 @@
-require_relative './vector_list'
-load_library :pgs
+#require_relative './vector_list'
+load_libraries :pgs, :vector_list
 java_import 'micycle.pgs.PGS_Contour'
 
 attr_reader :polygon, :heights, :max, :min
