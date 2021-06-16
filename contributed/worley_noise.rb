@@ -3,7 +3,7 @@
 # The Coding Train / Daniel Shiffman
 attr_reader :points
 
-NPOINTS = 20
+NPOINTS = 100
 
 def settings
   size(400, 400)
@@ -23,7 +23,7 @@ def draw
       z = frame_count % width
       distances << dist(x, y, z, v.x, v.y, v.z)
     end
-    sorted = distances.sort!
+    sorted = distances.sort
     r = map1d(sorted[0], 0..150, 0..255)
     g = map1d(sorted[1], 0..50, 255..0)
     b = map1d(sorted[2], 0..200, 255..0)
