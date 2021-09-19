@@ -1,5 +1,4 @@
 require 'joonsrenderer'
-include_package 'joons'
 
 attr_reader :jr, :eye, :center, :up
 
