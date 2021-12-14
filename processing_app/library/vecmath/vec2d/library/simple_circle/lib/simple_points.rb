@@ -20,7 +20,7 @@ class SimplePoints
   end
 
   def collinear?
-    full? ? (points[0] - points[1]).cross(points[1] - points[2]).zero? : false
+    full? ? ((points[0] - points[1]) ^ (points[1] - points[2])).zero? : false
   end
 
   def full?

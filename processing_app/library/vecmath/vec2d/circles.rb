@@ -31,7 +31,7 @@ def draw
   no_fill
   # verifies if there is a circle and draw it
   return if collinear(@points[0].pos, @points[1].pos, @points[2].pos)
-  draw_circle *@points
+  draw_circle(*@points)
 end
 
 def draw_circle(a, b, c)
@@ -53,7 +53,7 @@ def bisector(a, b)
 end
 
 def collinear(a, b, c)
-  (a - b).cross(b - c).zero?
+  ((a - b) ^ (b - c)).zero?
 end
 
 def center(bisector)

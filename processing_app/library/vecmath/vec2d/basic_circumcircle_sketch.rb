@@ -3,7 +3,7 @@
 # Here is a sketch that clearly demonstrates some of the most egregious parts of
 # vanilla processing:-
 # PVector is over complicated and overloads 2D and 3D functionality, cf Vec2D
-# JRubyArt and propane which behaves as a 2D vector (cross product is a float)
+# JRubyArt and propane which behaves as a 2D vector (wedge product is a float)
 # and can easily be used in chain calculations.
 
 ##################################################

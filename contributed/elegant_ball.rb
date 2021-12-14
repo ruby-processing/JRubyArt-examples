@@ -134,12 +134,9 @@ def draw_triangle(depth, r, p1, p2, p3)
     v3 = (p3 + p1) * 0.5
     unless r == 0.0
       # Project the vertices out onto the sphere with radius r.
-      v1.normalize!
-      v1 *= r
-      v2.normalize!
-      v2 *= r
-      v3.normalize!
-      v3 *= r
+      v1.set_mag(r)
+      v2.set_mag(r)
+      v3.set_mag(r)
     end
     ## Generate the next level of detail
     depth -= 1

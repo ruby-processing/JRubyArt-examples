@@ -20,7 +20,7 @@ class TPoints
   end
 
   def collinear?
-    full? ? (vec[0] - vec[1]).cross(vec[1] - vec[2]).zero? : false
+    full? ? ((vec[0] - vec[1]) ^ (vec[1] - vec[2])).zero? : false
   end
 
   def vec

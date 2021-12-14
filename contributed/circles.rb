@@ -22,8 +22,8 @@ def draw
   end
 
   # set the style of the circle
-  @dc = map1d(millis, 0..150_000, 0..360) # slowly changes hue
-  stroke((@c + @dc) % 360, 50, 100, 5)
+  @delta_hue = map1d(millis, 0..150_000, 0..360) # slowly changes hue
+  stroke((@hue + @delta_hue) % 360, 50, 100, 5)
   no_fill
 
   ## verifies if there is a circle and draw it
@@ -39,7 +39,7 @@ def draw_circle(pts)
 end
 
 def reset
-  @c = rand(360)
+  @hue = rand(360)
   @points = TrianglePoints.new
   3.times { @points << TPoint.new(Vec2D.new(rand(5..width - 5), rand(5..height - 5))) }
   background 0

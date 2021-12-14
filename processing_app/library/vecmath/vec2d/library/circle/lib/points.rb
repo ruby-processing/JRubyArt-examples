@@ -21,7 +21,7 @@ class TPoints
 
   def collinear?
     return false unless full?
-    (array[0] - array[1]).cross(array[1] - array[2]).zero?
+    ((array[0] - array[1]) ^ (array[1] - array[2])).zero?
   end
 
   def array

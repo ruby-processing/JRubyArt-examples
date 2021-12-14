@@ -33,6 +33,6 @@ class Circumcircle
   end
 
   def collinear?
-    (a - b).cross(b - c).zero?
+    ((a - b) ^ (b - c)).zero?
   end
 end
